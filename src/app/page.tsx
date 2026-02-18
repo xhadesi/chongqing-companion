@@ -11,11 +11,13 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen px-6 pt-10 pb-32 space-y-10">
       {/* Header */}
-      <header className="animate-in slide-in-from-bottom-4 duration-700 flex flex-col items-center text-center mt-4">
-        <h1 className="text-4xl font-black tracking-tight text-slate-800 dark:text-white mb-1">
-          China <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-yellow-600">One</span>
+      <header className="animate-in slide-in-from-bottom-4 duration-700 flex items-center justify-center gap-3 mt-2">
+        <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg border border-white/10">
+          <img src="/icon-192x192.png" alt="Logo" className="object-cover w-full h-full" />
+        </div>
+        <h1 className="text-3xl font-black tracking-tight text-slate-800 dark:text-white">
+          China <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">One</span>
         </h1>
-        <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.3em]">Votre Compagnon de Voyage</p>
       </header>
 
 
@@ -32,16 +34,13 @@ export default function Home() {
           <span className="text-xs font-medium text-slate-400">Liens Utiles</span>
         </div>
 
-        <div className="flex overflow-x-auto gap-4 pb-4 -mx-6 px-6 no-scrollbar snap-x">
-          {/* Spacer for left offset */}
-          <div className="w-2 shrink-0" />
-
+        <div className="grid grid-cols-2 gap-3">
           {/* News: Visa Exemption */}
           <GuideBanner
             icon={<Info className="w-6 h-6 text-blue-600 dark:text-blue-400" />}
             title="Visa Free"
-            subtitle="Jusqu'au 31/12/2025"
-            tag="Flash Info"
+            subtitle="Info 2025"
+            tag="Flash"
             href="https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/chine/#entre"
             external
           />
@@ -50,7 +49,7 @@ export default function Home() {
           <GuideBanner
             icon={<Wifi className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />}
             title="Internet"
-            subtitle="eSIM Holafly"
+            subtitle="eSIM"
             href="https://esim.holafly.com/fr/esim-chine/"
             external
           />
@@ -59,8 +58,7 @@ export default function Home() {
           <GuideBanner
             icon={<Smartphone className="w-6 h-6 text-purple-600 dark:text-purple-400" />}
             title="Apps"
-            subtitle="Le Kit de Survie"
-            tag="Indispensable"
+            subtitle="Kit Survie"
             href="/guide/apps"
           />
 
@@ -68,7 +66,7 @@ export default function Home() {
           <GuideBanner
             icon={<Languages className="w-6 h-6 text-pink-600 dark:text-pink-400" />}
             title="Culture"
-            subtitle="Guide Expat"
+            subtitle="Le Guide"
             href="/guide/culture"
           />
 
@@ -85,7 +83,7 @@ export default function Home() {
           <GuideBanner
             icon={<Map className="w-6 h-6 text-slate-600 dark:text-slate-400" />}
             title="Métro"
-            subtitle="Carte Interactive"
+            subtitle="Carte"
             href="/metro"
           />
 
@@ -93,11 +91,11 @@ export default function Home() {
           <GuideBanner
             icon={<Phone className="w-6 h-6 text-red-600 dark:text-red-400" />}
             title="Urgences"
-            subtitle="110 (Police) / 120 (SAMU)"
+            subtitle="110 / 120"
             isEmergency={true}
             href="tel:110"
             external
-            className="bg-red-50/50 dark:bg-red-900/20"
+            className="col-span-2 bg-red-50/50 dark:bg-red-900/20"
           />
         </div>
       </section>
@@ -123,8 +121,8 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-r from-slate-900/5 to-transparent dark:from-slate-900/50 pointer-events-none" />
 
             <div className="flex flex-col justify-center relative z-10">
-              <h3 className="font-bold text-slate-800 dark:text-white text-xl">Boîte à Outils</h3>
-              <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 font-medium">Convertisseur, Météo, Piment...</p>
+              <h3 className="font-black text-slate-900 dark:text-white text-xl tracking-tight">Boîte à Outils</h3>
+              <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 font-bold uppercase tracking-wide opacity-80">Convertisseur • Météo</p>
             </div>
 
             <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center group-hover:bg-slate-200 dark:group-hover:bg-white/20 transition-colors border border-slate-200 dark:border-white/5 relative z-10 shadow-sm">
