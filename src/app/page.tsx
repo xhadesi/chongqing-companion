@@ -148,7 +148,7 @@ function GuideBanner({
 
   return (
     // @ts-ignore
-    <Component href={href !== '#' ? href : undefined} {...props} className={`flex-shrink-0 w-60 h-32 rounded-3xl p-4 flex flex-col justify-between shadow-md relative overflow-hidden snap-start hover:shadow-lg transition-all active:scale-95 group ${isEmergency ? 'bg-red-texture' : (className || 'bg-slate-200')}`}>
+    <Component href={href !== '#' ? href : undefined} {...props} className={`flex-shrink-0 w-72 h-40 md:w-60 md:h-32 rounded-3xl p-5 flex flex-col justify-between shadow-md relative overflow-hidden snap-start hover:shadow-lg transition-all active:scale-95 group ${isEmergency ? 'bg-red-texture' : (className || 'bg-slate-200')}`}>
 
       {/* Background Image (if provided and not emergency) */}
       {!isEmergency && image && (

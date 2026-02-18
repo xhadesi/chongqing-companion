@@ -112,7 +112,7 @@ export function BestOfGuide() {
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-4 pt-0">
-                    <div className="grid grid-cols-5 gap-2"> {/* 5 cols as requested */}
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 md:gap-4"> {/* Responsive grid */}
                         {CATEGORIES.map(cat => (
                             <button
                                 key={cat.id}

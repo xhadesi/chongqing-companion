@@ -1,14 +1,15 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Activity } from "@/lib/types";
-import { GripVertical, Trash2 } from "lucide-react";
+import { GripVertical, Trash2, Plus } from "lucide-react";
 
 interface SidebarItemProps {
     activity: Activity;
     onDelete?: (id: string) => void;
+    onAddClick?: (id: string) => void;
 }
 
-export function SidebarItem({ activity, onDelete }: SidebarItemProps) {
+export function SidebarItem({ activity, onDelete, onAddClick }: SidebarItemProps) {
     const {
         attributes,
         listeners,
@@ -28,7 +29,7 @@ export function SidebarItem({ activity, onDelete }: SidebarItemProps) {
         <div
             ref={setNodeRef}
             style={style}
-            className="flex items-center gap-2 p-2 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-amber-400 group relative"
+            className="flex items-center gap-2 p-2 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 hover:border-amber-400 group relative pr-10"
         >
             <div
                 {...attributes}
@@ -61,6 +62,22 @@ export function SidebarItem({ activity, onDelete }: SidebarItemProps) {
                     title="Supprimer"
                 >
                     <Trash2 className="w-3.5 h-3.5" />
+                </button>
+            )}
+
+            {/* Mobile Add Button (Always visible on mobile, or on hover desktop) */}
+            {onAddClick && (
+                <button
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onAddClick(activity.id);
+                    }}
+                    onPointerDown={(e) => e.stopPropagation()}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-amber-100 hover:bg-amber-200 text-amber-600 rounded-full flex items-center justify-center shadow-sm z-20"
+                    title="Planifier"
+                >
+                    <Plus className="w-4 h-4" />
                 </button>
             )}
         </div>

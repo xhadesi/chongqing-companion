@@ -13,6 +13,10 @@ interface TimeEditModalProps {
 export function TimeEditModal({ isOpen, onClose, onConfirm, initialTime }: TimeEditModalProps) {
     const [time, setTime] = useState(initialTime);
 
+    const handleQuickTime = (t: string) => {
+        setTime(t);
+    };
+
     useEffect(() => {
         if (isOpen) setTime(initialTime || "09:00");
     }, [isOpen, initialTime]);
@@ -44,9 +48,33 @@ export function TimeEditModal({ isOpen, onClose, onConfirm, initialTime }: TimeE
                             type="time"
                             value={time}
                             onChange={(e) => setTime(e.target.value)}
-                            className="bg-slate-50 border-2 border-slate-100 text-slate-900 text-4xl font-black rounded-2xl px-6 py-4 text-center focus:outline-none focus:border-amber-500 focus:ring-4 focus:ring-amber-500/20 transition-all w-full"
+                            className="bg-slate-50 border-2 border-slate-100 dark:bg-slate-800 dark:border-slate-700 dark:text-white text-slate-900 text-4xl font-black rounded-2xl px-6 py-4 text-center focus:outline-none focus:border-amber-500 focus:ring-4 focus:ring-amber-500/20 transition-all w-full"
                             autoFocus
                         />
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-2">
+                        <button
+                            type="button"
+                            onClick={() => handleQuickTime("10:00")}
+                            className="p-2 rounded-xl bg-amber-50 text-amber-700 text-sm font-bold border border-amber-100 hover:bg-amber-100"
+                        >
+                            Matin
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => handleQuickTime("14:00")}
+                            className="p-2 rounded-xl bg-orange-50 text-orange-700 text-sm font-bold border border-orange-100 hover:bg-orange-100"
+                        >
+                            Aprèm
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => handleQuickTime("19:00")}
+                            className="p-2 rounded-xl bg-indigo-50 text-indigo-700 text-sm font-bold border border-indigo-100 hover:bg-indigo-100"
+                        >
+                            Soir
+                        </button>
                     </div>
 
                     <button

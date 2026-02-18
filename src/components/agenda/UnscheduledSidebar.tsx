@@ -6,9 +6,10 @@ import { SidebarItem } from "./SidebarItem";
 interface UnscheduledSidebarProps {
     items: Activity[];
     onDelete: (id: string) => void;
+    onAddClick: (id: string) => void;
 }
 
-export function UnscheduledSidebar({ items, onDelete }: UnscheduledSidebarProps) {
+export function UnscheduledSidebar({ items, onDelete, onAddClick }: UnscheduledSidebarProps) {
     const { setNodeRef } = useDroppable({
         id: "unscheduled"
     });
@@ -43,7 +44,12 @@ export function UnscheduledSidebar({ items, onDelete }: UnscheduledSidebarProps)
                         </div>
                     ) : (
                         items.map((activity) => (
-                            <SidebarItem key={activity.id} activity={activity} onDelete={onDelete} />
+                            <SidebarItem
+                                key={activity.id}
+                                activity={activity}
+                                onDelete={onDelete}
+                                onAddClick={onAddClick}
+                            />
                         ))
                     )}
                 </SortableContext>

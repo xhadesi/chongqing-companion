@@ -23,6 +23,7 @@ import { DayTimeline } from "./DayTimeline";
 import { UnscheduledSidebar } from "./UnscheduledSidebar";
 import { Activity } from "@/lib/types";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
+import { AddToAgendaModal } from "./AddToAgendaModal";
 
 export function AgendaView() {
     const { days, unscheduled, isLoading, addActivity, moveActivity, toggleActivity, deleteActivity, updateActivity, clearUnscheduled, addDay, removeDay, updateDate } = useAgenda();
@@ -30,6 +31,10 @@ export function AgendaView() {
     const [activeId, setActiveId] = useState<string | null>(null);
     const [activeItem, setActiveItem] = useState<Activity | null>(null);
     const [dayToDelete, setDayToDelete] = useState<string | null>(null);
+
+    // Modal Add State
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [activityToAddId, setActivityToAddId] = useState<string | null>(null);
 
     const [isAdding, setIsAdding] = useState(false);
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
@@ -232,7 +237,14 @@ export function AgendaView() {
                     {/* Right: Staging Area */}
                     <div className="w-full lg:w-96 flex-shrink-0">
                         <div className="sticky top-28 h-[calc(100vh-8rem)]">
-                            <UnscheduledSidebar items={unscheduled} onDelete={(id) => deleteActivity("unscheduled", id)} />
+                            <UnscheduledSidebar
+                                items={unscheduled}
+                                onDelete={(id) => deleteActivity("unscheduled", id)}
+                                onAddClick={(id) => {
+                                    setActivityToAddId(id);
+                                    setIsAddModalOpen(true);
+                                }}
+                            />
                         </div>
                     </div>
                 </div>
@@ -287,6 +299,20 @@ export function AgendaView() {
                     </div>
                 ) : null}
             </DragOverlay>
+
+            <AddToAgendaModal
+                isOpen={isAddModalOpen}
+                onClose={() => setIsAddModalOpen(false)}
+                activityTitle={unscheduled.find(a => a.id === activityToAddId)?.title || "Activité"}
+                days={days.map(d => ({ id: d.id, dayNumber: d.dayNumber, date: d.date }))}
+                onAdd={(time, dayId) => {
+                    if (activityToAddId) {
+                        moveActivity(activityToAddId, "unscheduled", dayId, time);
+                        setIsAddModalOpen(false);
+                        setActivityToAddId(null);
+                    }
+                }}
+            />
         </DndContext>
     );
 }
