@@ -1,0 +1,21 @@
+{
+    "name": "China Companion",
+    "short_name": "China Comp",
+    "description": "Votre assistant de voyage tout-en-un pour la Chine",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#faf9f6",
+    "theme_color": "#faf9f6",
+    "icons": [
+        {
+            "src": "/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
