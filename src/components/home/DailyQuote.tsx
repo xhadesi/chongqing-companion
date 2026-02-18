@@ -42,7 +42,6 @@ export function DailyQuote() {
     }, []);
 
     return (
-    return (
         <Card variant="premium" className="p-6 group hover:shadow-lg transition-all duration-500">
             {/* Background Decoration */}
             <div className="absolute top-0 right-0 p-4 opacity-10">

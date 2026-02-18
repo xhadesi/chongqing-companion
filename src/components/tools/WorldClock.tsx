@@ -75,7 +75,6 @@ export function WorldClock() {
     };
 
     return (
-    return (
         <Card variant="premium" className="p-6">
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">

@@ -40,7 +40,6 @@ export function CurrencyConverter() {
     if (!mounted) return <div className="bg-card w-full p-6 rounded-[2rem] shadow-neon border border-border h-[200px] animate-pulse" />;
 
     return (
-    return (
         <Card variant="premium" className="w-full p-6 flex flex-col relative overflow-hidden group hover:shadow-lg transition-all duration-300">
             {/* Background Decoration */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50/50 dark:bg-indigo-900/20 rounded-full blur-3xl -z-10 opacity-50 pointer-events-none" />
