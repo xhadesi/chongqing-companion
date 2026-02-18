@@ -21,14 +21,16 @@ body {
   --color-popover: hsl(0 0% 100%);
   --color-popover-foreground: hsl(0 0% 10%);
 
-  /* Imperial Red */
-  --color-primary: hsl(350 78% 44%);
-  /* #C41E3A */
+  /* Imperial Red - VIBRANT UPDATE */
+  --color-primary: hsl(355 85% 55%);
+  /* Brighter, more popping red */
+  /* #DE1834 */
   --color-primary-foreground: hsl(0 0% 100%);
 
-  /* Dragon Gold */
-  --color-secondary: hsl(45 61% 53%);
-  /* #D4AF37ish */
+  /* Dragon Gold - VIBRANT UPDATE */
+  --color-secondary: hsl(45 90% 50%);
+  /* Richer Gold */
+  /* #F2C010 */
   --color-secondary-foreground: hsl(0 0% 10%);
 
   --color-muted: hsl(240 5% 96%);
@@ -132,12 +134,32 @@ body {
   }
 
   .bg-pearl {
-    background-color: var(--color-background);
-    /* Light Mode: Warm premium texture */
+    background-color: #f8fafc;
+    /* Very light slate/white base */
+    /* Light Mode: Anime Fusion Style - Pearlescent White + Red Glow + Mirror Effect */
     background-image:
-      radial-gradient(at 0% 0%, hsla(35, 100%, 96%, 1) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, hsla(220, 100%, 98%, 1) 0px, transparent 50%),
+      /* 1. Mirror/Sheen Effect (Diagonal White/Silver) */
+      linear-gradient(135deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(241, 245, 249, 0.4) 50%,
+        /* slate-100 hint */
+        rgba(255, 255, 255, 0.9) 100%),
+
+      /* 2. Red Nacrage (Bottom/Center Glow) - Vibrant but diffused */
+      radial-gradient(circle at 50% 120%,
+        rgba(222, 24, 52, 0.15) 0%,
+        /* Primary Red Hint */
+        rgba(255, 255, 255, 0) 60%),
+
+      /* 3. Subtle Top Glow (Cool/Metallic hint) */
+      radial-gradient(circle at 50% 0%,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(240, 240, 245, 0.5) 40%,
+        transparent 80%),
+
+      /* 4. Texture Noise (Keep for premium feel) */
       url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+
     background-attachment: fixed;
     background-size: cover;
   }
@@ -159,15 +181,15 @@ body {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 
-    /* Light Mode Borders/Shadows - VISIBILITY BOOST */
-    border: 1px solid rgba(255, 255, 255, 0.8);
+    /* Light Mode Borders/Shadows - NEON/DEPTH BOOST */
+    border: 1px solid rgba(255, 255, 255, 0.9);
     box-shadow:
-      0 4px 6px -1px rgba(0, 0, 0, 0.02),
-      0 12px 32px -4px rgba(0, 0, 0, 0.04),
-      /* Deeper shadow */
-      0 0 0 1px rgba(0, 0, 0, 0.02),
-      /* Subtle rim */
-      inset 0 0 20px rgba(255, 255, 255, 0.5);
+      0 4px 12px -2px rgba(0, 0, 0, 0.05),
+      0 12px 32px -4px rgba(196, 30, 58, 0.08),
+      /* Red Glow visible */
+      0 0 0 1px rgba(212, 175, 55, 0.2),
+      /* Gold Rim visible */
+      inset 0 0 20px rgba(255, 255, 255, 0.8);
     /* Inner light */
   }
 

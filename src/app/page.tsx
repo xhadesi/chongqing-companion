@@ -151,8 +151,7 @@ function GuideBanner({
 
   return (
     // @ts-ignore
-    <Component href={href !== '#' ? href : undefined} {...props} className={`flex-shrink-0 w-72 h-40 md:w-60 md:h-32 p-5 flex flex-col justify-between relative overflow-hidden snap-start transition-all active:scale-95 group card-premium ${className || 'bg-white/60 dark:bg-slate-900/60'}`}>
-
+    <Component href={href !== '#' ? href : undefined} {...props} className={`w-full min-h-[90px] p-3 flex flex-row items-center gap-3 relative overflow-hidden transition-all active:scale-95 group card-premium ${className || 'bg-white/60 dark:bg-slate-900/60'} ${isEmergency ? 'col-span-2' : ''}`}>
       {/* Background Image (if provided and not emergency) */}
       {!isEmergency && image && (
         <div className="absolute inset-0">
@@ -163,20 +162,24 @@ function GuideBanner({
 
       {/* Tag */}
       {tag && (
-        <div className="absolute top-4 right-4 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse shadow-lg z-20">
+        <div className="absolute top-2 right-2 bg-primary text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full animate-pulse shadow-sm z-20">
           {tag}
         </div>
       )}
 
-      <div className="flex justify-between items-start relative z-10">
-        <div className="p-2 bg-slate-100/50 dark:bg-white/5 backdrop-blur-md rounded-xl border border-slate-200/50 dark:border-white/10 shadow-sm">
-          {icon}
+      {/* Icon */}
+      <div className="relative z-10 shrink-0">
+        <div className="w-10 h-10 bg-slate-100/50 dark:bg-white/5 backdrop-blur-md rounded-xl border border-slate-200/60 dark:border-white/10 shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          <div className="transform scale-90">
+            {icon}
+          </div>
         </div>
       </div>
 
-      <div className="relative z-10">
-        <h3 className="font-bold text-slate-800 dark:text-white text-lg tracking-tight leading-none mb-1">{title}</h3>
-        <p className="text-slate-500 dark:text-slate-400 text-xs font-medium">{subtitle}</p>
+      {/* Text Content */}
+      <div className="relative z-10 flex-1 min-w-0">
+        <h3 className="font-black text-slate-900 dark:text-white text-base tracking-tight leading-none mb-0.5 truncate">{title}</h3>
+        <p className="text-slate-600 dark:text-slate-300 text-[10px] font-bold uppercase tracking-wide opacity-90 truncate">{subtitle}</p>
       </div>
     </Component>
   );

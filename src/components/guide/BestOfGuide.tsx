@@ -106,10 +106,10 @@ export function BestOfGuide() {
         return (
             <Card variant="premium" className="flex flex-col h-[500px]">
                 <div className="p-6 pb-4 shrink-0">
-                    <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">
-                        Le Guide <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-red-600">Best Of</span>
+                    <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">
+                        Le Guide <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-red-600">Ultime</span>
                     </h2>
-                    <p className="text-slate-500 text-sm font-medium">Les 50 lieux incontournables de Chongqing.</p>
+                    <p className="text-slate-500 text-sm font-medium">Les lieux incontournables de Chongqing.</p>
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-4 pt-0 custom-scrollbar">
