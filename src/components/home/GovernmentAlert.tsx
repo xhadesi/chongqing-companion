@@ -37,7 +37,7 @@ export function GovernmentAlert({ initialAlert = false, initialMessage }: Govern
     );
 
     return (
-        <a href="https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/chine/" target="_blank" rel="noopener noreferrer" className={cn(
+        <a href="https://translate.google.com/translate?sl=zh-CN&tl=fr&u=www.gov.cn" target="_blank" rel="noopener noreferrer" className={cn(
             "block w-full rounded-2xl p-4 flex items-start gap-4 shadow-sm border transaction-all duration-300 relative overflow-hidden group active:scale-95",
             hasAlert
                 ? "bg-red-50 border-red-100 text-red-900 dark:bg-red-900/20 dark:border-red-900/50 dark:text-red-100"
@@ -60,7 +60,7 @@ export function GovernmentAlert({ initialAlert = false, initialMessage }: Govern
                     <h4 className="font-bold text-sm mb-0.5 uppercase tracking-wide opacity-80">
                         {hasAlert ? "Alerte Officielle" : "Statut Chine"}
                     </h4>
-                    <span className="text-[10px] bg-black/5 dark:bg-white/10 px-1.5 py-0.5 rounded text-current opacity-70">diplomatie.gouv.fr</span>
+                    <span className="text-[10px] bg-black/5 dark:bg-white/10 px-1.5 py-0.5 rounded text-current opacity-70">www.gov.cn</span>
                 </div>
                 <p className="text-sm font-medium leading-relaxed opacity-95">
                     {message || (hasAlert ? "Alerte en cours." : "Aucune annonce gouvernementale importante. Tout est OK.")}

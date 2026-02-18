@@ -31,7 +31,9 @@ export default function Home() {
           <span className="text-xs font-medium text-slate-400">Liens Utiles</span>
         </div>
 
-        <div className="flex overflow-x-auto gap-4 pb-4 -mx-6 pl-8 pr-6 no-scrollbar snap-x">
+        <div className="flex overflow-x-auto gap-4 pb-4 -mx-6 px-6 no-scrollbar snap-x">
+          {/* Spacer for left offset */}
+          <div className="w-2 shrink-0" />
           {/* ... existing banners ... */}
           {/* News: Visa Exemption */}
           <GuideBanner
