@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { BottomNav } from "@/components/layout/BottomNav";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { PullToRefresh } from "@/components/layout/PullToRefresh";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,9 +43,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="pb-20 relative min-h-screen">
-            {children}
-          </main>
+          <PullToRefresh>
+            <main className="pb-20 relative min-h-screen">
+              {children}
+            </main>
+          </PullToRefresh>
           <BottomNav />
         </ThemeProvider>
       </body>
