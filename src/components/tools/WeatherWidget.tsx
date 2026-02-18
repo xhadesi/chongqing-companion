@@ -101,16 +101,15 @@ export function WeatherWidget() {
 
     return (
         <div className="w-full relative min-h-[160px]">
-            {/* Horizontal Scroll Cities */}
             {!showSearch && (
-                <div className="flex gap-3 overflow-x-auto pb-6 pt-2 px-1 snap-x no-scrollbar">
+                <div className="grid grid-cols-2 gap-3 pb-2 px-1">
                     {cities.map((city, idx) => {
                         const w = weatherData[city.name];
                         return (
                             <div
                                 key={city.name}
                                 className={cn(
-                                    "relative shrink-0 w-36 aspect-[4/5] rounded-[2rem] p-5 text-white shadow-neon flex flex-col justify-between snap-start transition-transform active:scale-95 overflow-hidden",
+                                    "relative w-full aspect-[4/5] rounded-[2rem] p-4 text-white shadow-neon flex flex-col justify-between transition-transform active:scale-95 overflow-hidden",
                                     idx % 2 === 0 ? "bg-gradient-to-br from-blue-400 to-indigo-500" : "bg-gradient-to-br from-indigo-400 to-purple-500"
                                 )}
                             >
@@ -146,7 +145,7 @@ export function WeatherWidget() {
                     {/* Add Button */}
                     <button
                         onClick={() => setShowSearch(true)}
-                        className="shrink-0 w-36 aspect-[4/5] border-2 border-dashed border-slate-200 rounded-[2rem] flex flex-col items-center justify-center text-slate-300 gap-3 hover:bg-slate-50 hover:text-indigo-400 hover:border-indigo-200 transition-all group"
+                        className="w-full aspect-[4/5] border-2 border-dashed border-slate-200 rounded-[2rem] flex flex-col items-center justify-center text-slate-300 gap-3 hover:bg-slate-50 hover:text-indigo-400 hover:border-indigo-200 transition-all group"
                     >
                         <div className="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center group-hover:bg-indigo-50 transition-colors">
                             <Plus className="w-6 h-6" />

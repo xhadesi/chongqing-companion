@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Clock, Plus, X } from "lucide-react";
+import { Clock, Plus, X, Sun, Moon, Sunset } from "lucide-react";
 import { toZonedTime, format } from 'date-fns-tz';
 
 export function WorldClock() {
@@ -131,25 +131,46 @@ export function WorldClock() {
                 {selectedZones.map((city) => {
                     const timeInZone = toZonedTime(now, city.zone);
                     const hours = parseInt(format(timeInZone, 'H', { timeZone: city.zone }));
-                    const isNight = hours < 6 || hours > 20;
+
+                    // Theme Logic
+                    let themeClass = "bg-blue-50 border-blue-100 text-slate-900";
+                    let icon = <Sun className="w-4 h-4 text-orange-500" />;
+                    let label = "Journée";
+
+                    // Night: 21h - 6h
+                    if (hours >= 21 || hours < 6) {
+                        themeClass = "bg-slate-900 border-slate-800 text-white";
+                        icon = <Moon className="w-4 h-4 text-indigo-300" />;
+                        label = "Nuit";
+                    }
+                    // Evening: 18h - 21h
+                    else if (hours >= 18 && hours < 21) {
+                        themeClass = "bg-gradient-to-r from-indigo-900 to-purple-900 border-indigo-800 text-white";
+                        icon = <Sunset className="w-4 h-4 text-amber-400" />;
+                        label = "Soirée";
+                    }
 
                     return (
-                        <div key={city.label} className={`flex items-center justify-between p-4 rounded-2xl border transition-all ${isNight ? 'bg-slate-900 border-slate-800 text-white' : 'bg-blue-50 border-blue-100 text-slate-900'}`}>
+                        <div key={city.label} className={cn("flex items-center justify-between p-4 rounded-2xl border transition-all relative group", themeClass)}>
                             <div>
                                 <div className="flex items-center gap-2">
                                     <span className="text-sm font-bold opacity-90">{city.label}</span>
-                                    {isNight && <MoonIcon className="w-3 h-3 text-indigo-400" />}
+                                    {icon}
                                 </div>
                                 <p className="text-xs opacity-60 mt-0.5">
-                                    {format(timeInZone, 'EEEE d MMM', { timeZone: city.zone })}
+                                    {format(timeInZone, 'EEEE d MMM', { timeZone: city.zone })} • {label}
                                 </p>
                             </div>
-                            <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-4">
                                 <span className="text-3xl font-mono font-bold tracking-tight">
                                     {format(timeInZone, 'HH:mm', { timeZone: city.zone })}
                                 </span>
-                                <button onClick={() => removeZone(city.label)} className="opacity-0 group-hover:opacity-100 p-1 hover:bg-black/10 rounded-full transition-all text-current">
-                                    <X className="w-3 h-3" />
+                                <button
+                                    onClick={() => removeZone(city.label)}
+                                    className="p-2 bg-black/10 rounded-full hover:bg-red-500/20 hover:text-red-500 transition-colors"
+                                    title="Supprimer"
+                                >
+                                    <X className="w-4 h-4" />
                                 </button>
                             </div>
                         </div>

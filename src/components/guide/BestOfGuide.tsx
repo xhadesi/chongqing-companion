@@ -278,6 +278,7 @@ export function BestOfGuide() {
             {/* Details Modal - Kept relatively similar but cleaner */}
             {selectedPlace && (
                 <div className="absolute inset-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm p-0 flex flex-col animate-in slide-in-from-bottom-10 duration-300">
+                    <div ref={node => node && node.scrollIntoView({ behavior: "instant", block: "start" })} />
                     <div className="relative h-64 w-full shrink-0">
                         <Image
                             src={selectedPlace.image}
