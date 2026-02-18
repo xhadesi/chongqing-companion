@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Utensils, Wifi, Phone, Languages, CarFront, Settings as SettingsIcon, Info, CreditCard, Map, Smartphone, MessageSquare } from "lucide-react";
 import { BestOfGuide } from "@/components/guide/BestOfGuide";
+import { Card } from "@/components/ui/Card";
 import { GovernmentAlert } from "@/components/home/GovernmentAlert";
 import { DailyQuote } from "@/components/home/DailyQuote";
 
@@ -34,74 +35,69 @@ export default function Home() {
         <div className="flex overflow-x-auto gap-4 pb-4 -mx-6 px-6 no-scrollbar snap-x">
           {/* Spacer for left offset */}
           <div className="w-2 shrink-0" />
-          {/* ... existing banners ... */}
+
           {/* News: Visa Exemption */}
           <GuideBanner
-            icon={<Info className="w-5 h-5 text-white" />}
+            icon={<Info className="w-6 h-6 text-blue-600 dark:text-blue-400" />}
             title="Visa Free"
             subtitle="Jusqu'au 31/12/2025"
             tag="Flash Info"
-            className="bg-gradient-to-br from-blue-600 to-blue-800"
             href="https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/chine/#entre"
             external
           />
 
           {/* Internet - Holafly */}
           <GuideBanner
-            icon={<Wifi className="w-5 h-5 text-white" />}
+            icon={<Wifi className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />}
             title="Internet"
             subtitle="eSIM Holafly"
-            className="bg-gradient-to-br from-indigo-500 to-purple-600"
             href="https://esim.holafly.com/fr/esim-chine/"
             external
           />
 
-          {/* Apps Essentials Link (was Payment) */}
+          {/* Apps Essentials Link */}
           <GuideBanner
-            icon={<Smartphone className="w-5 h-5 text-white" />}
+            icon={<Smartphone className="w-6 h-6 text-purple-600 dark:text-purple-400" />}
             title="Apps"
             subtitle="Le Kit de Survie"
             tag="Indispensable"
-            className="bg-gradient-to-br from-indigo-500 to-indigo-700"
             href="/guide/apps"
           />
 
           {/* Culture Guide */}
           <GuideBanner
-            icon={<Languages className="w-5 h-5 text-white" />}
+            icon={<Languages className="w-6 h-6 text-pink-600 dark:text-pink-400" />}
             title="Culture"
             subtitle="Guide Expat"
-            className="bg-gradient-to-br from-rose-500 to-pink-600"
             href="/guide/culture"
           />
 
           {/* Social - WeChat */}
           <GuideBanner
-            icon={<MessageSquare className="w-5 h-5 text-white" />}
+            icon={<MessageSquare className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />}
             title="WeChat"
             subtitle="Tout-en-un"
-            className="bg-gradient-to-br from-green-500 to-emerald-600"
             href="https://www.wechat.com/"
             external
           />
 
           {/* Transport - Metro */}
           <GuideBanner
-            icon={<Map className="w-5 h-5 text-white" />}
+            icon={<Map className="w-6 h-6 text-slate-600 dark:text-slate-400" />}
             title="Métro"
             subtitle="Carte Interactive"
-            className="bg-gradient-to-br from-slate-700 to-slate-900"
             href="/metro"
           />
 
-          {/* Guide: Emergency - Textured Red */}
+          {/* Guide: Emergency */}
           <GuideBanner
-            icon={<Phone className="w-5 h-5 text-white" />}
+            icon={<Phone className="w-6 h-6 text-red-600 dark:text-red-400" />}
             title="Urgences"
             subtitle="110 (Police) / 120 (SAMU)"
             isEmergency={true}
             href="tel:110"
             external
+            className="bg-red-50/50 dark:bg-red-900/20"
           />
         </div>
       </section>
@@ -121,21 +117,23 @@ export default function Home() {
 
       {/* Tools Quick Access */}
       <section className="animate-in slide-in-from-bottom-8 duration-700 delay-300">
-        <Link href="/tools" className="block relative h-28 bg-slate-900 rounded-3xl overflow-hidden shadow-neon group active:scale-95 transition-transform">
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 to-slate-800" />
+        <Link href="/tools">
+          <Card variant="premium" className="h-28 flex items-center justify-between px-8 hover:scale-[1.02] active:scale-95 transition-transform group">
+            {/* Background Gradient Effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-900/5 to-transparent dark:from-slate-900/50 pointer-events-none" />
 
-          <div className="absolute inset-0 flex items-center justify-between px-8 z-10">
-            <div className="flex flex-col justify-center">
-              <h3 className="font-bold text-white text-xl">Boîte à Outils</h3>
-              <p className="text-slate-400 text-sm mt-1">Convertisseur, Météo, Piment...</p>
+            <div className="flex flex-col justify-center relative z-10">
+              <h3 className="font-bold text-slate-800 dark:text-white text-xl">Boîte à Outils</h3>
+              <p className="text-slate-500 dark:text-slate-400 text-sm mt-1 font-medium">Convertisseur, Météo, Piment...</p>
             </div>
-            <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors border border-white/5">
-              <Utensils className="w-6 h-6 text-white" />
-            </div>
-          </div>
 
-          {/* Decoration */}
-          <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rounded-full blur-2xl group-hover:bg-white/10 transition-colors" />
+            <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center group-hover:bg-slate-200 dark:group-hover:bg-white/20 transition-colors border border-slate-200 dark:border-white/5 relative z-10 shadow-sm">
+              <Utensils className="w-6 h-6 text-slate-700 dark:text-white" />
+            </div>
+
+            {/* Decoration */}
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-slate-900/5 dark:bg-white/5 rounded-full blur-2xl group-hover:bg-slate-900/10 dark:group-hover:bg-white/10 transition-colors" />
+          </Card>
         </Link>
       </section>
 
@@ -153,32 +151,32 @@ function GuideBanner({
 
   return (
     // @ts-ignore
-    <Component href={href !== '#' ? href : undefined} {...props} className={`flex-shrink-0 w-72 h-40 md:w-60 md:h-32 rounded-3xl p-5 flex flex-col justify-between shadow-md relative overflow-hidden snap-start hover:shadow-lg transition-all active:scale-95 group ${isEmergency ? 'bg-red-texture' : (className || 'bg-slate-200')}`}>
+    <Component href={href !== '#' ? href : undefined} {...props} className={`flex-shrink-0 w-72 h-40 md:w-60 md:h-32 p-5 flex flex-col justify-between relative overflow-hidden snap-start transition-all active:scale-95 group card-premium ${className || 'bg-white/60 dark:bg-slate-900/60'}`}>
 
       {/* Background Image (if provided and not emergency) */}
       {!isEmergency && image && (
         <div className="absolute inset-0">
-          <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
+          <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/40 to-white/10 dark:from-black/80 dark:via-black/40 dark:to-black/10" />
         </div>
       )}
 
       {/* Tag */}
       {tag && (
-        <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse shadow-lg z-20">
+        <div className="absolute top-4 right-4 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse shadow-lg z-20">
           {tag}
         </div>
       )}
 
       <div className="flex justify-between items-start relative z-10">
-        <div className="p-2 bg-white/10 backdrop-blur-md rounded-xl border border-white/10">
+        <div className="p-2 bg-slate-100/50 dark:bg-white/5 backdrop-blur-md rounded-xl border border-slate-200/50 dark:border-white/10 shadow-sm">
           {icon}
         </div>
       </div>
 
       <div className="relative z-10">
-        <h3 className="font-black text-white text-lg tracking-tight leading-none mb-1">{title}</h3>
-        <p className="text-white/80 text-xs font-medium">{subtitle}</p>
+        <h3 className="font-bold text-slate-800 dark:text-white text-lg tracking-tight leading-none mb-1">{title}</h3>
+        <p className="text-slate-500 dark:text-slate-400 text-xs font-medium">{subtitle}</p>
       </div>
     </Component>
   );
