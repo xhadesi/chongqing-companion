@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Clock, Plus, X, Sun, Moon, Sunset } from "lucide-react";
 import { toZonedTime, format } from 'date-fns-tz';
+import { cn } from "@/lib/utils";
 
 export function WorldClock() {
     const [now, setNow] = useState(new Date());
