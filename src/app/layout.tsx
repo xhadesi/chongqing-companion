@@ -16,13 +16,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "China Companion",
+  title: "China One",
   description: "Votre assistant de voyage tout-en-un pour la Chine",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "China Comp",
+    title: "China One",
   },
   formatDetection: {
     telephone: false,

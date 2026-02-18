@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Utensils, Wifi, Phone, Languages, CarFront, Settings as SettingsIcon, Info, CreditCard, Map, Smartphone, MessageSquare } from "lucide-react";
 import { BestOfGuide } from "@/components/guide/BestOfGuide";
 import { GovernmentAlert } from "@/components/home/GovernmentAlert";
+import { DailyQuote } from "@/components/home/DailyQuote";
 
 export default function Home() {
   return (
@@ -11,12 +12,17 @@ export default function Home() {
       {/* Header */}
       <header className="animate-in slide-in-from-bottom-4 duration-700 flex flex-col items-center text-center mt-4">
         <h1 className="text-4xl font-black tracking-tight text-slate-800 dark:text-white mb-1">
-          Bonjour / <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-yellow-600">Ni hao</span>
+          China <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-yellow-600">One</span>
         </h1>
-        <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.3em]">China Companion</p>
+        <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.3em]">Votre Compagnon de Voyage</p>
       </header>
 
 
+
+      {/* Daily Quote */}
+      <section className="animate-in slide-in-from-bottom-8 duration-700 delay-75">
+        <DailyQuote />
+      </section>
 
       {/* News & Guide Carousel (Banner Style) */}
       <section className="space-y-4 animate-in slide-in-from-bottom-8 duration-700 delay-100">
@@ -34,7 +40,7 @@ export default function Home() {
             subtitle="Jusqu'au 31/12/2025"
             tag="Flash Info"
             className="bg-gradient-to-br from-blue-600 to-blue-800"
-            href="https://www.service-public.fr/particuliers/actualites/A17013"
+            href="https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/chine/#entre"
             external
           />
 

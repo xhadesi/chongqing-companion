@@ -1,6 +1,6 @@
 {
-    "name": "China Companion",
-    "short_name": "China Comp",
+    "name": "China One",
+    "short_name": "China One",
     "description": "Votre assistant de voyage tout-en-un pour la Chine",
     "start_url": "/",
     "display": "standalone",

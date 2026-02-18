@@ -37,8 +37,8 @@ export function GovernmentAlert({ initialAlert = false, initialMessage }: Govern
     );
 
     return (
-        <div className={cn(
-            "w-full rounded-2xl p-4 flex items-start gap-4 shadow-sm border transaction-all duration-300 relative overflow-hidden",
+        <a href="https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/chine/" target="_blank" rel="noopener noreferrer" className={cn(
+            "block w-full rounded-2xl p-4 flex items-start gap-4 shadow-sm border transaction-all duration-300 relative overflow-hidden group active:scale-95",
             hasAlert
                 ? "bg-red-50 border-red-100 text-red-900 dark:bg-red-900/20 dark:border-red-900/50 dark:text-red-100"
                 : "bg-emerald-50 border-emerald-100 text-emerald-900 dark:bg-emerald-900/20 dark:border-emerald-900/50 dark:text-emerald-100"
@@ -56,13 +56,16 @@ export function GovernmentAlert({ initialAlert = false, initialMessage }: Govern
             </div>
 
             <div className="relative z-10 pt-0.5">
-                <h4 className="font-bold text-sm mb-0.5 uppercase tracking-wide opacity-80">
-                    {hasAlert ? "Alerte Officielle" : "Statut Chine"}
-                </h4>
+                <div className="flex items-center gap-2">
+                    <h4 className="font-bold text-sm mb-0.5 uppercase tracking-wide opacity-80">
+                        {hasAlert ? "Alerte Officielle" : "Statut Chine"}
+                    </h4>
+                    <span className="text-[10px] bg-black/5 dark:bg-white/10 px-1.5 py-0.5 rounded text-current opacity-70">diplomatie.gouv.fr</span>
+                </div>
                 <p className="text-sm font-medium leading-relaxed opacity-95">
                     {message || (hasAlert ? "Alerte en cours." : "Aucune annonce gouvernementale importante. Tout est OK.")}
                 </p>
             </div>
-        </div>
+        </a>
     );
 }
