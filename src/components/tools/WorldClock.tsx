@@ -4,29 +4,68 @@ import { useState, useEffect } from "react";
 import { Clock, Plus, X } from "lucide-react";
 import { toZonedTime, format } from 'date-fns-tz';
 
-const ALL_ZONES = [
-    { label: "📍 Ma Position", zone: Intl.DateTimeFormat().resolvedOptions().timeZone }, // Local
-    { label: "🇨🇳 Chongqing", zone: "Asia/Shanghai" },
-    { label: "🇫🇷 Paris", zone: "Europe/Paris" },
-    { label: "🇺🇸 New York", zone: "America/New_York" },
-    { label: "🇬🇧 Londres", zone: "Europe/London" },
-    { label: "🇯🇵 Tokyo", zone: "Asia/Tokyo" },
-    { label: "🇦🇺 Sydney", zone: "Australia/Sydney" },
-];
-
 export function WorldClock() {
     const [now, setNow] = useState(new Date());
-    const [selectedZones, setSelectedZones] = useState([ALL_ZONES[1], ALL_ZONES[2]]); // Default Chongqing & Paris
+    const [selectedZones, setSelectedZones] = useState<{ label: string, zone: string }[]>([
+        { label: "📍 Ma Position", zone: Intl.DateTimeFormat().resolvedOptions().timeZone },
+        { label: "🇨🇳 Chongqing", zone: "Asia/Shanghai" },
+        { label: "🇫🇷 Paris", zone: "Europe/Paris" }
+    ]);
+    const [showSearch, setShowSearch] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [searchResults, setSearchResults] = useState<any[]>([]);
 
     useEffect(() => {
         const timer = setInterval(() => setNow(new Date()), 1000);
         return () => clearInterval(timer);
     }, []);
 
-    const addZone = (zone: any) => {
-        if (!selectedZones.find(z => z.label === zone.label)) {
-            setSelectedZones([...selectedZones, zone]);
+    // Load saved zones
+    useEffect(() => {
+        const saved = localStorage.getItem("world_clock_zones");
+        if (saved) {
+            try {
+                setSelectedZones(JSON.parse(saved));
+            } catch (e) { console.error(e); }
         }
+    }, []);
+
+    // Save zones
+    useEffect(() => {
+        localStorage.setItem("world_clock_zones", JSON.stringify(selectedZones));
+    }, [selectedZones]);
+
+    // Search Logic
+    useEffect(() => {
+        const timer = setTimeout(async () => {
+            if (searchQuery.length < 3) {
+                setSearchResults([]);
+                return;
+            }
+            try {
+                const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchQuery)}&count=5&language=fr&format=json`);
+                const data = await res.json();
+                if (data.results) setSearchResults(data.results);
+            } catch (e) {
+                console.error(e);
+            }
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [searchQuery]);
+
+    const addZone = (city: any) => {
+        // Map timezone from lat/long if not provided, but OpenMeteo geocoding gives timezone directly often or we default.
+        // Actually OpenMeteo Geocoding result has .timezone field!
+        if (!city.timezone) return;
+
+        const newZone = { label: `${city.country_code?.toUpperCase() === 'CN' ? '🇨🇳' : city.country_code?.toUpperCase() === 'FR' ? '🇫🇷' : '🌍'} ${city.name}`, zone: city.timezone };
+
+        if (!selectedZones.find(z => z.label === newZone.label)) {
+            setSelectedZones([...selectedZones, newZone]);
+        }
+        setShowSearch(false);
+        setSearchQuery("");
+        setSearchResults([]);
     };
 
     const removeZone = (label: string) => {
@@ -46,24 +85,46 @@ export function WorldClock() {
                     </div>
                 </div>
 
-                {/* Add City Trigger - Simple Select for now */}
-                <div className="relative group">
-                    <button className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                        <Plus className="w-4 h-4 text-slate-600 dark:text-slate-300" />
-                    </button>
-                    <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 p-2 hidden group-hover:block z-20">
-                        <p className="text-[10px] font-bold text-slate-400 uppercase px-2 mb-2">Ajouter une ville</p>
-                        {ALL_ZONES.map(z => (
-                            <button
-                                key={z.label}
-                                onClick={() => addZone(z)}
-                                className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors"
-                            >
-                                {z.label}
-                            </button>
-                        ))}
+                {/* Add City Trigger */}
+                <button
+                    onClick={() => setShowSearch(true)}
+                    className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                >
+                    <Plus className="w-4 h-4 text-slate-600 dark:text-slate-300" />
+                </button>
+
+                {/* Search Overlay */}
+                {showSearch && (
+                    <div className="absolute top-16 left-0 right-0 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 p-4 z-20">
+                        <div className="flex items-center gap-2 mb-2">
+                            <input
+                                autoFocus
+                                type="text"
+                                placeholder="Rechercher une ville..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-500"
+                            />
+                            <button onClick={() => setShowSearch(false)}><X className="w-4 h-4 text-slate-400" /></button>
+                        </div>
+
+                        <div className="max-h-48 overflow-y-auto space-y-1">
+                            {searchResults.map(res => (
+                                <button
+                                    key={res.id}
+                                    onClick={() => addZone(res)}
+                                    className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex justify-between"
+                                >
+                                    <span>{res.name}</span>
+                                    <span className="text-xs text-slate-400 uppercase">{res.country_code}</span>
+                                </button>
+                            ))}
+                            {searchQuery.length > 2 && searchResults.length === 0 && (
+                                <p className="text-xs text-slate-400 text-center py-2">Aucun résultat</p>
+                            )}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
 
             <div className="space-y-3">

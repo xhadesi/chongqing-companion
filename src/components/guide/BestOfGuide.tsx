@@ -171,8 +171,8 @@ export function BestOfGuide() {
             </div>
 
             {/* List */}
-            <div className="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-950/20">
-                <div className="flex flex-col">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden bg-slate-50 dark:bg-slate-950/20 w-full touch-pan-y overscroll-contain">
+                <div className="flex flex-col w-full max-w-full">
                     {places.map((place, index) => {
                         const status = getOpenStatus(place.openTime, place.closeTime);
 

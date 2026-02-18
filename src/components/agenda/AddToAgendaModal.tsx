@@ -31,7 +31,7 @@ export function AddToAgendaModal({ isOpen, onClose, onAdd, activityTitle, days }
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onClick={onClose} />
 
-            <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-[2rem] p-6 relative z-10 shadow-2xl animate-in slide-in-from-bottom-10 duration-200 border border-slate-100 dark:border-slate-800 mb-8">
+            <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-[2rem] p-6 relative z-10 shadow-2xl animate-in slide-in-from-bottom-10 duration-200 border border-slate-100 dark:border-slate-800 mb-20 md:mb-0">
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
@@ -106,8 +106,9 @@ export function AddToAgendaModal({ isOpen, onClose, onAdd, activityTitle, days }
                             <input
                                 type="time"
                                 value={time}
+                                onClick={(e) => e.currentTarget.showPicker()}
                                 onChange={(e) => setTime(e.target.value)}
-                                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-bold text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-amber-500"
+                                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-bold text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-amber-500 appearance-none"
                             />
                         </div>
                     </div>
