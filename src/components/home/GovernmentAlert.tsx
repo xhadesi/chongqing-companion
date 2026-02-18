@@ -33,15 +33,15 @@ export function GovernmentAlert({ initialAlert = false, initialMessage }: Govern
     }, []);
 
     if (loading) return (
-        <div className="w-full h-16 rounded-2xl bg-slate-100 dark:bg-slate-800 animate-pulse border border-slate-200 dark:border-slate-700" />
+        <div className="w-full h-16 rounded-[1.5rem] bg-slate-100 dark:bg-slate-800 animate-pulse border border-slate-200 dark:border-slate-700" />
     );
 
     return (
         <a href="https://translate.google.com/translate?sl=zh-CN&tl=fr&u=www.gov.cn" target="_blank" rel="noopener noreferrer" className={cn(
-            "block w-full rounded-2xl p-4 flex items-start gap-4 shadow-sm border transaction-all duration-300 relative overflow-hidden group active:scale-95",
+            "block w-full rounded-[1.5rem] p-4 flex items-start gap-4 shadow-lg border transaction-all duration-300 relative overflow-hidden group active:scale-95 backdrop-blur-md",
             hasAlert
-                ? "bg-red-50 border-red-100 text-red-900 dark:bg-red-900/20 dark:border-red-900/50 dark:text-red-100"
-                : "bg-emerald-50 border-emerald-100 text-emerald-900 dark:bg-emerald-900/20 dark:border-emerald-900/50 dark:text-emerald-100"
+                ? "bg-red-50/90 border-red-200 text-red-900 dark:bg-red-900/40 dark:border-red-800 dark:text-red-100 shadow-red-500/10"
+                : "bg-emerald-50/90 border-emerald-200 text-emerald-900 dark:bg-emerald-900/40 dark:border-emerald-800 dark:text-emerald-100 shadow-emerald-500/10"
         )}>
             {/* Texture Overlay */}
             <div className="absolute inset-0 opacity-[0.04] pointer-events-none"

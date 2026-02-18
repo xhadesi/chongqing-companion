@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Clock, Plus, X, Sun, Moon, Sunset } from "lucide-react";
 import { toZonedTime, format } from 'date-fns-tz';
 import { cn } from "@/lib/utils";
+import { Card } from "@/components/ui/Card";
 
 export function WorldClock() {
     const [now, setNow] = useState(new Date());
@@ -74,7 +75,8 @@ export function WorldClock() {
     };
 
     return (
-        <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+    return (
+        <Card variant="premium" className="p-6">
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
                     <div className="bg-orange-100 dark:bg-orange-900/30 p-2 rounded-xl">
@@ -89,14 +91,14 @@ export function WorldClock() {
                 {/* Add City Trigger */}
                 <button
                     onClick={() => setShowSearch(true)}
-                    className="p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                    className="p-2 bg-white/50 dark:bg-black/20 rounded-full hover:bg-white/80 dark:hover:bg-slate-700 transition-colors backdrop-blur-sm shadow-sm"
                 >
                     <Plus className="w-4 h-4 text-slate-600 dark:text-slate-300" />
                 </button>
 
                 {/* Search Overlay */}
                 {showSearch && (
-                    <div className="absolute top-16 left-0 right-0 bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-slate-200 dark:border-slate-700 p-4 z-20">
+                    <div className="absolute top-16 left-0 right-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-xl shadow-xl border border-white/20 dark:border-slate-700 p-4 z-20 animate-in fade-in zoom-in-95 duration-200">
                         <div className="flex items-center gap-2 mb-2">
                             <input
                                 autoFocus
@@ -104,7 +106,7 @@ export function WorldClock() {
                                 placeholder="Rechercher une ville..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="flex-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-500"
+                                className="flex-1 bg-slate-50/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-500"
                             />
                             <button onClick={() => setShowSearch(false)}><X className="w-4 h-4 text-slate-400" /></button>
                         </div>
@@ -114,7 +116,7 @@ export function WorldClock() {
                                 <button
                                     key={res.id}
                                     onClick={() => addZone(res)}
-                                    className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex justify-between"
+                                    className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-orange-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex justify-between"
                                 >
                                     <span>{res.name}</span>
                                     <span className="text-xs text-slate-400 uppercase">{res.country_code}</span>
@@ -133,26 +135,26 @@ export function WorldClock() {
                     const timeInZone = toZonedTime(now, city.zone);
                     const hours = parseInt(format(timeInZone, 'H', { timeZone: city.zone }));
 
-                    // Theme Logic
-                    let themeClass = "bg-blue-50 border-blue-100 text-slate-900";
+                    // Theme Logic - Refined for Premium
+                    let themeClass = "bg-blue-50/50 border-blue-100 text-slate-900";
                     let icon = <Sun className="w-4 h-4 text-orange-500" />;
                     let label = "Journée";
 
-                    // Night: 21h - 6h
+                    // Night
                     if (hours >= 21 || hours < 6) {
-                        themeClass = "bg-slate-900 border-slate-800 text-white";
+                        themeClass = "bg-slate-900/80 border-slate-800 text-white";
                         icon = <Moon className="w-4 h-4 text-indigo-300" />;
                         label = "Nuit";
                     }
-                    // Evening: 18h - 21h
+                    // Evening
                     else if (hours >= 18 && hours < 21) {
-                        themeClass = "bg-gradient-to-r from-indigo-900 to-purple-900 border-indigo-800 text-white";
+                        themeClass = "bg-gradient-to-r from-indigo-900/80 to-purple-900/80 border-indigo-800 text-white";
                         icon = <Sunset className="w-4 h-4 text-amber-400" />;
                         label = "Soirée";
                     }
 
                     return (
-                        <div key={city.label} className={cn("flex items-center justify-between p-4 rounded-2xl border transition-all relative group", themeClass)}>
+                        <div key={city.label} className={cn("flex items-center justify-between p-4 rounded-2xl border transition-all relative group backdrop-blur-sm", themeClass)}>
                             <div>
                                 <div className="flex items-center gap-2">
                                     <span className="text-sm font-bold opacity-90">{city.label}</span>
@@ -178,7 +180,7 @@ export function WorldClock() {
                     )
                 })}
             </div>
-        </div>
+        </Card>
     );
 }
 

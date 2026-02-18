@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Copy, Check, MapPin, Phone, Car } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Card } from "@/components/ui/Card";
 
 interface TaxiDestination {
     id: string;
@@ -81,14 +82,15 @@ export function TaxiCards() {
 
             <div className="grid gap-4">
                 {DESTINATIONS.map((dest) => (
-                    <div
+                    <Card
                         key={dest.id}
-                        className="bg-white dark:bg-slate-900 rounded-[2rem] p-6 shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-shadow"
+                        variant="premium"
+                        className="p-6 hover:shadow-lg transition-shadow bg-white/60 dark:bg-slate-900/60"
                     >
                         <div className="flex justify-between items-start mb-4">
                             <div className="flex items-center gap-3">
                                 <div className={cn(
-                                    "w-10 h-10 rounded-xl flex items-center justify-center",
+                                    "w-10 h-10 rounded-xl flex items-center justify-center shadow-sm",
                                     dest.category === "airport" ? "bg-amber-100 text-amber-600" :
                                         dest.category === "station" ? "bg-blue-100 text-blue-600" :
                                             "bg-purple-100 text-purple-600"
@@ -99,13 +101,13 @@ export function TaxiCards() {
                             </div>
                             <button
                                 onClick={() => handleCopy(dest.chineseTitle, dest.id)}
-                                className="p-2 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                                className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors bg-white/50 backdrop-blur-sm"
                             >
                                 {copiedId === dest.id ? <Check className="w-5 h-5 text-emerald-500" /> : <Copy className="w-5 h-5 text-slate-400" />}
                             </button>
                         </div>
 
-                        <div className="bg-slate-50 dark:bg-slate-950 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 text-center mb-4">
+                        <div className="bg-slate-50/50 dark:bg-slate-950/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 text-center mb-4 backdrop-blur-sm">
                             <p className="text-3xl font-black text-slate-900 dark:text-white mb-2 leading-tight">
                                 {dest.chineseTitle}
                             </p>
@@ -118,7 +120,7 @@ export function TaxiCards() {
                             <MapPin className="w-4 h-4" />
                             <span className="truncate">{dest.address}</span>
                         </div>
-                    </div>
+                    </Card>
                 ))}
             </div>
         </div>

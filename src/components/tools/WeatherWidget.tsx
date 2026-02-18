@@ -109,33 +109,40 @@ export function WeatherWidget() {
                             <div
                                 key={city.name}
                                 className={cn(
-                                    "relative w-full aspect-[4/5] rounded-[2rem] p-4 text-white shadow-neon flex flex-col justify-between transition-transform active:scale-95 overflow-hidden",
-                                    idx % 2 === 0 ? "bg-gradient-to-br from-blue-400 to-indigo-500" : "bg-gradient-to-br from-indigo-400 to-purple-500"
+                                    "relative w-full aspect-[4/5] rounded-[2rem] p-4 text-white shadow-lg flex flex-col justify-between transition-transform active:scale-95 overflow-hidden border border-white/20",
+                                    idx % 2 === 0 ? "bg-gradient-to-br from-blue-500/90 to-indigo-600/90" : "bg-gradient-to-br from-indigo-500/90 to-purple-600/90"
                                 )}
                             >
+                                {/* Noise Texture */}
+                                <div className="absolute inset-0 opacity-20 pointer-events-none"
+                                    style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\' opacity=\'1\'/%3E%3C/svg%3E")' }}
+                                />
+
                                 {/* Decorative Circles */}
-                                <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full blur-xl -mr-6 -mt-6" />
-                                <div className="absolute bottom-0 left-0 w-16 h-16 bg-black/10 rounded-full blur-xl -ml-6 -mb-6" />
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-full blur-2xl -mr-8 -mt-8" />
+                                <div className="absolute bottom-0 left-0 w-20 h-20 bg-black/20 rounded-full blur-2xl -ml-8 -mb-8" />
 
                                 <div className="relative z-10 flex justify-between items-start">
                                     <div>
-                                        <h4 className="font-black text-sm leading-tight truncate max-w-[80px]">{city.name}</h4>
-                                        <p className="text-[10px] uppercase font-bold opacity-60 mt-0.5">Météo</p>
+                                        <h4 className="font-black text-sm leading-tight truncate max-w-[80px] drop-shadow-sm">{city.name}</h4>
+                                        <p className="text-[10px] uppercase font-bold opacity-80 mt-0.5">Météo</p>
                                     </div>
                                     <button
                                         onClick={() => removeCity(city.name)}
-                                        className="text-white/40 hover:text-white transition-colors"
+                                        className="text-white/60 hover:text-white transition-colors bg-black/10 rounded-full p-1"
                                     >
-                                        <X className="w-4 h-4" />
+                                        <X className="w-3.5 h-3.5" />
                                     </button>
                                 </div>
 
                                 <div className="relative z-10">
                                     <div className="flex justify-between items-end">
-                                        <span className="text-4xl font-black tracking-tighter">
+                                        <span className="text-5xl font-black tracking-tighter drop-shadow-md">
                                             {w ? Math.round(w.temperature_2m) + "°" : "--"}
                                         </span>
-                                        {w && getWeatherIcon(w.weather_code)}
+                                        <div className="filter drop-shadow-lg">
+                                            {w && getWeatherIcon(w.weather_code)}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -10,51 +10,82 @@ body {
 }
 
 @theme {
-  --color-background: hsl(40 20% 98%);
-  --color-foreground: hsl(220 20% 20%);
+  --color-background: hsl(0 0% 98%);
+  /* Pure White / Off-white */
+  --color-foreground: hsl(0 0% 10%);
+  /* Near Black */
+
   --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(220 20% 20%);
+  --color-card-foreground: hsl(0 0% 10%);
+
   --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(220 20% 20%);
-  --color-primary: hsl(42 66% 45%);
+  --color-popover-foreground: hsl(0 0% 10%);
+
+  /* Imperial Red */
+  --color-primary: hsl(350 78% 44%);
+  /* #C41E3A */
   --color-primary-foreground: hsl(0 0% 100%);
-  --color-secondary: hsl(40 20% 94%);
-  --color-secondary-foreground: hsl(220 20% 20%);
-  --color-muted: hsl(220 10% 90%);
-  --color-muted-foreground: hsl(220 10% 50%);
-  --color-accent: hsl(42 66% 90%);
-  --color-accent-foreground: hsl(42 80% 30%);
-  --color-destructive: hsl(0 62.8% 30.6%);
-  --color-destructive-foreground: hsl(0 0% 100%);
-  --color-border: hsl(220 10% 90%);
-  --color-input: hsl(220 10% 90%);
-  --color-ring: hsl(42 66% 45%);
-  --radius: 0.75rem;
+
+  /* Dragon Gold */
+  --color-secondary: hsl(45 61% 53%);
+  /* #D4AF37ish */
+  --color-secondary-foreground: hsl(0 0% 10%);
+
+  --color-muted: hsl(240 5% 96%);
+  --color-muted-foreground: hsl(240 4% 46%);
+
+  --color-accent: hsl(45 61% 95%);
+  --color-accent-foreground: hsl(240 6% 10%);
+
+  --color-destructive: hsl(0 84% 60%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+
+  --color-border: hsl(240 6% 90%);
+  --color-input: hsl(240 6% 90%);
+  --color-ring: hsl(350 78% 44%);
+
+  --radius: 1.5rem;
+  /* iOS Style rounded corners */
+  --radius-lg: 1.5rem;
+  --radius-md: 1rem;
+  --radius-sm: 0.75rem;
 
   --font-sans: var(--font-inter);
 }
 
-/* Force Dark Mode Variables when class is present on html/body */
+/* Force Dark Mode Variables */
 :root:where(.dark) {
-  --color-background: hsl(220 20% 10%);
-  --color-foreground: hsl(40 20% 90%);
-  --color-card: hsl(220 20% 15%);
-  --color-card-foreground: hsl(40 20% 90%);
-  --color-popover: hsl(220 20% 15%);
-  --color-popover-foreground: hsl(40 20% 90%);
-  --color-primary: hsl(42 66% 55%);
-  --color-primary-foreground: hsl(220 20% 10%);
-  --color-secondary: hsl(220 20% 20%);
-  --color-secondary-foreground: hsl(40 20% 90%);
-  --color-muted: hsl(220 20% 20%);
-  --color-muted-foreground: hsl(220 10% 60%);
-  --color-accent: hsl(42 66% 15%);
-  --color-accent-foreground: hsl(42 66% 65%);
-  --color-destructive: hsl(0 62.8% 30.6%);
-  --color-destructive-foreground: hsl(0 0% 100%);
-  --color-border: hsl(220 20% 25%);
-  --color-input: hsl(220 20% 25%);
-  --color-ring: hsl(42 66% 55%);
+  --color-background: hsl(0 0% 0%);
+  /* True Black for OLED */
+  --color-foreground: hsl(0 0% 98%);
+
+  --color-card: hsl(0 0% 8%);
+  /* Dark Grey for cards */
+  --color-card-foreground: hsl(0 0% 98%);
+
+  --color-popover: hsl(0 0% 8%);
+  --color-popover-foreground: hsl(0 0% 98%);
+
+  --color-primary: hsl(350 78% 50%);
+  /* Lighter Red for dark mode */
+  --color-primary-foreground: hsl(0 0% 100%);
+
+  --color-secondary: hsl(45 61% 53%);
+  /* Keep Gold */
+  --color-secondary-foreground: hsl(0 0% 10%);
+
+  --color-muted: hsl(240 4% 16%);
+  --color-muted-foreground: hsl(240 5% 65%);
+
+  --color-accent: hsl(45 30% 15%);
+  --color-accent-foreground: hsl(0 0% 98%);
+
+  --color-destructive: hsl(0 63% 31%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+
+  --color-border: hsl(240 4% 16%);
+  --color-input: hsl(240 4% 16%);
+  --color-ring: hsl(350 78% 50%);
 }
 
 @utility pb-safe {
@@ -118,6 +149,59 @@ body {
     background-image: none;
   }
 
+  /* Premium Card (Pearlescent + Texture + Glow) */
+  .card-premium {
+    @apply relative overflow-hidden rounded-[var(--radius)] transition-all duration-300;
+
+    /* Base Glass & Blur */
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+
+    /* Pearlescent Gradient (Nacrage) */
+    background-image:
+      linear-gradient(125deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 40%, rgba(255, 255, 255, 0.4) 100%),
+      radial-gradient(circle at 10% 10%, rgba(255, 200, 200, 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 90% 90%, rgba(255, 250, 200, 0.05) 0%, transparent 40%);
+
+    /* Border: Subtle Gold/White mix */
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow:
+      0 4px 24px -1px rgba(0, 0, 0, 0.05),
+      0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+      /* Inner highlight */
+      0 0 20px -5px rgba(212, 175, 55, 0.1);
+    /* Gold Glow */
+  }
+
+  /* Texture Overlay using repeating gradient for noise-like effect or actual noise image if we had one. 
+     Using a subtle grain pattern via CSS */
+  .card-premium::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* Dark Mode Adaptation */
+  .dark .card-premium {
+    background-color: rgba(20, 20, 20, 0.6);
+    border-color: rgba(255, 255, 255, 0.08);
+    background-image:
+      linear-gradient(125deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 40%, rgba(255, 255, 255, 0.03) 100%),
+      radial-gradient(circle at 10% 10%, rgba(196, 30, 58, 0.1) 0%, transparent 50%),
+      /* Red hint */
+      radial-gradient(circle at 90% 90%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+    /* Gold hint */
+
+    box-shadow:
+      0 8px 32px -4px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+
   .shadow-neon {
     box-shadow:
       0 0 0 1px rgba(255, 255, 255, 0.8) inset,
@@ -125,6 +209,7 @@ body {
       0 0 20px rgba(255, 255, 255, 0.6),
       0 1px 3px rgba(0, 0, 0, 0.1);
   }
+
 
   .dark .shadow-neon {
     box-shadow:

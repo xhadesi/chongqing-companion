@@ -6,6 +6,7 @@ import { GUIDE_DATA, CATEGORIES, GuidePlace, CategoryId } from "@/data/guideData
 import { MapPin, Star, Plus, Check, Info, Navigation, ArrowLeft, Lightbulb, Clock, Utensils, Coffee, Landmark, ShoppingBag, Martini, Heart, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAgenda } from "@/hooks/useAgenda";
+import { Card } from "@/components/ui/Card";
 
 export function BestOfGuide() {
     const [activeCategory, setActiveCategory] = useState<CategoryId | null>(null);
@@ -103,34 +104,34 @@ export function BestOfGuide() {
     // --- VIEW: CATEGORY SELECTION (DASHBOARD) ---
     if (!activeCategory) {
         return (
-            <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl border border-slate-100 dark:border-slate-800 overflow-hidden flex flex-col">
-                <div className="p-6 pb-4">
-                    <h2 className="text-2xl font-black text-slate-800 dark:text-white mb-1">
+            <Card variant="premium" className="flex flex-col h-[500px]">
+                <div className="p-6 pb-4 shrink-0">
+                    <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">
                         Le Guide <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-red-600">Best Of</span>
                     </h2>
-                    <p className="text-slate-500 text-sm font-medium">Le Top 50 de Chongqing.</p>
+                    <p className="text-slate-500 text-sm font-medium">Les 50 lieux incontournables de Chongqing.</p>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-4 pt-0">
-                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 md:gap-4"> {/* Responsive grid */}
+                <div className="flex-1 overflow-y-auto p-4 pt-0 custom-scrollbar">
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 md:gap-4 pb-20"> {/* pb-20 for scroll space */}
                         {CATEGORIES.map(cat => (
                             <button
                                 key={cat.id}
                                 onClick={() => setActiveCategory(cat.id)}
-                                className="group flex flex-col items-center gap-1.5"
+                                className="group flex flex-col items-center gap-2"
                             >
-                                <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all active:scale-[0.95] border border-slate-100 dark:border-slate-800">
+                                <div className="relative w-full aspect-square rounded-[1.2rem] overflow-hidden shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-amber-500/20 transition-all active:scale-[0.95] border border-white/40 dark:border-white/10 group-hover:border-amber-400/50">
                                     <Image
                                         src={cat.image}
                                         alt={cat.label}
                                         fill
                                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
-                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors" />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
 
-                                    {/* Icon centered in image */}
+                                    {/* Icon centered */}
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30 shadow-sm">
+                                        <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30 shadow-sm group-hover:scale-110 transition-transform">
                                             {getIcon(cat.iconName)}
                                         </div>
                                     </div>
@@ -138,27 +139,26 @@ export function BestOfGuide() {
 
                                 {/* Text below image */}
                                 <div className="text-center w-full">
-                                    <h3 className="text-slate-800 dark:text-white font-bold text-xs leading-tight truncate px-1">{cat.label}</h3>
-                                    <p className="text-slate-400 text-[10px] leading-tight line-clamp-1 px-0.5 mt-0.5">{cat.description.split(" ")[0]}</p>
+                                    <h3 className="text-slate-800 dark:text-white font-bold text-xs leading-tight truncate px-1 group-hover:text-amber-600 transition-colors">{cat.label}</h3>
                                 </div>
                             </button>
                         ))}
                     </div>
                 </div>
-            </div>
+            </Card>
         );
     }
 
     // --- VIEW: LIST FOR CATEGORY ---
     return (
-        <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl border border-slate-100 dark:border-slate-800 overflow-hidden flex flex-col min-h-[600px] h-[75vh]">
+        <Card variant="premium" className="flex flex-col min-h-[600px] h-[75vh]">
 
             {/* Header */}
-            <div className="p-0 bg-white dark:bg-slate-900 sticky top-0 z-10 shadow-sm border-b border-slate-100 dark:border-slate-800">
+            <div className="p-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-20 border-b border-white/20 dark:border-slate-800">
                 <div className="flex items-center gap-3 p-4">
                     <button
                         onClick={() => setActiveCategory(null)}
-                        className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors"
+                        className="w-10 h-10 rounded-full bg-slate-100/50 dark:bg-slate-800/50 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors"
                     >
                         <ArrowLeft className="w-5 h-5" />
                     </button>
@@ -383,6 +383,6 @@ export function BestOfGuide() {
                     </div>
                 </div>
             )}
-        </div>
+        </Card>
     );
 }

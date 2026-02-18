@@ -23,11 +23,11 @@ export default function ToolsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <WeatherWidget />
                     <WorldClock />
+                    <CurrencyConverter />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <SpicyMeter />
-                    <CurrencyConverter />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
