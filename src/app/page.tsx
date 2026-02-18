@@ -9,14 +9,11 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen px-6 pt-10 pb-32 space-y-10">
       {/* Header */}
-      <header className="animate-in slide-in-from-bottom-4 duration-700">
-        <p className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mb-1">China Companion</p>
-        <h1 className="text-3xl font-black tracking-tight text-slate-800 dark:text-white">
-          Bonjour, <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-yellow-600">
-            Voyageur
-          </span>
+      <header className="animate-in slide-in-from-bottom-4 duration-700 flex flex-col items-center text-center mt-4">
+        <h1 className="text-4xl font-black tracking-tight text-slate-800 dark:text-white mb-1">
+          Bonjour / <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-yellow-600">Ni hao</span>
         </h1>
+        <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.3em]">China Companion</p>
       </header>
 
 

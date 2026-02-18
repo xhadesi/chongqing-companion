@@ -156,43 +156,46 @@ export function WeatherWidget() {
                 </div>
             )}
 
-            {/* Search Overlay */}
+            {/* Search Overlay - Fixed to avoid clipping */}
             {showSearch && (
-                <div className="absolute inset-0 z-20 bg-white rounded-[2rem] shadow-xl p-4 animate-in zoom-in-95 fade-in duration-200 border border-slate-100 flex flex-col">
-                    <div className="flex items-center gap-3 mb-4">
-                        <button onClick={() => setShowSearch(false)} className="p-2 bg-slate-50 rounded-full hover:bg-slate-100 transition-colors">
-                            <ArrowLeft className="w-4 h-4 text-slate-500" />
-                        </button>
-                        <span className="font-bold text-slate-700">Nouvelle ville</span>
-                    </div>
-
-                    <div className="relative mb-4 shrink-0">
-                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
-                        <input
-                            type="text"
-                            autoFocus
-                            placeholder="Rechercher..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-10 pr-4 py-3 bg-slate-50 rounded-xl text-sm font-bold text-slate-700 outline-none focus:ring-2 focus:ring-indigo-100 placeholder:text-slate-300"
-                        />
-                    </div>
-
-                    <div className="flex-1 overflow-y-auto space-y-2 -mr-2 pr-2 custom-scrollbar">
-                        {searchResults.length === 0 && searchQuery.length > 2 && (
-                            <p className="text-center text-xs text-slate-400 py-4 opacity-50">Aucun résultat trouvé</p>
-                        )}
-                        {searchResults.map(res => (
-                            <button
-                                key={res.id}
-                                onClick={() => addCity(res)}
-                                className="w-full text-left p-3 rounded-xl hover:bg-indigo-50 transition-colors flex justify-between items-center group"
-                            >
-                                <span className="font-bold text-sm text-slate-700 group-hover:text-indigo-700">{res.name}</span>
-                                <span className="text-[10px] font-bold text-slate-300 uppercase bg-slate-50 px-2 py-1 rounded-md">{res.country_code}</span>
+                <div className="fixed inset-0 z-50 bg-white/95 backdrop-blur-sm p-6 animate-in zoom-in-95 fade-in duration-200 flex flex-col justify-center items-center">
+                    <div className="w-full max-w-sm bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-4">
+                        <div className="flex items-center gap-3 mb-4">
+                            <button onClick={() => setShowSearch(false)} className="p-2 bg-slate-50 rounded-full hover:bg-slate-100 transition-colors">
+                                <ArrowLeft className="w-4 h-4 text-slate-500" />
                             </button>
-                        ))}
+                            <span className="font-bold text-slate-700">Nouvelle ville</span>
+                        </div>
+
+                        <div className="relative mb-4 shrink-0">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
+                            <input
+                                type="text"
+                                autoFocus
+                                placeholder="Rechercher..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full pl-10 pr-4 py-3 bg-slate-50 rounded-xl text-sm font-bold text-slate-700 outline-none focus:ring-2 focus:ring-indigo-100 placeholder:text-slate-300"
+                            />
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto space-y-2 -mr-2 pr-2 custom-scrollbar">
+                            {searchResults.length === 0 && searchQuery.length > 2 && (
+                                <p className="text-center text-xs text-slate-400 py-4 opacity-50">Aucun résultat trouvé</p>
+                            )}
+                            {searchResults.map(res => (
+                                <button
+                                    key={res.id}
+                                    onClick={() => addCity(res)}
+                                    className="w-full text-left p-3 rounded-xl hover:bg-indigo-50 transition-colors flex justify-between items-center group"
+                                >
+                                    <span className="font-bold text-sm text-slate-700 group-hover:text-indigo-700">{res.name}</span>
+                                    <span className="text-[10px] font-bold text-slate-300 uppercase bg-slate-50 px-2 py-1 rounded-md">{res.country_code}</span>
+                                </button>
+                            ))}
+                        </div>
                     </div>
+                    <button onClick={() => setShowSearch(false)} className="mt-8 p-3 bg-white/10 text-white rounded-full hover:bg-white/20 backdrop-blur-md">Fermer</button>
                 </div>
             )}
         </div>

@@ -351,14 +351,29 @@ export function BestOfGuide() {
                                 {isAdded(selectedPlace.id) ? "Ajouté à l'agenda" : "Ajouter à l'agenda"}
                             </button>
 
-                            <a
-                                href={`https://www.amap.com/search?query=${encodeURIComponent(selectedPlace.address)}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-100"
-                            >
-                                <Navigation className="w-5 h-5" />
-                            </a>
+                            <div className="flex gap-2">
+                                <a
+                                    href={`https://www.tripadvisor.fr/Search?q=${encodeURIComponent(selectedPlace.title + " Chongqing")}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-emerald-600 hover:bg-emerald-50 transition-colors shadow-sm"
+                                    title="Voir sur TripAdvisor"
+                                >
+                                    <div className="w-6 h-6 rounded-full border-2 border-emerald-600 flex items-center justify-center">
+                                        <span className="font-bold text-[10px] leading-none">TA</span>
+                                    </div>
+                                </a>
+
+                                <a
+                                    href={`https://www.amap.com/search?query=${encodeURIComponent(selectedPlace.chineseTitle || selectedPlace.address)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 hover:bg-blue-100 transition-colors"
+                                    title="Voir sur Amap (Maps)"
+                                >
+                                    <Navigation className="w-5 h-5" />
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

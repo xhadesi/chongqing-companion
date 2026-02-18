@@ -29,6 +29,22 @@ export default function MetroPage() {
 
     const handleMouseUp = () => setIsDragging(false);
 
+    // Touch Support
+    const handleTouchStart = (e: React.TouchEvent) => {
+        if (e.touches.length === 1) {
+            setIsDragging(true);
+            setStartPos({ x: e.touches[0].clientX - position.x, y: e.touches[0].clientY - position.y });
+        }
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        if (isDragging && e.touches.length === 1) {
+            setPosition({ x: e.touches[0].clientX - startPos.x, y: e.touches[0].clientY - startPos.y });
+        }
+    };
+
+    const handleTouchEnd = () => setIsDragging(false);
+
     return (
         <div className="h-screen bg-slate-900 overflow-hidden relative flex flex-col">
             {/* Header Overlay */}
@@ -62,6 +78,9 @@ export default function MetroPage() {
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
                 onMouseLeave={handleMouseUp}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
             >
                 {/* 
                   PLACEHOLDER: In a real scenario, we would use a high-res JPG/SVG here.

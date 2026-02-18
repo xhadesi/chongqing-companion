@@ -213,7 +213,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "Site classé UNESCO, célèbre pour ses trois ponts naturels en calcaire spectaculaires. Lieu de tournage de 'Transformers 4' et 'La Cité Interdite'.",
         tips: "C'est une excursion d'une journée complète hors de la ville. Prévoyez de bonnes chaussures de marche.",
         address: "Wulong District (2h de train)",
-        image: "/images/guide/Three_Natural_Bridges_CNS_2024__5_.png",
+        image: "/images/guide/Wulong_Three_Bridges.png",
         tags: ["Nature", "UNESCO", "Spectaculaire"],
         priceLevel: "€€€",
         lat: 29.430,
@@ -438,7 +438,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "Un magnifique complexe de bâtiments jaunes vifs datant de la dynastie Qing, servant autrefois de point de rencontre pour les immigrants. Architecture traditionnelle superbe.",
         tips: "Cherchez les sculptures en bois détaillées. C'est un excellent contraste calme avec la ville moderne environnante.",
         address: "Changjiang Binjiang Road, Yuzhong",
-        image: "/images/guide/Ciqikou_Street.jpg", // Fallback: Architecture traditionnelle
+        image: "/images/guide/Huguang_Guild_Hall.jpg",
         tags: ["Histoire", "Architecture", "Culture"],
         priceLevel: "€",
         lat: 29.555,
@@ -463,7 +463,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "Un temple bouddhiste millénaire caché entre les gratte-ciels, célèbre pour son hall contenant 500 statues de Luohan (Arhats) en terre cuite, toutes différentes.",
         tips: "Lieu de tournage du film culte 'Crazy Stone'. L'entrée est modeste mais l'intérieur est fascinant.",
         address: "Minzu Road, Jiefangbei",
-        image: "/images/guide/Ciqikou_Street.jpg", // Fallback: Temple/Traditionnel
+        image: "/images/guide/Luohan_Temple.jpg",
         tags: ["Temple", "Spirituel", "Calme"],
         priceLevel: "€",
         lat: 29.560,
@@ -488,7 +488,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "Le point de vue le plus haut de la péninsule (73e étage). Vue imprenable à 360° sur la ville, bien plus haut que la plupart des autres tours.",
         tips: "Par temps clair, on peut voir jusqu'aux montagnes lointaines. Moins bondé que le téléphérique.",
         address: "73F, WFC, Jiefangbei",
-        image: "/images/guide/Jiefangbei_Night.jpg", // Fallback: Jiefangbei (WFC est là)
+        image: "/images/guide/WFC.jpg",
         tags: ["Vue", "Hauteur", "Luxe"],
         priceLevel: "€€",
         lat: 29.558,
@@ -513,7 +513,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "Une rue historique rénovée avec goût sur la rive sud, mêlant briques grises anciennes et vues modernes sur le fleuve. Très chic et moins touristique que Ciqikou.",
         tips: "Idéal pour un café l'après-midi ou un dîner avec vue. L'ambiance y est plus sophistiquée.",
         address: "Nanbin Road, Nan'an District",
-        image: "/images/guide/Night_Cruise.jpg", // Fallback: Vue sur la rivière
+        image: "/images/guide/Longmenhao.jpg",
         tags: ["Chic", "Histoire", "Vue"],
         priceLevel: "Gratuit",
         lat: 29.552,
@@ -538,7 +538,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "Ancienne imprimerie de billets transformée en zone artistique hipster. Boutiques cool, cafés, et décors industriels parfaits pour Instagram.",
         tips: "Lieu de tournage de 'I Belonged to You'. Montez sur les toits pour une vue unique sur la ville.",
         address: "1 Eling Main St, Yuzhong",
-        image: "/images/guide/Eling_Park_Night.jpg", // Fallback: Voisin de Eling Park
+        image: "/images/guide/Testbed_2.jpg",
         tags: ["Art", "Hipster", "Photo"],
         priceLevel: "Gratuit",
         lat: 29.551,
@@ -563,7 +563,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "La pointe de la péninsule, où les eaux vertes du Jialing rencontrent les eaux brunes du Yangtze. Un lieu historique majeur, aujourd'hui dominé par Raffles City.",
         tips: "Il y a beaucoup de marches ! La vue sur la confluence des deux couleurs d'eau est la plus nette par temps clair.",
         address: "Chaotianmen, Yuzhong District",
-        image: "/images/guide/Raffles_City.jpg", // Fallback: Raffles est SUR Chaotianmen
+        image: "/images/guide/Chaotianmen_Square.jpg",
         tags: ["Histoire", "Fleuve", "Vue"],
         priceLevel: "Gratuit",
         lat: 29.569,
@@ -588,7 +588,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "Un bâtiment moderne emblématique en forme de 'char' ou de vaisseau spatial vert, magnifique quand il est illuminé la nuit face à Hongya Cave.",
         tips: "La place devant le théâtre offre l'une des meilleures vues sur la skyline de Yuzhong (Hongya Cave) de l'autre côté de la rivière.",
         address: "Jiangbeizui CBD",
-        image: "/images/guide/Night_Cruise.jpg", // Fallback: Vue rivière similaire
+        image: "/images/guide/Grand_Theatre.jpg",
         tags: ["Architecture", "Vue nocturne"],
         priceLevel: "Gratuit",
         lat: 29.567,
@@ -613,7 +613,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "Le quartier commerçant le plus moderne et animé du nord. C'est là que la jeunesse locale sort. Immenses écrans LED, malls et danseuses de place.",
         tips: "Allez voir le 'Beicang' (North Warehouse) juste à côté pour une ambiance plus artistique et des cafés sympas.",
         address: "Guanyinqiao, Jiangbei District",
-        image: "/images/guide/Jiefangbei_Night.jpg", // Fallback: Shopping district
+        image: "/images/guide/Guanyin_Bridge.jpg",
         tags: ["Shopping", "Moderne", "Local"],
         priceLevel: "Gratuit",
         lat: 29.575,
@@ -638,7 +638,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "La plus longue rue de graffitis au monde (1.25km), créée autour de l'Académie des Beaux-Arts. Tout est peint : immeubles, murs, sols.",
         tips: "Un peu excentré et 'brut', mais incontournable pour les amateurs d'art urbain et de photos colorées.",
         address: "Huangjueping Main St",
-        image: "/images/guide/Three_Gorges_Museum.jpg", // Fallback: Art/Culture
+        image: "/images/guide/Huangjueping_Graffiti_Street.jpg",
         tags: ["Art", "Street Art", "Coloré"],
         priceLevel: "Gratuit",
         lat: 29.502,
@@ -663,7 +663,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "Une librairie au design 'Escherien' époustouflant avec des miroirs au plafond et des escaliers en zigzag. Un temple de livres infini.",
         tips: "Situé au 3e étage du Zodi Plaza. C'est plus un lieu de photo qu'une librairie calme. Venez tôt.",
         address: "Zodi Plaza, Yangjiaping",
-        image: "/images/guide/Raffles_City.jpg", // Fallback: Architecture moderne/Interieur
+        image: "/images/guide/Zhongshuge.jpg",
         tags: ["Architecture", "Photo", "Intérieur"],
         priceLevel: "Gratuit",
         lat: 29.508,
@@ -688,7 +688,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "Le lien historique entre la ville haute (Jiefangbei) et la ville basse. Récemment restauré, c'est un superbe exemple de l'architecture traditionnelle 'Bayu'.",
         tips: "Superbe de nuit avec les lanternes. Beaucoup de stands d'artisanat et de snacks.",
         address: "Shibati, Yuzhong District",
-        image: "/images/guide/Hongya_Cave.jpg", // Fallback: Similaire (Traditionnel/Nuit)
+        image: "/images/guide/Shibati.jpg",
         tags: ["Reconstruit", "Charme", "Central"],
         priceLevel: "Gratuit",
         lat: 29.553,
@@ -713,7 +713,7 @@ export const GUIDE_DATA: GuidePlace[] = [
         description: "Une magnifique pagode de style traditionnel sur une colline au nord de la rivière. Moins connue que Nanshan mais offre une vue spectaculaire sur Yuzhong.",
         tips: "Parc très agréable et calme. La pagode s'illumine magnifiquement la nuit.",
         address: "Hong'en Temple Park, Jiangbei",
-        image: "/images/guide/Nanshan_Panorama.jpg", // Fallback: Vue similaire
+        image: "/images/guide/Hongen_Pagoda.jpg",
         tags: ["Vue", "Parc", "Calme"],
         priceLevel: "Gratuit",
         lat: 29.580,

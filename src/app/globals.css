@@ -1,6 +1,14 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+html,
+body {
+  overscroll-behavior-x: none;
+  /* Prevent horizontal elastic scroll */
+  overflow-x: hidden;
+  /* Prevent horizontal scroll */
+}
+
 @theme {
   --color-background: hsl(40 20% 98%);
   --color-foreground: hsl(220 20% 20%);
@@ -87,7 +95,8 @@
     transition-property: background-color, border-color, color, fill, stroke;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     transition-duration: 150ms;
-    touch-action: manipulation; /* Improve touch response */
+    touch-action: manipulation;
+    /* Improve touch response */
   }
 }
 
