@@ -20,6 +20,11 @@ export default function Home() {
         </h1>
       </header>
 
+      {/* Government Alert Banner - Top Position */}
+      <section className="animate-in slide-in-from-bottom-4 duration-700 delay-75">
+        <GovernmentAlert />
+      </section>
+
 
 
       {/* Daily Quote */}
@@ -100,11 +105,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Government Alert Banner */}
-      <section className="animate-in slide-in-from-bottom-8 duration-700 delay-125">
-        <GovernmentAlert />
-        {/* Toggle 'hasAlert={true}' to see red state */}
-      </section>
+
 
       {/* Best Of Guide (Replaces Assistant) */}
       <section className="animate-in slide-in-from-bottom-8 duration-700 delay-150">

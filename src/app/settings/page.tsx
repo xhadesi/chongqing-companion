@@ -89,8 +89,8 @@ export default function SettingsPage() {
 
                 <div className="px-4 text-center">
                     <p className="text-xs text-slate-400">
-                        China Companion <br />
-                        Fait avec ❤️ pour le voyage
+                        China One<br />
+                        Fait avec ❤️ par Lucas
                     </p>
                 </div>
             </div>
