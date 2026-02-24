@@ -47,7 +47,7 @@ export default function ToolsPage() {
                     </Link>
 
                     <Link href="/checklists" className="bg-gradient-to-br from-amber-400 to-orange-500 p-5 rounded-[2rem] shadow-sm hover:shadow-lg transition-all active:scale-95 group relative overflow-hidden flex flex-col justify-between h-48 text-white">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-2xl -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500" />
+                        {/* Decoration removed for mobile webkit issues */}
 
                         <div className="relative z-10">
                             <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-4 border border-white/30">

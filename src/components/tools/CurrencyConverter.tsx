@@ -41,8 +41,7 @@ export function CurrencyConverter() {
 
     return (
         <Card variant="premium" className="w-full p-6 flex flex-col relative overflow-hidden group hover:shadow-lg transition-all duration-300">
-            {/* Background Decoration */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50/50 dark:bg-indigo-900/20 rounded-full blur-3xl z-0 opacity-50 pointer-events-none" />
+            {/* Background Decoration Removed For iOS Compat */}
 
             <div className="flex justify-between items-center mb-6 relative z-10">
                 <h3 className="font-black text-slate-800 dark:text-white text-lg flex items-center gap-2">
