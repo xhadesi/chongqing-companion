@@ -310,8 +310,19 @@ export function AgendaView() {
                                     <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
                                         <span className="text-xl">📝</span> Détails / Notes
                                     </h3>
-                                    <div className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm bg-amber-50 dark:bg-amber-900/10 p-5 rounded-2xl border border-amber-100 dark:border-amber-900/30 whitespace-pre-wrap">
+                                    <div className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700 whitespace-pre-wrap">
                                         {selectedActivity.description}
+                                    </div>
+                                </div>
+                            )}
+
+                            {selectedActivity.tips && (
+                                <div className="flex flex-col gap-3">
+                                    <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
+                                        <span className="text-xl">💡</span> Conseils Spécialisés
+                                    </h3>
+                                    <div className="text-slate-800 dark:text-slate-200 leading-relaxed text-sm bg-blue-50 dark:bg-indigo-900/20 p-5 rounded-2xl border border-blue-200 dark:border-indigo-800/40 whitespace-pre-wrap shadow-sm shadow-blue-100 dark:shadow-none">
+                                        {selectedActivity.tips}
                                     </div>
                                 </div>
                             )}

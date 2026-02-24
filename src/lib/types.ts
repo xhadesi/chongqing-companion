@@ -4,6 +4,7 @@ export interface Activity {
     duration?: string; // e.g. "1h" or "30m"
     title: string;
     description?: string;
+    tips?: string; // Additional context or advice
     icon?: string; // Lucide icon name or emoji
     location?: string;
     address?: string; // For navigation
