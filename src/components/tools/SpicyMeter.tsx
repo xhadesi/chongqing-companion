@@ -42,7 +42,7 @@ export function SpicyMeter() {
 
                 {/* Display Card */}
                 <div className={cn(
-                    "relative aspect-square sm:aspect-auto sm:h-48 rounded-[2rem] flex flex-col items-center justify-center transition-all duration-500 border-4 border-white shadow-xl overflow-hidden group cursor-pointer",
+                    "relative aspect-square sm:aspect-auto sm:h-48 rounded-[2rem] flex flex-col items-center justify-center transition-all duration-500 border-4 border-white shadow-xl overflow-hidden group cursor-pointer transform-gpu",
                     currentSpice.bg,
                     currentSpice.shadow
                 )}

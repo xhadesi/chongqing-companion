@@ -123,7 +123,7 @@ export function WeatherWidget() {
                                 key={city.name}
                                 onClick={() => setSelectedCityName(city.name)}
                                 className={cn(
-                                    "relative w-full aspect-[4/5] rounded-[2rem] p-4 text-white shadow-lg flex flex-col justify-between transition-transform active:scale-95 overflow-hidden border border-white/20 cursor-pointer",
+                                    "relative w-full aspect-[4/5] rounded-[2rem] p-4 text-white shadow-lg flex flex-col justify-between transition-transform active:scale-95 overflow-hidden border border-white/20 cursor-pointer transform-gpu",
                                     idx % 2 === 0 ? "bg-gradient-to-br from-blue-500/90 to-indigo-600/90" : "bg-gradient-to-br from-indigo-500/90 to-purple-600/90"
                                 )}
                             >
@@ -181,96 +181,100 @@ export function WeatherWidget() {
                         </div>
                         <span className="text-xs font-bold uppercase tracking-wider">Ajouter</span>
                     </button>
-                </div>
+                </div >
             )}
 
             {/* Search Overlay - Fixed to avoid clipping */}
-            {showSearch && (
-                <div className="fixed inset-0 z-50 bg-white/95 backdrop-blur-sm p-6 animate-in zoom-in-95 fade-in duration-200 flex flex-col justify-center items-center">
-                    <div className="w-full max-w-sm bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-4">
-                        <div className="flex items-center gap-3 mb-4">
-                            <button onClick={() => setShowSearch(false)} className="p-2 bg-slate-50 rounded-full hover:bg-slate-100 transition-colors">
-                                <ArrowLeft className="w-4 h-4 text-slate-500" />
-                            </button>
-                            <span className="font-bold text-slate-700">Nouvelle ville</span>
-                        </div>
-
-                        <div className="relative mb-4 shrink-0">
-                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
-                            <input
-                                type="text"
-                                autoFocus
-                                placeholder="Rechercher..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-10 pr-4 py-3 bg-slate-50 rounded-xl text-sm font-bold text-slate-700 outline-none focus:ring-2 focus:ring-indigo-100 placeholder:text-slate-300"
-                            />
-                        </div>
-
-                        <div className="flex-1 overflow-y-auto space-y-2 -mr-2 pr-2 custom-scrollbar">
-                            {searchResults.length === 0 && searchQuery.length > 2 && (
-                                <p className="text-center text-xs text-slate-400 py-4 opacity-50">Aucun résultat trouvé</p>
-                            )}
-                            {searchResults.map(res => (
-                                <button
-                                    key={res.id}
-                                    onClick={() => addCity(res)}
-                                    className="w-full text-left p-3 rounded-xl hover:bg-indigo-50 transition-colors flex justify-between items-center group"
-                                >
-                                    <span className="font-bold text-sm text-slate-700 group-hover:text-indigo-700">{res.name}</span>
-                                    <span className="text-[10px] font-bold text-slate-300 uppercase bg-slate-50 px-2 py-1 rounded-md">{res.country_code}</span>
+            {
+                showSearch && (
+                    <div className="fixed inset-0 z-50 bg-white/95 backdrop-blur-sm p-6 animate-in zoom-in-95 fade-in duration-200 flex flex-col justify-center items-center">
+                        <div className="w-full max-w-sm bg-white rounded-[2rem] shadow-2xl border border-slate-100 p-4">
+                            <div className="flex items-center gap-3 mb-4">
+                                <button onClick={() => setShowSearch(false)} className="p-2 bg-slate-50 rounded-full hover:bg-slate-100 transition-colors">
+                                    <ArrowLeft className="w-4 h-4 text-slate-500" />
                                 </button>
-                            ))}
+                                <span className="font-bold text-slate-700">Nouvelle ville</span>
+                            </div>
+
+                            <div className="relative mb-4 shrink-0">
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-300" />
+                                <input
+                                    type="text"
+                                    autoFocus
+                                    placeholder="Rechercher..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="w-full pl-10 pr-4 py-3 bg-slate-50 rounded-xl text-sm font-bold text-slate-700 outline-none focus:ring-2 focus:ring-indigo-100 placeholder:text-slate-300"
+                                />
+                            </div>
+
+                            <div className="flex-1 overflow-y-auto space-y-2 -mr-2 pr-2 custom-scrollbar">
+                                {searchResults.length === 0 && searchQuery.length > 2 && (
+                                    <p className="text-center text-xs text-slate-400 py-4 opacity-50">Aucun résultat trouvé</p>
+                                )}
+                                {searchResults.map(res => (
+                                    <button
+                                        key={res.id}
+                                        onClick={() => addCity(res)}
+                                        className="w-full text-left p-3 rounded-xl hover:bg-indigo-50 transition-colors flex justify-between items-center group"
+                                    >
+                                        <span className="font-bold text-sm text-slate-700 group-hover:text-indigo-700">{res.name}</span>
+                                        <span className="text-[10px] font-bold text-slate-300 uppercase bg-slate-50 px-2 py-1 rounded-md">{res.country_code}</span>
+                                    </button>
+                                ))}
+                            </div>
                         </div>
+                        <button onClick={() => setShowSearch(false)} className="mt-8 p-3 bg-white/10 text-white rounded-full hover:bg-white/20 backdrop-blur-md">Fermer</button>
                     </div>
-                    <button onClick={() => setShowSearch(false)} className="mt-8 p-3 bg-white/10 text-white rounded-full hover:bg-white/20 backdrop-blur-md">Fermer</button>
-                </div>
-            )}
+                )
+            }
 
             {/* Detailed Forecast Modal */}
-            {selectedCityName && (
-                <div className="fixed inset-0 z-50 bg-slate-900/60 dark:bg-black/60 backdrop-blur-sm p-4 flex items-center justify-center animate-in fade-in duration-200" onClick={() => setSelectedCityName(null)}>
-                    <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-[2rem] p-6 relative animate-in zoom-in-95 duration-200 shadow-2xl border border-slate-100 dark:border-slate-800" onClick={e => e.stopPropagation()}>
-                        <button onClick={() => setSelectedCityName(null)} className="absolute top-4 right-4 p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
-                            <X className="w-5 h-5" />
-                        </button>
+            {
+                selectedCityName && (
+                    <div className="fixed inset-0 z-50 bg-slate-900/60 dark:bg-black/60 backdrop-blur-sm p-4 flex items-center justify-center animate-in fade-in duration-200" onClick={() => setSelectedCityName(null)}>
+                        <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-[2rem] p-6 relative animate-in zoom-in-95 duration-200 shadow-2xl border border-slate-100 dark:border-slate-800" onClick={e => e.stopPropagation()}>
+                            <button onClick={() => setSelectedCityName(null)} className="absolute top-4 right-4 p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                                <X className="w-5 h-5" />
+                            </button>
 
-                        <h3 className="text-xl font-black text-slate-800 dark:text-white mb-6 pr-8">{selectedCityName} <br /><span className="text-sm font-bold text-amber-500 uppercase tracking-widest">Prévisions 7 Jours</span></h3>
+                            <h3 className="text-xl font-black text-slate-800 dark:text-white mb-6 pr-8">{selectedCityName} <br /><span className="text-sm font-bold text-amber-500 uppercase tracking-widest">Prévisions 7 Jours</span></h3>
 
-                        <div className="space-y-3">
-                            {weatherData[selectedCityName]?.daily ? (
-                                weatherData[selectedCityName].daily.time.slice(0, 7).map((dateStr: string, i: number) => {
-                                    const date = new Date(dateStr);
-                                    const dayName = date.toLocaleDateString('fr-FR', { weekday: 'short' });
-                                    const min = Math.round(weatherData[selectedCityName].daily.temperature_2m_min[i]);
-                                    const max = Math.round(weatherData[selectedCityName].daily.temperature_2m_max[i]);
-                                    const code = weatherData[selectedCityName].daily.weather_code[i];
+                            <div className="space-y-3">
+                                {weatherData[selectedCityName]?.daily ? (
+                                    weatherData[selectedCityName].daily.time.slice(0, 7).map((dateStr: string, i: number) => {
+                                        const date = new Date(dateStr);
+                                        const dayName = date.toLocaleDateString('fr-FR', { weekday: 'short' });
+                                        const min = Math.round(weatherData[selectedCityName].daily.temperature_2m_min[i]);
+                                        const max = Math.round(weatherData[selectedCityName].daily.temperature_2m_max[i]);
+                                        const code = weatherData[selectedCityName].daily.weather_code[i];
 
-                                    return (
-                                        <div key={dateStr} className="flex flex-row items-center justify-between gap-4 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
-                                            <div className="flex items-center gap-3 w-12">
-                                                <span className="font-bold text-slate-600 dark:text-slate-300 capitalize">{dayName}</span>
-                                            </div>
-                                            <div className="flex items-center gap-4 flex-1">
-                                                <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center shrink-0">
-                                                    <div className="scale-[1]">{getWeatherIcon(code, true)}</div>
+                                        return (
+                                            <div key={dateStr} className="flex flex-row items-center justify-between gap-4 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
+                                                <div className="flex items-center gap-3 w-12">
+                                                    <span className="font-bold text-slate-600 dark:text-slate-300 capitalize">{dayName}</span>
                                                 </div>
-                                                <div className="flex-1 flex items-center justify-end gap-3 text-sm font-bold">
-                                                    <span className="text-slate-400">{min}°</span>
-                                                    <div className="flex-1 max-w-[60px] h-1.5 rounded-full bg-gradient-to-r from-blue-400 to-amber-500 opacity-80" />
-                                                    <span className="text-slate-800 dark:text-white">{max}°</span>
+                                                <div className="flex items-center gap-4 flex-1">
+                                                    <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center shrink-0">
+                                                        <div className="scale-[1]">{getWeatherIcon(code, true)}</div>
+                                                    </div>
+                                                    <div className="flex-1 flex items-center justify-end gap-3 text-sm font-bold">
+                                                        <span className="text-slate-400">{min}°</span>
+                                                        <div className="flex-1 max-w-[60px] h-1.5 rounded-full bg-gradient-to-r from-blue-400 to-amber-500 opacity-80" />
+                                                        <span className="text-slate-800 dark:text-white">{max}°</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    );
-                                })
-                            ) : (
-                                <p className="text-center text-slate-400 text-sm py-4">Données indisponibles</p>
-                            )}
+                                        );
+                                    })
+                                ) : (
+                                    <p className="text-center text-slate-400 text-sm py-4">Données indisponibles</p>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 }
