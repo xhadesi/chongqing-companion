@@ -11,7 +11,7 @@ export default function ToolsPage() {
 
 
     return (
-        <div className="min-h-screen p-6 pt-12 pb-32">
+        <div className="min-h-screen p-6 pt-safe pb-32">
             <header className="mb-8">
                 <span className="text-sm font-semibold text-primary uppercase tracking-widest">Utilitaires</span>
                 <h1 className="text-3xl font-black text-slate-800">Boîte à Outils</h1>

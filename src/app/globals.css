@@ -171,8 +171,15 @@ body {
   .card-premium {
     @apply relative overflow-hidden rounded-[var(--radius)] transition-all duration-300;
 
-    /* Base Glass - Removed blur to prevent WebKit origin clipping bug */
-    background-color: rgba(255, 255, 255, 0.85);
+    /* Base Glass & Blur */
+    background-color: rgba(255, 255, 255, 0.65);
+    /* More transp for blur */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    /* Safari 1px clip bug fix */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
 
     /* Light Mode Borders/Shadows - NEON/DEPTH BOOST */
     border: 1px solid rgba(255, 255, 255, 0.9);
