@@ -21,7 +21,7 @@ export default function SettingsPage() {
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen bg-slate-100 dark:bg-black pt-safe pb-32 px-4">
+        <div className="min-h-screen bg-slate-100 dark:bg-black pt-10 pb-32 px-4 mt-[env(safe-area-inset-top)]">
             <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-6 px-2">Paramètres</h1>
 
             <div className="space-y-6">

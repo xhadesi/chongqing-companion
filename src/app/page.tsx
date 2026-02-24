@@ -8,7 +8,7 @@ import { DailyQuote } from "@/components/home/DailyQuote";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen px-6 pt-safe pb-32 space-y-10">
+    <div className="flex flex-col min-h-screen px-6 pt-10 pb-32 space-y-10 mt-[env(safe-area-inset-top)]">
       {/* Header */}
       <header className="animate-in slide-in-from-bottom-4 duration-700 flex items-center justify-center gap-3 mt-2">
         <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg border border-white/10">
