@@ -349,7 +349,7 @@ export function BestOfGuide() {
                                     "flex-1 h-12 rounded-xl font-black flex items-center justify-center gap-2 transition-all active:scale-[0.98] text-sm uppercase tracking-wider",
                                     isAdded(selectedPlace.id)
                                         ? "bg-slate-100 text-slate-400"
-                                        : "bg-amber-500 text-white shadow-lg shadow-amber-200 hover:bg-amber-600"
+                                        : "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-700"
                                 )}
                             >
                                 {isAdded(selectedPlace.id) ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}

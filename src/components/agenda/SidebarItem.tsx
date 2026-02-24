@@ -18,7 +18,7 @@ export function SidebarItem({ activity, onDelete, onAddClick, onClick }: Sidebar
                 onClick={onClick}
                 className={cn(
                     "flex flex-col bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 rounded-2xl cursor-pointer transition-all",
-                    "hover:border-amber-400 hover:shadow-md active:scale-[0.98]",
+                    "hover:border-indigo-400 hover:shadow-md active:scale-[0.98]",
                     "opacity-100"
                 )}
             >

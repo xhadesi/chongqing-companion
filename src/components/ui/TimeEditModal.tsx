@@ -38,7 +38,7 @@ export function TimeEditModal({ isOpen, onClose, onConfirm, initialTime }: TimeE
                 </button>
 
                 <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2 justify-center">
-                    <Clock className="w-6 h-6 text-amber-500" />
+                    <Clock className="w-6 h-6 text-indigo-500" />
                     Modifier l'heure
                 </h3>
 
@@ -48,7 +48,7 @@ export function TimeEditModal({ isOpen, onClose, onConfirm, initialTime }: TimeE
                             type="time"
                             value={time}
                             onChange={(e) => setTime(e.target.value)}
-                            className="bg-slate-50 border-2 border-slate-100 dark:bg-slate-800 dark:border-slate-700 dark:text-white text-slate-900 text-4xl font-black rounded-2xl px-6 py-4 text-center focus:outline-none focus:border-amber-500 focus:ring-4 focus:ring-amber-500/20 transition-all w-full"
+                            className="bg-slate-50 border-2 border-slate-100 dark:bg-slate-800 dark:border-slate-700 dark:text-white text-slate-900 text-4xl font-black rounded-2xl px-6 py-4 text-center focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all w-full"
                             autoFocus
                         />
                     </div>
@@ -79,7 +79,7 @@ export function TimeEditModal({ isOpen, onClose, onConfirm, initialTime }: TimeE
 
                     <button
                         type="submit"
-                        className="w-full py-4 bg-amber-500 text-white rounded-xl font-bold text-lg shadow-lg shadow-amber-200 hover:bg-amber-600 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                        className="w-full py-4 bg-indigo-600 text-white rounded-xl font-bold text-lg shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] transition-all"
                     >
                         Valider
                     </button>

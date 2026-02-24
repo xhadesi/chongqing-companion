@@ -105,7 +105,7 @@ export default function ChecklistsPage() {
                     </Link>
                     <div>
                         <h1 className="text-xl font-black text-slate-800 dark:text-white leading-none">Listes & Bagages</h1>
-                        <p className="text-xs font-bold text-amber-500 uppercase tracking-widest mt-1">Checklists</p>
+                        <p className="text-xs font-bold text-indigo-500 uppercase tracking-widest mt-1">Checklists</p>
                     </div>
                 </div>
 
@@ -134,7 +134,7 @@ export default function ChecklistsPage() {
                 {/* Progress Bar */}
                 <div className="h-1 w-full bg-slate-100 dark:bg-slate-800">
                     <div
-                        className="h-full bg-amber-500 transition-all duration-500"
+                        className="h-full bg-indigo-500 transition-all duration-500"
                         style={{ width: `${progress}%` }}
                     />
                 </div>
@@ -168,7 +168,7 @@ export default function ChecklistsPage() {
                             <div className="flex items-center gap-4 flex-1">
                                 <div className={cn(
                                     "w-6 h-6 rounded-full flex items-center justify-center transition-colors border",
-                                    item.checked ? "bg-amber-500 border-amber-500 text-white" : "border-slate-300 dark:border-slate-600 bg-transparent text-transparent"
+                                    item.checked ? "bg-indigo-500 border-indigo-500 text-white" : "border-slate-300 dark:border-slate-600 bg-transparent text-transparent"
                                 )}>
                                     <Check className="w-4 h-4" />
                                 </div>
@@ -207,12 +207,12 @@ export default function ChecklistsPage() {
                             placeholder="Ajouter un élément..."
                             value={newItemLabel}
                             onChange={(e) => setNewItemLabel(e.target.value)}
-                            className="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-6 py-4 font-bold text-slate-800 dark:text-white outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 shadow-lg"
+                            className="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-6 py-4 font-bold text-slate-800 dark:text-white outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 shadow-lg"
                         />
                         <button
                             type="submit"
                             disabled={!newItemLabel.trim()}
-                            className="w-14 bg-amber-500 text-white rounded-2xl flex items-center justify-center disabled:opacity-50 disabled:bg-slate-200 dark:disabled:bg-slate-700 shadow-lg active:scale-95 transition-transform"
+                            className="w-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center disabled:opacity-50 disabled:bg-slate-200 dark:disabled:bg-slate-700 shadow-lg active:scale-95 transition-transform"
                         >
                             <Plus className="w-6 h-6" />
                         </button>
@@ -230,7 +230,7 @@ function TabButton({ active, onClick, icon, label }: { active: boolean, onClick:
             className={cn(
                 "flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all",
                 active
-                    ? "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-400"
+                    ? "bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-400"
                     : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
             )}
         >

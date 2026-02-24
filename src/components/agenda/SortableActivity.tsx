@@ -23,7 +23,7 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                 }}
                 className={cn(
                     "w-full bg-white dark:bg-slate-900 p-4 xl:p-5 rounded-3xl border shadow-sm transition-all cursor-pointer flex flex-col gap-3 group-hover:shadow-md",
-                    activity.completed ? "border-slate-100 dark:border-slate-800 opacity-60 bg-slate-50 dark:bg-slate-900/50" : "border-slate-100 dark:border-slate-700 hover:border-amber-300 dark:hover:border-amber-500/50"
+                    activity.completed ? "border-slate-100 dark:border-slate-800 opacity-60 bg-slate-50 dark:bg-slate-900/50" : "border-slate-100 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-500/50"
                 )}>
 
                 {/* Top Row: Time, Title, Actions */}
@@ -99,7 +99,7 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                 {/* Bottom Row: Location, Details */}
                 <div className="flex flex-wrap items-center gap-x-2 gap-y-2 mt-1 pl-1">
                     {activity.location && (
-                        <span className="text-sm font-bold bg-amber-50 dark:bg-amber-900/20 px-2.5 py-1.5 rounded-xl border border-amber-100 dark:border-amber-900/50 text-amber-700 dark:text-amber-500 flex items-center gap-1.5">
+                        <span className="text-sm font-bold bg-indigo-50 dark:bg-indigo-900/20 px-2.5 py-1.5 rounded-xl border border-indigo-100 dark:border-indigo-900/50 text-indigo-700 dark:text-indigo-500 flex items-center gap-1.5">
                             <MapPin className="w-3.5 h-3.5 shrink-0" />
                             <span className="truncate max-w-[200px]">{activity.location}</span>
                         </span>

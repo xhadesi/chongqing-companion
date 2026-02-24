@@ -35,7 +35,7 @@ export function AgendaView() {
     if (isLoading) {
         return (
             <div className="flex flex-col items-center justify-center p-12 h-64 space-y-4">
-                <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
+                <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin" />
             </div>
         );
     }
@@ -83,19 +83,19 @@ export function AgendaView() {
                                 className={cn(
                                     "flex-shrink-0 flex flex-col items-center justify-center min-w-[5rem] px-2 h-20 rounded-2xl transition-all snap-center relative border",
                                     isSelected
-                                        ? "bg-slate-900 dark:bg-amber-500 text-white shadow-lg shadow-black/10 dark:shadow-amber-500/20 scale-105 border-transparent"
+                                        ? "bg-slate-900 dark:bg-indigo-600 text-white shadow-lg shadow-black/10 dark:shadow-indigo-500/20 scale-105 border-transparent"
                                         : "bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-400 hover:border-slate-300 dark:hover:border-slate-600"
                                 )}
                             >
-                                <span className={cn("text-[10px] uppercase font-bold", isSelected ? "text-slate-300 dark:text-amber-100" : "")}>{dayName}</span>
+                                <span className={cn("text-[10px] uppercase font-bold", isSelected ? "text-slate-300 dark:text-indigo-100" : "")}>{dayName}</span>
                                 <span className="text-2xl font-black leading-none mt-1">{dateObj.getDate()}</span>
-                                {day.activities.length > 0 && <div className={cn("absolute bottom-2 w-1.5 h-1.5 rounded-full", isSelected ? "bg-amber-500 dark:bg-white" : "bg-amber-400")} />}
+                                {day.activities.length > 0 && <div className={cn("absolute bottom-2 w-1.5 h-1.5 rounded-full", isSelected ? "bg-indigo-500 dark:bg-white" : "bg-indigo-400")} />}
                             </button>
                         );
                     })}
                     <button
                         onClick={() => addDay()}
-                        className="flex-shrink-0 w-16 h-20 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-300 dark:text-slate-600 hover:text-amber-500 hover:border-amber-300 dark:hover:border-amber-600 transition-colors"
+                        className="flex-shrink-0 w-16 h-20 rounded-2xl border-2 border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-300 dark:text-slate-600 hover:text-indigo-500 hover:border-indigo-300 dark:hover:border-indigo-600 transition-colors"
                     >
                         <Plus className="w-6 h-6" />
                     </button>
@@ -113,7 +113,7 @@ export function AgendaView() {
                                     <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">
                                         <span>Jour {selectedDay.dayNumber}</span>
                                     </div>
-                                    <button onClick={() => setIsDatePickerOpen(true)} className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-2 hover:text-amber-500 transition-colors">
+                                    <button onClick={() => setIsDatePickerOpen(true)} className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-2 hover:text-indigo-500 transition-colors">
                                         {new Date(selectedDay.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
                                         <ChevronRight className="w-5 h-5 opacity-50" />
                                     </button>
@@ -137,15 +137,17 @@ export function AgendaView() {
                             />
 
                             {/* Add Custom Activity Button */}
-                            <div className="p-4 border-t border-slate-50 dark:border-slate-800 flex justify-center bg-white dark:bg-slate-900">
+                            <div className="p-6 border-t border-slate-100 dark:border-slate-800/60 flex justify-center bg-white/50 dark:bg-slate-900/20 backdrop-blur-sm">
                                 <button
                                     onClick={() => setIsAdding(true)}
-                                    className="flex items-center gap-2 px-8 py-4 bg-amber-50 dark:bg-amber-900/20 hover:bg-amber-100 dark:hover:bg-amber-900/40 text-amber-600 dark:text-amber-500 rounded-2xl font-bold transition-all active:scale-95 border border-amber-100 dark:border-amber-900/50"
+                                    className="group flex flex-col items-center gap-2 transition-all active:scale-95"
                                 >
-                                    <div className="w-8 h-8 rounded-full bg-amber-200 dark:bg-amber-800 flex items-center justify-center">
-                                        <Plus className="w-5 h-5 text-amber-800 dark:text-amber-200" />
+                                    <div className="w-14 h-14 rounded-full bg-indigo-600 text-white shadow-xl shadow-indigo-600/30 flex items-center justify-center group-hover:bg-indigo-700 group-hover:scale-110 transition-all border-4 border-slate-50 dark:border-slate-900 z-10">
+                                        <Plus className="w-6 h-6" />
                                     </div>
-                                    <span>Ajouter une étape</span>
+                                    <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 tracking-widest uppercase group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                                        Nouvelle étape
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -168,25 +170,36 @@ export function AgendaView() {
 
             {/* Custom Activity Form Modal */}
             {isAdding && (
-                <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center p-4">
-                    <div className="absolute inset-0 bg-slate-900/60 dark:bg-black/60 backdrop-blur-sm" onClick={() => setIsAdding(false)} />
-                    <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-3xl p-6 relative animate-in slide-in-from-bottom-10 z-10 shadow-2xl border border-slate-100 dark:border-slate-800">
-                        <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white">Ajouter une étape</h3>
-                        <form onSubmit={handleAdd} className="space-y-3">
-                            <input autoFocus type="text" placeholder="Quoi ? (Ex: Restaurant)" value={newTitle} onChange={e => setNewTitle(e.target.value)} className="w-full p-4 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl font-bold outline-none ring-2 ring-transparent focus:ring-amber-500 transition-all placeholder:text-slate-400" />
-                            <div className="flex gap-2">
-                                <input type="text" placeholder="ex: 20h-22h" value={newTime} onChange={e => setNewTime(e.target.value)} className="w-28 p-4 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl font-bold outline-none focus:ring-amber-500 text-sm placeholder:text-slate-400" />
-                                <input type="text" placeholder="Quartier / Lieu" value={newLocation} onChange={e => setNewLocation(e.target.value)} className="flex-1 p-4 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl font-medium outline-none focus:ring-amber-500 text-sm placeholder:text-slate-400" />
+                <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-slate-900/40 dark:bg-black/80 backdrop-blur-sm" onClick={() => setIsAdding(false)} />
+                    <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-[2rem] p-6 relative animate-in slide-in-from-bottom-8 sm:zoom-in-95 z-10 shadow-2xl border border-slate-100 dark:border-slate-800">
+                        <div className="w-12 h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto mb-6 sm:hidden" />
+                        <h3 className="text-xl font-black mb-6 text-slate-800 dark:text-white flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center">
+                                <Plus className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
                             </div>
-                            <input type="text" placeholder="Adresse précise (pour GPS)" value={newAddress} onChange={e => setNewAddress(e.target.value)} className="w-full p-4 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl font-medium outline-none focus:ring-amber-500 text-sm placeholder:text-slate-400" />
+                            Organiser
+                        </h3>
+                        <form onSubmit={handleAdd} className="space-y-4">
+                            <input autoFocus type="text" placeholder="Titre (ex: Restaurant, Musée...)" value={newTitle} onChange={e => setNewTitle(e.target.value)} className="w-full p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-bold outline-none ring-2 ring-transparent focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-800 transition-all placeholder:text-slate-400" />
+
+                            <div className="flex gap-3">
+                                <input type="text" placeholder="Heure" value={newTime} onChange={e => setNewTime(e.target.value)} className="w-1/3 p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-bold outline-none ring-2 ring-transparent focus:ring-indigo-500 text-sm placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 transition-all" />
+                                <input type="text" placeholder="Lieu ou Quartier" value={newLocation} onChange={e => setNewLocation(e.target.value)} className="flex-1 p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-medium outline-none ring-2 ring-transparent focus:ring-indigo-500 text-sm placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 transition-all" />
+                            </div>
+
+                            <input type="text" placeholder="Adresse précise (si besoin)" value={newAddress} onChange={e => setNewAddress(e.target.value)} className="w-full p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-medium outline-none ring-2 ring-transparent focus:ring-indigo-500 text-sm placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 transition-all" />
+
                             <textarea
-                                placeholder="Description / Notes..."
+                                placeholder="Notes, réservation, infos utiles..."
                                 value={newDescription}
                                 onChange={e => setNewDescription(e.target.value)}
-                                className="w-full p-4 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl font-medium outline-none focus:ring-amber-500 text-sm h-24 resize-none placeholder:text-slate-400"
+                                className="w-full p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-medium outline-none ring-2 ring-transparent focus:ring-indigo-500 text-sm h-28 resize-none placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 transition-all custom-scrollbar"
                             />
 
-                            <button type="submit" className="w-full py-4 bg-amber-500 text-white rounded-xl font-bold shadow-lg shadow-amber-200 dark:shadow-none mt-2 active:scale-95 transition-transform">Ajouter au Jour {selectedDay.dayNumber}</button>
+                            <button type="submit" className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold tracking-wide shadow-lg shadow-indigo-600/20 active:scale-95 hover:bg-indigo-700 transition-all mt-4">
+                                Valider et Ajouter
+                            </button>
                         </form>
                         <button onClick={() => setIsAdding(false)} className="absolute top-4 right-4 p-2 text-slate-300 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full"><X className="w-5 h-5" /></button>
                     </div>
@@ -245,7 +258,7 @@ export function AgendaView() {
                         <div className="absolute bottom-6 left-6 right-6">
                             <h1 className="text-2xl md:text-3xl font-black text-white mb-1 shadow-black/50 text-shadow-sm leading-tight">{selectedActivity.title}</h1>
                             {selectedActivity.time && (
-                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500 rounded-full text-white text-xs font-bold shadow-md">
+                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-600 rounded-full text-white text-xs font-bold shadow-md">
                                     <Clock className="w-3.5 h-3.5" />
                                     {selectedActivity.time}
                                 </span>
@@ -258,7 +271,7 @@ export function AgendaView() {
                         {(selectedActivity.location || selectedActivity.address) && (
                             <div className="flex flex-col gap-3">
                                 <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
-                                    <MapPin className="w-5 h-5 text-amber-500" />
+                                    <MapPin className="w-5 h-5 text-indigo-600" />
                                     Localisation
                                 </h3>
                                 {selectedActivity.location && <p className="text-sm font-medium text-slate-700 dark:text-slate-300"><span className="text-slate-400">Quartier:</span> {selectedActivity.location}</p>}
