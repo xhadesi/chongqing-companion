@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Utensils, Wifi, Phone, Languages, CarFront, Settings as SettingsIcon, Info, CreditCard, Map, Smartphone, MessageSquare } from "lucide-react";
 import { BestOfGuide } from "@/components/guide/BestOfGuide";
 import { Card } from "@/components/ui/Card";
 import { GovernmentAlert } from "@/components/home/GovernmentAlert";
@@ -42,7 +41,7 @@ export default function Home() {
         <div className="grid grid-cols-2 gap-3">
           {/* News: Visa Exemption */}
           <GuideBanner
-            icon={<Info className="w-6 h-6 text-blue-600 dark:text-blue-400" />}
+            emoji="🛂"
             title="Visa Free"
             subtitle="Info 2025"
             tag="Flash"
@@ -52,7 +51,7 @@ export default function Home() {
 
           {/* Internet - Holafly */}
           <GuideBanner
-            icon={<Wifi className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />}
+            emoji="📶"
             title="Internet"
             subtitle="eSIM"
             href="https://esim.holafly.com/fr/esim-chine/"
@@ -61,7 +60,7 @@ export default function Home() {
 
           {/* Apps Essentials Link */}
           <GuideBanner
-            icon={<Smartphone className="w-6 h-6 text-purple-600 dark:text-purple-400" />}
+            emoji="📱"
             title="Apps"
             subtitle="Kit Survie"
             href="/guide/apps"
@@ -69,7 +68,7 @@ export default function Home() {
 
           {/* Culture Guide */}
           <GuideBanner
-            icon={<Languages className="w-6 h-6 text-pink-600 dark:text-pink-400" />}
+            emoji="🏮"
             title="Culture"
             subtitle="Le Guide"
             href="/guide/culture"
@@ -77,7 +76,7 @@ export default function Home() {
 
           {/* Guide: Emergency */}
           <GuideBanner
-            icon={<Phone className="w-6 h-6 text-red-600 dark:text-red-400" />}
+            emoji="🚨"
             title="Urgences"
             subtitle="110 / 119 / 120"
             isEmergency={true}
@@ -109,8 +108,8 @@ export default function Home() {
               <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 font-bold uppercase tracking-wide opacity-80">Convertisseur • Météo</p>
             </div>
 
-            <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-white/10 flex items-center justify-center group-hover:bg-slate-200 dark:group-hover:bg-white/20 transition-colors border border-slate-200 dark:border-white/5 relative z-10 shadow-sm">
-              <Utensils className="w-6 h-6 text-slate-700 dark:text-white" />
+            <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-white/10 flex items-center justify-center group-hover:bg-slate-200 dark:group-hover:bg-white/20 transition-colors border border-slate-200 dark:border-white/5 relative z-10 shadow-sm text-2xl drop-shadow-sm group-hover:scale-110">
+              🧰
             </div>
 
             {/* Decoration */}
@@ -124,9 +123,9 @@ export default function Home() {
 }
 
 function GuideBanner({
-  icon, title, subtitle, image, tag, href, external, isEmergency, className
+  emoji, title, subtitle, image, tag, href, external, isEmergency, className
 }: {
-  icon: React.ReactNode, title: string, subtitle: string, image?: string, tag?: string, href: string, external?: boolean, isEmergency?: boolean, className?: string
+  emoji: string, title: string, subtitle: string, image?: string, tag?: string, href: string, external?: boolean, isEmergency?: boolean, className?: string
 }) {
   const Component = external ? 'a' : href === '#' ? 'div' : Link;
   const props = external ? { target: "_blank", rel: "noopener noreferrer" } : {};
@@ -149,11 +148,11 @@ function GuideBanner({
         </div>
       )}
 
-      {/* Icon */}
+      {/* Emoji Icon */}
       <div className="relative z-10 shrink-0">
-        <div className="w-10 h-10 bg-slate-100/50 dark:bg-white/5 backdrop-blur-md rounded-xl border border-slate-200/60 dark:border-white/10 shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-          <div className="transform scale-90">
-            {icon}
+        <div className="w-12 h-12 bg-white/80 dark:bg-white/5 backdrop-blur-md rounded-xl border border-white/60 dark:border-white/10 shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300 transform-gpu hover:shadow-md">
+          <div className="text-2xl drop-shadow-sm">
+            {emoji}
           </div>
         </div>
       </div>

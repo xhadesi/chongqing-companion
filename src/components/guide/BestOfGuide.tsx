@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { GUIDE_DATA, CATEGORIES, GuidePlace, CategoryId } from "@/data/guideData";
-import { MapPin, Star, Plus, Check, Info, Navigation, ArrowLeft, Lightbulb, Clock, Utensils, Coffee, Landmark, ShoppingBag, Martini, Heart, Share2 } from "lucide-react";
+import { MapPin, Star, Plus, Check, Info, Navigation, ArrowLeft, Lightbulb, Clock, Heart, Share2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAgenda } from "@/hooks/useAgenda";
 import { Card } from "@/components/ui/Card";
@@ -75,12 +75,12 @@ export function BestOfGuide() {
     // Icon Mapping
     const getIcon = (name: string) => {
         switch (name) {
-            case "Utensils": return <Utensils className="w-6 h-6" />;
-            case "Coffee": return <Coffee className="w-6 h-6" />;
-            case "Landmark": return <Landmark className="w-6 h-6" />;
-            case "ShoppingBag": return <ShoppingBag className="w-6 h-6" />;
-            case "Martini": return <Martini className="w-6 h-6" />;
-            default: return <Utensils className="w-6 h-6" />;
+            case "Utensils": return <span className="text-xl drop-shadow-sm">🌶️</span>;
+            case "Coffee": return <span className="text-xl drop-shadow-sm">☕</span>;
+            case "Landmark": return <span className="text-xl drop-shadow-sm">🏯</span>;
+            case "ShoppingBag": return <span className="text-xl drop-shadow-sm">🛍️</span>;
+            case "Martini": return <span className="text-xl drop-shadow-sm">🍸</span>;
+            default: return <span className="text-xl drop-shadow-sm">📍</span>;
         }
     };
 

@@ -10,8 +10,19 @@ import { UnscheduledSidebar } from "./UnscheduledSidebar";
 import { Activity } from "@/lib/types";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
 import { AddToAgendaModal } from "./AddToAgendaModal";
-// We no longer import @dnd-kit/core stuff
-
+import {
+    DndContext,
+    closestCenter,
+    TouchSensor,
+    PointerSensor,
+    useSensor,
+    useSensors,
+    DragEndEvent,
+    DragStartEvent,
+    DragOverlay
+} from "@dnd-kit/core";
+import { SortableActivity } from "./SortableActivity";
+import { SidebarItem } from "./SidebarItem";
 export function AgendaView() {
     const { days, unscheduled, isLoading, addActivity, moveActivity, toggleActivity, deleteActivity, updateActivity, addDay, removeDay, updateDate } = useAgenda();
     const [selectedDayId, setSelectedDayId] = useState<string>("day-1");
@@ -26,6 +37,45 @@ export function AgendaView() {
     // Details Slide State
     const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
 
+    // DnD State
+    const [activeDragId, setActiveDragId] = useState<string | null>(null);
+    const activeDragActivity = activeDragId ? [...days.flatMap(d => d.activities), ...unscheduled].find(a => a.id === activeDragId) : null;
+
+    const sensors = useSensors(
+        useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+        useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 5 } })
+    );
+
+    const handleDragStart = (e: DragStartEvent) => {
+        setActiveDragId(e.active.id as string);
+    };
+
+    const handleDragEnd = (e: DragEndEvent) => {
+        setActiveDragId(null);
+        const { active, over } = e;
+        if (!over) return;
+
+        const activeIdStr = active.id as string;
+        const overIdStr = over.id as string;
+
+        let sourceContainer = "unscheduled";
+        if (days.some(d => d.activities.some(a => a.id === activeIdStr))) {
+            sourceContainer = days.find(d => d.activities.some(a => a.id === activeIdStr))?.id || "unscheduled";
+        }
+
+        let targetContainer = "unscheduled";
+        if (overIdStr === "unscheduled" || unscheduled.some(a => a.id === overIdStr)) {
+            targetContainer = "unscheduled";
+        } else {
+            // Check if over a day or day's activity
+            const targetDay = days.find(d => d.id === overIdStr || d.activities.some(a => a.id === overIdStr));
+            if (targetDay) targetContainer = targetDay.id;
+        }
+
+        if (sourceContainer !== targetContainer) {
+            moveActivity(activeIdStr, sourceContainer, targetContainer);
+        }
+    };
     // Form state for custom activity
     const [newTime, setNewTime] = useState("");
     const [newTitle, setNewTitle] = useState("");
@@ -82,7 +132,7 @@ export function AgendaView() {
                                 key={day.id}
                                 onClick={() => setSelectedDayId(day.id)}
                                 className={cn(
-                                    "flex-shrink-0 flex flex-col items-center justify-center w-16 h-20 rounded-2xl transition-all snap-center relative border",
+                                    "flex-shrink-0 flex flex-col items-center justify-center min-w-[5rem] px-2 h-20 rounded-2xl transition-all snap-center relative border",
                                     isSelected
                                         ? "bg-slate-900 dark:bg-amber-500 text-white shadow-lg shadow-black/10 dark:shadow-amber-500/20 scale-105 border-transparent"
                                         : "bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-400 hover:border-slate-300 dark:hover:border-slate-600"
@@ -103,68 +153,76 @@ export function AgendaView() {
                 </div>
             </div>
 
-            <div className="flex-1 flex flex-col lg:flex-row max-w-7xl mx-auto w-full gap-6 p-4 md:p-6 pb-24">
-
-                {/* Left: Main Timeline */}
-                <div className="flex-1 min-w-0">
-                    {selectedDay && (
-                        <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 min-h-[600px] overflow-hidden">
-                            {/* Day Header */}
-                            <div className="p-6 border-b border-slate-50 dark:border-slate-800/50 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
-                                <div>
-                                    <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">
-                                        <span>Jour {selectedDay.dayNumber}</span>
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+                <div className="flex-1 flex flex-col lg:flex-row max-w-7xl mx-auto w-full gap-6 p-4 md:p-6 pb-32">
+                    {/* Left: Main Timeline */}
+                    <div className="flex-1 min-w-0">
+                        {selectedDay && (
+                            <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 min-h-[600px] overflow-hidden">
+                                {/* Day Header */}
+                                <div className="p-6 border-b border-slate-50 dark:border-slate-800/50 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
+                                    <div>
+                                        <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">
+                                            <span>Jour {selectedDay.dayNumber}</span>
+                                        </div>
+                                        <button onClick={() => setIsDatePickerOpen(true)} className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-2 hover:text-amber-500 transition-colors">
+                                            {new Date(selectedDay.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
+                                            <ChevronRight className="w-5 h-5 opacity-50" />
+                                        </button>
+                                        {isDatePickerOpen && (
+                                            <DatePicker value={selectedDay.date} onChange={(d) => updateDate(selectedDay.id, d)} onClose={() => setIsDatePickerOpen(false)} />
+                                        )}
                                     </div>
-                                    <button onClick={() => setIsDatePickerOpen(true)} className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-2 hover:text-amber-500 transition-colors">
-                                        {new Date(selectedDay.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
-                                        <ChevronRight className="w-5 h-5 opacity-50" />
+                                    <div className="flex gap-2">
+                                        <button onClick={() => setDayToDelete(selectedDay.id)} className="p-2 text-slate-300 dark:text-slate-600 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors"><Trash2 className="w-5 h-5" /></button>
+                                    </div>
+                                </div>
+
+                                <DayTimeline
+                                    dayId={selectedDay.id}
+                                    activities={selectedDay.activities}
+                                    onToggle={(id) => toggleActivity(selectedDay.id, id)}
+                                    onDelete={(id) => deleteActivity(selectedDay.id, id)}
+                                    onActivityClick={(activity) => setSelectedActivity({ ...activity, _containerId: selectedDay.id } as any)}
+                                />
+
+                                {/* Add Custom Activity Button */}
+                                <div className="p-4 border-t border-slate-50 dark:border-slate-800 flex justify-center bg-white dark:bg-slate-900">
+                                    <button
+                                        onClick={() => setIsAdding(true)}
+                                        className="flex items-center gap-2 px-8 py-4 bg-amber-50 dark:bg-amber-900/20 hover:bg-amber-100 dark:hover:bg-amber-900/40 text-amber-600 dark:text-amber-500 rounded-2xl font-bold transition-all active:scale-95 border border-amber-100 dark:border-amber-900/50"
+                                    >
+                                        <div className="w-8 h-8 rounded-full bg-amber-200 dark:bg-amber-800 flex items-center justify-center">
+                                            <Plus className="w-5 h-5 text-amber-800 dark:text-amber-200" />
+                                        </div>
+                                        <span>Ajouter une étape</span>
                                     </button>
-                                    {isDatePickerOpen && (
-                                        <DatePicker value={selectedDay.date} onChange={(d) => updateDate(selectedDay.id, d)} onClose={() => setIsDatePickerOpen(false)} />
-                                    )}
-                                </div>
-                                <div className="flex gap-2">
-                                    <button onClick={() => setDayToDelete(selectedDay.id)} className="p-2 text-slate-300 dark:text-slate-600 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors"><Trash2 className="w-5 h-5" /></button>
                                 </div>
                             </div>
+                        )}
+                    </div>
 
-                            <DayTimeline
-                                dayId={selectedDay.id}
-                                activities={selectedDay.activities}
-                                onToggle={(id) => toggleActivity(selectedDay.id, id)}
-                                onDelete={(id) => deleteActivity(selectedDay.id, id)}
-                                onActivityClick={(activity) => setSelectedActivity({ ...activity, _containerId: selectedDay.id } as any)}
-                            />
-
-                            {/* Add Custom Activity Button */}
-                            <div className="p-4 border-t border-slate-50 dark:border-slate-800 flex justify-center bg-white dark:bg-slate-900">
-                                <button
-                                    onClick={() => setIsAdding(true)}
-                                    className="flex items-center gap-2 px-8 py-4 bg-amber-50 dark:bg-amber-900/20 hover:bg-amber-100 dark:hover:bg-amber-900/40 text-amber-600 dark:text-amber-500 rounded-2xl font-bold transition-all active:scale-95 border border-amber-100 dark:border-amber-900/50"
-                                >
-                                    <div className="w-8 h-8 rounded-full bg-amber-200 dark:bg-amber-800 flex items-center justify-center">
-                                        <Plus className="w-5 h-5 text-amber-800 dark:text-amber-200" />
-                                    </div>
-                                    <span>Ajouter une étape</span>
-                                </button>
-                            </div>
+                    {/* Right: Staging Area */}
+                    <div className="w-full lg:w-96 flex-shrink-0">
+                        <UnscheduledSidebar
+                            items={unscheduled}
+                            onDelete={(id) => deleteActivity("unscheduled", id)}
+                            onAddClick={(id) => {
+                                setActivityToAddId(id);
+                                setIsAddModalOpen(true);
+                            }}
+                            onItemClick={(activity) => setSelectedActivity({ ...activity, _containerId: "unscheduled" } as any)}
+                        />
+                    </div>
+                </div>
+                <DragOverlay>
+                    {activeDragActivity ? (
+                        <div className="w-64 opacity-80 scale-105">
+                            <SidebarItem activity={activeDragActivity} onClick={() => { }} onDelete={() => { }} onAddClick={() => { }} />
                         </div>
-                    )}
-                </div>
-
-                {/* Right: Staging Area */}
-                <div className="w-full lg:w-96 flex-shrink-0">
-                    <UnscheduledSidebar
-                        items={unscheduled}
-                        onDelete={(id) => deleteActivity("unscheduled", id)}
-                        onAddClick={(id) => {
-                            setActivityToAddId(id);
-                            setIsAddModalOpen(true);
-                        }}
-                        onItemClick={(activity) => setSelectedActivity({ ...activity, _containerId: "unscheduled" } as any)}
-                    />
-                </div>
-            </div>
+                    ) : null}
+                </DragOverlay>
+            </DndContext>
 
             {/* Custom Activity Form Modal */}
             {isAdding && (
@@ -175,7 +233,7 @@ export function AgendaView() {
                         <form onSubmit={handleAdd} className="space-y-3">
                             <input autoFocus type="text" placeholder="Quoi ? (Ex: Restaurant)" value={newTitle} onChange={e => setNewTitle(e.target.value)} className="w-full p-4 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl font-bold outline-none ring-2 ring-transparent focus:ring-amber-500 transition-all placeholder:text-slate-400" />
                             <div className="flex gap-2">
-                                <input type="time" value={newTime} onChange={e => setNewTime(e.target.value)} className="w-24 p-4 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl font-bold outline-none focus:ring-amber-500" />
+                                <input type="text" placeholder="ex: 20h-22h" value={newTime} onChange={e => setNewTime(e.target.value)} className="w-28 p-4 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl font-bold outline-none focus:ring-amber-500 text-sm placeholder:text-slate-400" />
                                 <input type="text" placeholder="Quartier / Lieu" value={newLocation} onChange={e => setNewLocation(e.target.value)} className="flex-1 p-4 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl font-medium outline-none focus:ring-amber-500 text-sm placeholder:text-slate-400" />
                             </div>
                             <input type="text" placeholder="Adresse précise (pour GPS)" value={newAddress} onChange={e => setNewAddress(e.target.value)} className="w-full p-4 bg-slate-50 dark:bg-slate-800 dark:text-white rounded-xl font-medium outline-none focus:ring-amber-500 text-sm placeholder:text-slate-400" />
@@ -295,7 +353,7 @@ export function AgendaView() {
                                     <button
                                         onClick={() => {
                                             // Basic prompt wrapper for time update since we removed the inline time edit
-                                            const newVal = window.prompt("Nouvelle heure (HH:MM):", selectedActivity.time);
+                                            const newVal = window.prompt("Nouvelle heure ou durée (ex: 20h-22h):", selectedActivity.time);
                                             if (newVal) {
                                                 updateActivity((selectedActivity as any)._containerId, selectedActivity.id, { time: newVal });
                                                 setSelectedActivity({ ...selectedActivity, time: newVal });

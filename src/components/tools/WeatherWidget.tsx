@@ -18,6 +18,7 @@ export function WeatherWidget() {
     const [showSearch, setShowSearch] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState<any[]>([]);
+    const [selectedCityName, setSelectedCityName] = useState<string | null>(null);
 
     // Load saved cities on mount
     useEffect(() => {
@@ -47,10 +48,13 @@ export function WeatherWidget() {
                 }
                 try {
                     const res = await fetch(
-                        `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lng}&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature`
+                        `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lng}&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`
                     );
                     const data = await res.json();
-                    newWeatherData[city.name] = data.current;
+                    newWeatherData[city.name] = {
+                        ...data.current,
+                        daily: data.daily
+                    };
                 } catch (e) {
                     console.error("Failed to fetch weather for " + city.name);
                 }
@@ -108,8 +112,9 @@ export function WeatherWidget() {
                         return (
                             <div
                                 key={city.name}
+                                onClick={() => setSelectedCityName(city.name)}
                                 className={cn(
-                                    "relative w-full aspect-[4/5] rounded-[2rem] p-4 text-white shadow-lg flex flex-col justify-between transition-transform active:scale-95 overflow-hidden border border-white/20",
+                                    "relative w-full aspect-[4/5] rounded-[2rem] p-4 text-white shadow-lg flex flex-col justify-between transition-transform active:scale-95 overflow-hidden border border-white/20 cursor-pointer",
                                     idx % 2 === 0 ? "bg-gradient-to-br from-blue-500/90 to-indigo-600/90" : "bg-gradient-to-br from-indigo-500/90 to-purple-600/90"
                                 )}
                             >
@@ -128,7 +133,10 @@ export function WeatherWidget() {
                                         <p className="text-[10px] uppercase font-bold opacity-80 mt-0.5">Météo</p>
                                     </div>
                                     <button
-                                        onClick={() => removeCity(city.name)}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            removeCity(city.name);
+                                        }}
                                         className="text-white/60 hover:text-white transition-colors bg-black/10 rounded-full p-1"
                                     >
                                         <X className="w-3.5 h-3.5" />
@@ -146,12 +154,12 @@ export function WeatherWidget() {
                                     </div>
 
                                     {/* Additional weather details */}
-                                    <div className="flex items-center gap-2 mt-2 opacity-90 text-[10px] sm:text-xs">
-                                        <div className="flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded border border-white/10 shadow-sm backdrop-blur-sm">
+                                    <div className="flex flex-wrap items-center gap-1.5 mt-2 opacity-90 text-[10px]">
+                                        <div className="flex items-center gap-1 bg-white/10 px-1.5 py-0.5 rounded border border-white/10 shadow-sm backdrop-blur-sm">
                                             <span className="font-bold">Ressenti:</span>
                                             {w ? Math.round(w.apparent_temperature) + "°C" : "--"}
                                         </div>
-                                        <div className="flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded border border-white/10 shadow-sm backdrop-blur-sm">
+                                        <div className="flex items-center gap-1 bg-white/10 px-1.5 py-0.5 rounded border border-white/10 shadow-sm backdrop-blur-sm">
                                             <Droplets className="w-3 h-3 text-blue-200" />
                                             {w ? w.relative_humidity_2m + "%" : "--"}
                                         </div>
@@ -214,6 +222,51 @@ export function WeatherWidget() {
                         </div>
                     </div>
                     <button onClick={() => setShowSearch(false)} className="mt-8 p-3 bg-white/10 text-white rounded-full hover:bg-white/20 backdrop-blur-md">Fermer</button>
+                </div>
+            )}
+
+            {/* Detailed Forecast Modal */}
+            {selectedCityName && (
+                <div className="fixed inset-0 z-50 bg-slate-900/60 dark:bg-black/60 backdrop-blur-sm p-4 flex items-center justify-center animate-in fade-in duration-200" onClick={() => setSelectedCityName(null)}>
+                    <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-[2rem] p-6 relative animate-in zoom-in-95 duration-200 shadow-2xl border border-slate-100 dark:border-slate-800" onClick={e => e.stopPropagation()}>
+                        <button onClick={() => setSelectedCityName(null)} className="absolute top-4 right-4 p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                            <X className="w-5 h-5" />
+                        </button>
+
+                        <h3 className="text-xl font-black text-slate-800 dark:text-white mb-6 pr-8">{selectedCityName} <br /><span className="text-sm font-bold text-amber-500 uppercase tracking-widest">Prévisions 5 Jours</span></h3>
+
+                        <div className="space-y-3">
+                            {weatherData[selectedCityName]?.daily ? (
+                                weatherData[selectedCityName].daily.time.slice(0, 5).map((dateStr: string, i: number) => {
+                                    const date = new Date(dateStr);
+                                    const dayName = date.toLocaleDateString('fr-FR', { weekday: 'short' });
+                                    const min = Math.round(weatherData[selectedCityName].daily.temperature_2m_min[i]);
+                                    const max = Math.round(weatherData[selectedCityName].daily.temperature_2m_max[i]);
+                                    const code = weatherData[selectedCityName].daily.weather_code[i];
+
+                                    return (
+                                        <div key={dateStr} className="flex flex-row items-center justify-between gap-4 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50">
+                                            <div className="flex items-center gap-3 w-12">
+                                                <span className="font-bold text-slate-600 dark:text-slate-300 capitalize">{dayName}</span>
+                                            </div>
+                                            <div className="flex items-center gap-4 flex-1">
+                                                <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center shrink-0">
+                                                    <div className="scale-[0.6] text-slate-700 dark:text-slate-300">{getWeatherIcon(code)}</div>
+                                                </div>
+                                                <div className="flex-1 flex items-center justify-end gap-3 text-sm font-bold">
+                                                    <span className="text-slate-400">{min}°</span>
+                                                    <div className="flex-1 max-w-[60px] h-1.5 rounded-full bg-gradient-to-r from-blue-400 to-amber-500 opacity-80" />
+                                                    <span className="text-slate-800 dark:text-white">{max}°</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                            ) : (
+                                <p className="text-center text-slate-400 text-sm py-4">Données indisponibles</p>
+                            )}
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

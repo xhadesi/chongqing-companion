@@ -92,9 +92,7 @@ export default function ChecklistsPage() {
         }));
     };
 
-    if (!mounted) return null;
-
-    const currentList = lists[activeTab] || [];
+    const currentList = mounted ? (lists[activeTab] || []) : (DEFAULT_LISTS[activeTab] || []);
     const completedCount = currentList.filter(i => i.checked).length;
     const progress = currentList.length === 0 ? 0 : Math.round((completedCount / currentList.length) * 100);
 

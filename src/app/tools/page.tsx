@@ -2,7 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { CarFront } from "lucide-react";
 import { WeatherWidget } from "@/components/tools/WeatherWidget";
 import { WorldClock } from "@/components/tools/WorldClock";
 import { SpicyMeter } from "@/components/tools/SpicyMeter";
@@ -35,8 +34,8 @@ export default function ToolsPage() {
                         <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 dark:bg-blue-900/20 rounded-full -mr-8 -mt-8 group-hover:scale-150 transition-transform duration-500" />
 
                         <div className="relative z-10">
-                            <div className="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center mb-4 group-hover:bg-blue-500 transition-colors">
-                                <CarFront className="w-6 h-6 text-blue-600 dark:text-blue-400 group-hover:text-white transition-colors" />
+                            <div className="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                                <span className="text-2xl drop-shadow-sm">🚕</span>
                             </div>
                             <h3 className="font-bold text-xl text-foreground mb-1">Taxi Cards</h3>
                             <p className="text-xs text-muted-foreground">Montrer au chauffeur</p>

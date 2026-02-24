@@ -61,7 +61,25 @@ export function TaxiCards() {
     const [copiedId, setCopiedId] = useState<string | null>(null);
 
     const handleCopy = (text: string, id: string) => {
-        navigator.clipboard.writeText(text);
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text).catch(err => console.error("Clipboard API error", err));
+        } else {
+            // Fallback for non-HTTPS local dev
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                console.error("Fallback copy failed", err);
+            }
+            document.body.removeChild(textArea);
+        }
         setCopiedId(id);
         setTimeout(() => setCopiedId(null), 2000);
     };

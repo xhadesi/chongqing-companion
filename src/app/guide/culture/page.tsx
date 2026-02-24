@@ -5,7 +5,7 @@ import { ArrowLeft, Languages, Utensils, ShieldCheck, HeartHandshake, CloudRain 
 
 export default function CultureGuidePage() {
     return (
-        <div className="min-h-screen bg-white pb-24">
+        <div className="min-h-screen bg-white pb-32">
             {/* Header */}
             <div className="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-100 p-4 flex items-center gap-4 z-10">
                 <Link href="/" className="p-2 -ml-2 hover:bg-slate-100 rounded-full transition-colors">

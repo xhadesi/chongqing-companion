@@ -14,7 +14,7 @@ export default function SpicyPage() {
                 <h1 className="font-bold text-lg">Piment-O-Mètre</h1>
             </header>
 
-            <div className="flex-1 p-4 flex items-center justify-center pb-24">
+            <div className="flex-1 p-4 flex items-center justify-center pb-32">
                 <SpicyMeter />
             </div>
         </div>

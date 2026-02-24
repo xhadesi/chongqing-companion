@@ -79,10 +79,10 @@ export function DatePicker({ value, onChange, onClose }: DatePickerProps) {
             {/* Click outside to close */}
             <div className="absolute inset-0" onClick={onClose} />
 
-            <div className="relative bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl w-full max-w-sm overflow-hidden animate-in zoom-in-95 duration-200 border border-slate-100 dark:border-slate-800">
+            <div className="relative bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl w-full max-w-sm max-h-[85vh] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200 border border-slate-100 dark:border-slate-800">
 
                 {/* Header Section */}
-                <div className="bg-slate-50 dark:bg-slate-800/50 p-4 border-b border-slate-100 dark:border-slate-800">
+                <div className="shrink-0 bg-slate-50 dark:bg-slate-800/50 p-4 border-b border-slate-100 dark:border-slate-800">
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                             <Calendar className="w-4 h-4" />
@@ -122,7 +122,7 @@ export function DatePicker({ value, onChange, onClose }: DatePickerProps) {
                     </div>
                 </div>
 
-                <div className="p-6">
+                <div className="p-4 sm:p-6 overflow-y-auto no-scrollbar">
                     {/* Week Days */}
                     <div className="grid grid-cols-7 mb-2 text-center">
                         {weekDays.map(day => (
@@ -147,7 +147,7 @@ export function DatePicker({ value, onChange, onClose }: DatePickerProps) {
                                     key={day}
                                     onClick={() => handleSelectDay(day)}
                                     className={cn(
-                                        "h-10 rounded-xl flex items-center justify-center text-sm font-medium transition-all relative",
+                                        "h-8 sm:h-10 rounded-xl flex items-center justify-center text-sm font-medium transition-all relative",
                                         selected
                                             ? "bg-indigo-600 text-white shadow-md shadow-indigo-200 scale-105 z-10"
                                             : "text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800",

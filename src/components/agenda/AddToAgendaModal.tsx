@@ -104,9 +104,9 @@ export function AddToAgendaModal({ isOpen, onClose, onAdd, activityTitle, days }
                         <div className="relative">
                             <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                             <input
-                                type="time"
+                                type="text"
+                                placeholder="ex: 10h ou 10h-12h"
                                 value={time}
-                                onClick={(e) => e.currentTarget.showPicker()}
                                 onChange={(e) => setTime(e.target.value)}
                                 className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl font-bold text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-amber-500 appearance-none"
                             />

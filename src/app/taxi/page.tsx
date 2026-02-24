@@ -14,7 +14,7 @@ export default function TaxiPage() {
                 <h1 className="font-bold text-lg">Taxi Cards</h1>
             </header>
 
-            <div className="flex-1 p-4 pb-24">
+            <div className="flex-1 p-4 pb-32">
                 <TaxiCards />
             </div>
         </div>
