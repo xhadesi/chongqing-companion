@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Trash2, ChevronRight, X, Clock, MapPin, Navigation, ArrowLeft, Timer } from "lucide-react";
 import { useAgenda } from "@/hooks/useAgenda";
 import { cn } from "@/lib/utils";
@@ -24,6 +24,30 @@ export function AgendaView() {
 
     // Details Slide State
     const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
+
+    // Handling browser back button / iOS swipe back for the Details Slide
+    useEffect(() => {
+        const handlePopState = (e: PopStateEvent) => {
+            if (selectedActivity) {
+                // If the slide was open and user swiped back/pressed back, close the slide
+                setSelectedActivity(null);
+            }
+        };
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, [selectedActivity]);
+
+    const handleOpenActivity = (activity: any, containerId: string) => {
+        window.history.pushState({ activityDetailsOpen: true }, "");
+        setSelectedActivity({ ...activity, _containerId: containerId } as any);
+    };
+
+    const handleCloseActivity = () => {
+        setSelectedActivity(null);
+        if (window.history.state?.activityDetailsOpen) {
+            window.history.back();
+        }
+    };
 
     // Form state for custom activity
     const [newTime, setNewTime] = useState("");
@@ -131,7 +155,7 @@ export function AgendaView() {
                                 activities={selectedDay.activities}
                                 onToggle={(id) => toggleActivity(selectedDay.id, id)}
                                 onDelete={(id) => deleteActivity(selectedDay.id, id)}
-                                onClick={(activity) => setSelectedActivity({ ...activity, _containerId: selectedDay.id } as any)}
+                                onClick={(activity) => handleOpenActivity(activity, selectedDay.id)}
                                 onTimeEdit={(id, newTime) => updateActivity(selectedDay.id, id, { time: newTime })}
                                 onDurationEdit={(id, newDuration) => updateActivity(selectedDay.id, id, { duration: newDuration })}
                             />
@@ -163,7 +187,7 @@ export function AgendaView() {
                             setActivityToAddId(id);
                             setIsAddModalOpen(true);
                         }}
-                        onItemClick={(activity) => setSelectedActivity({ ...activity, _containerId: "unscheduled" } as any)}
+                        onItemClick={(activity) => handleOpenActivity(activity, "unscheduled")}
                     />
                 </div>
             </div>
@@ -250,7 +274,7 @@ export function AgendaView() {
                         )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                         <button
-                            onClick={() => setSelectedActivity(null)}
+                            onClick={handleCloseActivity}
                             className="absolute top-4 left-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/40 text-white transition-colors"
                         >
                             <ArrowLeft className="w-6 h-6" />
