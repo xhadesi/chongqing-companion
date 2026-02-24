@@ -258,14 +258,9 @@ export function AgendaView() {
                 }}
             />
 
-            {/* Details Sliding Modal - Persisted in DOM for smooth exit animation */}
-            <div
-                className={cn(
-                    "fixed inset-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm p-0 flex flex-col duration-300 transition-transform shadow-2xl",
-                    isDetailsOpen ? "translate-x-0" : "translate-x-full"
-                )}
-            >
-                {selectedActivity && (
+            {/* Details Sliding Modal */}
+            {isDetailsOpen && selectedActivity && (
+                <div className="fixed inset-0 z-50 bg-white dark:bg-slate-950 p-0 flex flex-col animate-in slide-in-from-bottom-10 lg:slide-in-from-right-10 duration-200">
                     <>
                         <div className="relative h-64 md:h-80 w-full shrink-0 bg-slate-100 dark:bg-slate-900">
                             {selectedActivity.image ? (
@@ -379,8 +374,8 @@ export function AgendaView() {
                             </div>
                         </div>
                     </>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     );
 }
