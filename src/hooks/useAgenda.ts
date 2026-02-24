@@ -208,7 +208,12 @@ export function useAgenda() {
                 d.setDate(baseDate.getDate() + (i - index));
                 newDays[i] = { ...newDays[i], date: d.toISOString().split('T')[0] };
             }
-            return newDays;
+
+            // Sort days by date chronologically
+            newDays.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+            // Re-assign day numbers sequentially after sorting
+            return newDays.map((step, i) => ({ ...step, dayNumber: i + 1 }));
         });
     };
 

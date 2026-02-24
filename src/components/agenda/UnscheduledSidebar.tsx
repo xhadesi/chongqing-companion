@@ -1,7 +1,6 @@
 import { Activity } from "@/lib/types";
 import { SidebarItem } from "./SidebarItem";
 import { Card } from "@/components/ui/Card";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 interface UnscheduledSidebarProps {
     items: Activity[];
@@ -29,7 +28,7 @@ export function UnscheduledSidebar({ items, onDelete, onAddClick, onItemClick }:
                         <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Ajoutez-en depuis le Guide !</p>
                     </div>
                 ) : (
-                    <SortableContext items={items.map(a => a.id)} strategy={verticalListSortingStrategy} id="unscheduled">
+                    <div className="space-y-3">
                         {items.map((activity) => (
                             <SidebarItem
                                 key={activity.id}
@@ -39,7 +38,7 @@ export function UnscheduledSidebar({ items, onDelete, onAddClick, onItemClick }:
                                 onClick={() => onItemClick(activity)}
                             />
                         ))}
-                    </SortableContext>
+                    </div>
                 )}
             </div>
         </Card>

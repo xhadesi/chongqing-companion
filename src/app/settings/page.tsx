@@ -83,7 +83,7 @@ export default function SettingsPage() {
                         icon={<Info className="w-5 h-5 text-white" />}
                         iconColor="bg-gray-500"
                         label="À propos"
-                        value="v1.0.2"
+                        value="v1.6.0"
                     />
                 </SettingsGroup>
 

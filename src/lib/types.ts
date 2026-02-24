@@ -1,6 +1,7 @@
 export interface Activity {
     id: string;
     time: string; // HH:MM
+    duration?: string; // e.g. "1h" or "30m"
     title: string;
     description?: string;
     icon?: string; // Lucide icon name or emoji

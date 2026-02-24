@@ -2,7 +2,6 @@
 
 import { Activity } from "@/lib/types";
 import { Clock } from "lucide-react";
-import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { SortableActivity } from "./SortableActivity";
 
 interface DayTimelineProps {
@@ -10,35 +9,37 @@ interface DayTimelineProps {
     activities: Activity[];
     onToggle: (id: string) => void;
     onDelete: (id: string) => void;
-    onActivityClick: (activity: Activity) => void;
+    onClick: (activity: Activity) => void;
+    onTimeEdit: (id: string, newTime: string) => void;
+    onDurationEdit: (id: string, newDuration: string) => void;
 }
 
-export function DayTimeline({ dayId, activities, onToggle, onDelete, onActivityClick }: DayTimelineProps) {
+export function DayTimeline({ dayId, activities, onToggle, onDelete, onClick, onTimeEdit, onDurationEdit }: DayTimelineProps) {
     return (
-        <div className="flex-1 min-h-[500px] p-4 space-y-4 relative">
-            <div className="absolute left-[3rem] top-4 bottom-4 w-0.5 bg-slate-100 dark:bg-slate-800 -z-10" />
-
+        <div className="flex-1 min-h-[500px] p-4 lg:p-6 space-y-4">
             {activities.length === 0 && (
-                <div className="flex flex-col items-center justify-center py-12 text-center opacity-60">
-                    <div className="w-16 h-16 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
+                <div className="flex flex-col items-center justify-center py-12 text-center opacity-60 bg-slate-50/50 dark:bg-slate-900/50 rounded-[2rem] border-2 border-dashed border-slate-200 dark:border-slate-800">
+                    <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center mb-4 shadow-sm">
                         <Clock className="w-6 h-6 text-slate-300 dark:text-slate-600" />
                     </div>
-                    <p className="text-slate-500 dark:text-slate-400 font-medium">Rien de prévu</p>
-                    <p className="text-slate-400 dark:text-slate-500 text-xs mt-1">Ajoutez des idées depuis la liste</p>
+                    <p className="text-slate-500 dark:text-slate-400 font-bold mb-1">Rien de prévu</p>
+                    <p className="text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-widest">Ajoutez des étapes à ce jour</p>
                 </div>
             )}
 
-            <SortableContext items={activities.map(a => a.id)} strategy={verticalListSortingStrategy} id={dayId}>
+            <div className="space-y-4">
                 {activities.map((activity) => (
                     <SortableActivity
                         key={activity.id}
                         activity={activity}
                         onToggle={onToggle}
                         onDelete={onDelete}
-                        onClick={onActivityClick}
+                        onClick={onClick}
+                        onTimeEdit={onTimeEdit}
+                        onDurationEdit={onDurationEdit}
                     />
                 ))}
-            </SortableContext>
+            </div>
         </div>
     );
 }

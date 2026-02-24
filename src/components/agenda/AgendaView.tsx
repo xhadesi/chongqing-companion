@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Trash2, ChevronRight, X, Clock, MapPin, Navigation, ArrowLeft } from "lucide-react";
+import { Plus, Trash2, ChevronRight, X, Clock, MapPin, Navigation, ArrowLeft, Timer } from "lucide-react";
 import { useAgenda } from "@/hooks/useAgenda";
 import { cn } from "@/lib/utils";
 import { DatePicker } from "@/components/ui/DatePicker";
@@ -10,19 +10,7 @@ import { UnscheduledSidebar } from "./UnscheduledSidebar";
 import { Activity } from "@/lib/types";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
 import { AddToAgendaModal } from "./AddToAgendaModal";
-import {
-    DndContext,
-    closestCenter,
-    TouchSensor,
-    PointerSensor,
-    useSensor,
-    useSensors,
-    DragEndEvent,
-    DragStartEvent,
-    DragOverlay
-} from "@dnd-kit/core";
-import { SortableActivity } from "./SortableActivity";
-import { SidebarItem } from "./SidebarItem";
+
 export function AgendaView() {
     const { days, unscheduled, isLoading, addActivity, moveActivity, toggleActivity, deleteActivity, updateActivity, addDay, removeDay, updateDate } = useAgenda();
     const [selectedDayId, setSelectedDayId] = useState<string>("day-1");
@@ -37,45 +25,6 @@ export function AgendaView() {
     // Details Slide State
     const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
 
-    // DnD State
-    const [activeDragId, setActiveDragId] = useState<string | null>(null);
-    const activeDragActivity = activeDragId ? [...days.flatMap(d => d.activities), ...unscheduled].find(a => a.id === activeDragId) : null;
-
-    const sensors = useSensors(
-        useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
-        useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 5 } })
-    );
-
-    const handleDragStart = (e: DragStartEvent) => {
-        setActiveDragId(e.active.id as string);
-    };
-
-    const handleDragEnd = (e: DragEndEvent) => {
-        setActiveDragId(null);
-        const { active, over } = e;
-        if (!over) return;
-
-        const activeIdStr = active.id as string;
-        const overIdStr = over.id as string;
-
-        let sourceContainer = "unscheduled";
-        if (days.some(d => d.activities.some(a => a.id === activeIdStr))) {
-            sourceContainer = days.find(d => d.activities.some(a => a.id === activeIdStr))?.id || "unscheduled";
-        }
-
-        let targetContainer = "unscheduled";
-        if (overIdStr === "unscheduled" || unscheduled.some(a => a.id === overIdStr)) {
-            targetContainer = "unscheduled";
-        } else {
-            // Check if over a day or day's activity
-            const targetDay = days.find(d => d.id === overIdStr || d.activities.some(a => a.id === overIdStr));
-            if (targetDay) targetContainer = targetDay.id;
-        }
-
-        if (sourceContainer !== targetContainer) {
-            moveActivity(activeIdStr, sourceContainer, targetContainer);
-        }
-    };
     // Form state for custom activity
     const [newTime, setNewTime] = useState("");
     const [newTitle, setNewTitle] = useState("");
@@ -153,76 +102,69 @@ export function AgendaView() {
                 </div>
             </div>
 
-            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-                <div className="flex-1 flex flex-col lg:flex-row max-w-7xl mx-auto w-full gap-6 p-4 md:p-6 pb-32">
-                    {/* Left: Main Timeline */}
-                    <div className="flex-1 min-w-0">
-                        {selectedDay && (
-                            <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 min-h-[600px] overflow-hidden">
-                                {/* Day Header */}
-                                <div className="p-6 border-b border-slate-50 dark:border-slate-800/50 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
-                                    <div>
-                                        <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">
-                                            <span>Jour {selectedDay.dayNumber}</span>
-                                        </div>
-                                        <button onClick={() => setIsDatePickerOpen(true)} className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-2 hover:text-amber-500 transition-colors">
-                                            {new Date(selectedDay.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
-                                            <ChevronRight className="w-5 h-5 opacity-50" />
-                                        </button>
-                                        {isDatePickerOpen && (
-                                            <DatePicker value={selectedDay.date} onChange={(d) => updateDate(selectedDay.id, d)} onClose={() => setIsDatePickerOpen(false)} />
-                                        )}
+            <div className="flex-1 flex flex-col lg:flex-row max-w-7xl mx-auto w-full gap-6 p-4 md:p-6 pb-32">
+                {/* Left: Main Timeline */}
+                <div className="flex-1 min-w-0">
+                    {selectedDay && (
+                        <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 min-h-[600px] overflow-hidden">
+                            {/* Day Header */}
+                            <div className="p-6 border-b border-slate-50 dark:border-slate-800/50 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
+                                <div>
+                                    <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">
+                                        <span>Jour {selectedDay.dayNumber}</span>
                                     </div>
-                                    <div className="flex gap-2">
-                                        <button onClick={() => setDayToDelete(selectedDay.id)} className="p-2 text-slate-300 dark:text-slate-600 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors"><Trash2 className="w-5 h-5" /></button>
-                                    </div>
-                                </div>
-
-                                <DayTimeline
-                                    dayId={selectedDay.id}
-                                    activities={selectedDay.activities}
-                                    onToggle={(id) => toggleActivity(selectedDay.id, id)}
-                                    onDelete={(id) => deleteActivity(selectedDay.id, id)}
-                                    onActivityClick={(activity) => setSelectedActivity({ ...activity, _containerId: selectedDay.id } as any)}
-                                />
-
-                                {/* Add Custom Activity Button */}
-                                <div className="p-4 border-t border-slate-50 dark:border-slate-800 flex justify-center bg-white dark:bg-slate-900">
-                                    <button
-                                        onClick={() => setIsAdding(true)}
-                                        className="flex items-center gap-2 px-8 py-4 bg-amber-50 dark:bg-amber-900/20 hover:bg-amber-100 dark:hover:bg-amber-900/40 text-amber-600 dark:text-amber-500 rounded-2xl font-bold transition-all active:scale-95 border border-amber-100 dark:border-amber-900/50"
-                                    >
-                                        <div className="w-8 h-8 rounded-full bg-amber-200 dark:bg-amber-800 flex items-center justify-center">
-                                            <Plus className="w-5 h-5 text-amber-800 dark:text-amber-200" />
-                                        </div>
-                                        <span>Ajouter une étape</span>
+                                    <button onClick={() => setIsDatePickerOpen(true)} className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-2 hover:text-amber-500 transition-colors">
+                                        {new Date(selectedDay.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
+                                        <ChevronRight className="w-5 h-5 opacity-50" />
                                     </button>
+                                    {isDatePickerOpen && (
+                                        <DatePicker value={selectedDay.date} onChange={(d) => updateDate(selectedDay.id, d)} onClose={() => setIsDatePickerOpen(false)} />
+                                    )}
+                                </div>
+                                <div className="flex gap-2">
+                                    <button onClick={() => setDayToDelete(selectedDay.id)} className="p-2 text-slate-300 dark:text-slate-600 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors"><Trash2 className="w-5 h-5" /></button>
                                 </div>
                             </div>
-                        )}
-                    </div>
 
-                    {/* Right: Staging Area */}
-                    <div className="w-full lg:w-96 flex-shrink-0">
-                        <UnscheduledSidebar
-                            items={unscheduled}
-                            onDelete={(id) => deleteActivity("unscheduled", id)}
-                            onAddClick={(id) => {
-                                setActivityToAddId(id);
-                                setIsAddModalOpen(true);
-                            }}
-                            onItemClick={(activity) => setSelectedActivity({ ...activity, _containerId: "unscheduled" } as any)}
-                        />
-                    </div>
-                </div>
-                <DragOverlay>
-                    {activeDragActivity ? (
-                        <div className="w-64 opacity-80 scale-105">
-                            <SidebarItem activity={activeDragActivity} onClick={() => { }} onDelete={() => { }} onAddClick={() => { }} />
+                            <DayTimeline
+                                dayId={selectedDay.id}
+                                activities={selectedDay.activities}
+                                onToggle={(id) => toggleActivity(selectedDay.id, id)}
+                                onDelete={(id) => deleteActivity(selectedDay.id, id)}
+                                onClick={(activity) => setSelectedActivity({ ...activity, _containerId: selectedDay.id } as any)}
+                                onTimeEdit={(id, newTime) => updateActivity(selectedDay.id, id, { time: newTime })}
+                                onDurationEdit={(id, newDuration) => updateActivity(selectedDay.id, id, { duration: newDuration })}
+                            />
+
+                            {/* Add Custom Activity Button */}
+                            <div className="p-4 border-t border-slate-50 dark:border-slate-800 flex justify-center bg-white dark:bg-slate-900">
+                                <button
+                                    onClick={() => setIsAdding(true)}
+                                    className="flex items-center gap-2 px-8 py-4 bg-amber-50 dark:bg-amber-900/20 hover:bg-amber-100 dark:hover:bg-amber-900/40 text-amber-600 dark:text-amber-500 rounded-2xl font-bold transition-all active:scale-95 border border-amber-100 dark:border-amber-900/50"
+                                >
+                                    <div className="w-8 h-8 rounded-full bg-amber-200 dark:bg-amber-800 flex items-center justify-center">
+                                        <Plus className="w-5 h-5 text-amber-800 dark:text-amber-200" />
+                                    </div>
+                                    <span>Ajouter une étape</span>
+                                </button>
+                            </div>
                         </div>
-                    ) : null}
-                </DragOverlay>
-            </DndContext>
+                    )}
+                </div>
+
+                {/* Right: Staging Area */}
+                <div className="w-full lg:w-96 flex-shrink-0">
+                    <UnscheduledSidebar
+                        items={unscheduled}
+                        onDelete={(id) => deleteActivity("unscheduled", id)}
+                        onAddClick={(id) => {
+                            setActivityToAddId(id);
+                            setIsAddModalOpen(true);
+                        }}
+                        onItemClick={(activity) => setSelectedActivity({ ...activity, _containerId: "unscheduled" } as any)}
+                    />
+                </div>
+            </div>
 
             {/* Custom Activity Form Modal */}
             {isAdding && (
@@ -311,7 +253,7 @@ export function AgendaView() {
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 max-w-4xl mx-auto w-full">
+                    <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 max-w-4xl mx-auto w-full pb-32">
 
                         {(selectedActivity.location || selectedActivity.address) && (
                             <div className="flex flex-col gap-3">
@@ -329,9 +271,9 @@ export function AgendaView() {
                                 <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
                                     <span className="text-xl">📝</span> Détails / Notes
                                 </h3>
-                                <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-sm bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-800">
+                                <div className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm bg-amber-50 dark:bg-amber-900/10 p-5 rounded-2xl border border-amber-100 dark:border-amber-900/30 whitespace-pre-wrap">
                                     {selectedActivity.description}
-                                </p>
+                                </div>
                             </div>
                         )}
 
@@ -352,17 +294,29 @@ export function AgendaView() {
                                 <div className="w-full sm:flex-1 flex gap-2">
                                     <button
                                         onClick={() => {
-                                            // Basic prompt wrapper for time update since we removed the inline time edit
-                                            const newVal = window.prompt("Nouvelle heure ou durée (ex: 20h-22h):", selectedActivity.time);
-                                            if (newVal) {
+                                            const newVal = window.prompt("Nouvelle heure (ex: 20:00):", selectedActivity.time);
+                                            if (newVal !== null && newVal !== selectedActivity.time) {
                                                 updateActivity((selectedActivity as any)._containerId, selectedActivity.id, { time: newVal });
                                                 setSelectedActivity({ ...selectedActivity, time: newVal });
                                             }
                                         }}
-                                        className="flex-1 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold flex items-center justify-center gap-2 transition-colors"
+                                        className="flex-1 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold flex items-center justify-center gap-2 transition-colors active:scale-95"
                                     >
                                         <Clock className="w-5 h-5" />
-                                        Changer l'heure
+                                        Heure
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            const newVal = window.prompt("Nouvelle durée (ex: 1h30):", selectedActivity.duration || "");
+                                            if (newVal !== null) {
+                                                updateActivity((selectedActivity as any)._containerId, selectedActivity.id, { duration: newVal });
+                                                setSelectedActivity({ ...selectedActivity, duration: newVal });
+                                            }
+                                        }}
+                                        className="flex-1 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold flex items-center justify-center gap-2 transition-colors active:scale-95"
+                                    >
+                                        <Timer className="w-5 h-5" />
+                                        Durée
                                     </button>
                                 </div>
                             )}
@@ -372,7 +326,7 @@ export function AgendaView() {
                                     href={`https://www.amap.com/search?query=${encodeURIComponent(selectedActivity.address)}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-full sm:w-auto h-14 px-8 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 font-bold flex items-center justify-center gap-2 transition-colors"
+                                    className="w-full sm:w-auto h-14 px-8 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 font-bold flex items-center justify-center gap-2 transition-colors active:scale-95"
                                 >
                                     <Navigation className="w-5 h-5" />
                                     Ouvrir GPS
@@ -385,4 +339,3 @@ export function AgendaView() {
         </div>
     );
 }
-

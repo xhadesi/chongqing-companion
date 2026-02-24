@@ -96,12 +96,20 @@ export function WeatherWidget() {
     };
 
     const getWeatherIcon = (code: number, isModal = false) => {
-        const iconClass = isModal ? "w-8 h-8 drop-shadow-md" : "w-8 h-8 text-white drop-shadow-md";
-        if (code <= 1) return <Sun className={cn(iconClass, isModal && "text-amber-500")} />;
-        if (code <= 3) return <CloudSun className={cn(iconClass, isModal && "text-slate-400 dark:text-slate-300")} />;
-        if (code <= 48) return <Cloud className={cn(iconClass, isModal && "text-slate-400 dark:text-slate-300")} />;
-        if (code <= 67) return <CloudRain className={cn(iconClass, isModal && "text-blue-500")} />;
-        return <CloudSun className={cn(iconClass, isModal && "text-slate-400 dark:text-slate-300")} />;
+        const emojiSize = isModal ? "text-2xl" : "text-6xl";
+        let emoji = "☁️";
+        if (code === 0) emoji = "☀️";
+        else if (code === 1 || code === 2) emoji = "🌤️";
+        else if (code === 3) emoji = "☁️";
+        else if (code === 45 || code === 48) emoji = "🌫️";
+        else if (code >= 51 && code <= 57) emoji = "🌦️";
+        else if (code >= 61 && code <= 67) emoji = "🌧️";
+        else if (code >= 71 && code <= 77) emoji = "❄️";
+        else if (code >= 80 && code <= 82) emoji = "🌧️";
+        else if (code >= 85 && code <= 86) emoji = "🌨️";
+        else if (code >= 95 && code <= 99) emoji = "⛈️";
+
+        return <div className={cn(emojiSize, "drop-shadow-md leading-none flex items-center justify-center filter")}>{emoji}</div>;
     };
 
     return (
@@ -252,7 +260,7 @@ export function WeatherWidget() {
                                             </div>
                                             <div className="flex items-center gap-4 flex-1">
                                                 <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center shrink-0">
-                                                    <div className="scale-[0.8]">{getWeatherIcon(code, true)}</div>
+                                                    <div className="scale-[1]">{getWeatherIcon(code, true)}</div>
                                                 </div>
                                                 <div className="flex-1 flex items-center justify-end gap-3 text-sm font-bold">
                                                     <span className="text-slate-400">{min}°</span>

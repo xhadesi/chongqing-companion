@@ -3,8 +3,6 @@
 import { Activity } from "@/lib/types";
 import { MapPin, X, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 
 interface SidebarItemProps {
     activity: Activity;
@@ -14,34 +12,9 @@ interface SidebarItemProps {
 }
 
 export function SidebarItem({ activity, onDelete, onAddClick, onClick }: SidebarItemProps) {
-    const {
-        attributes,
-        listeners,
-        setNodeRef,
-        transform,
-        transition,
-        isDragging,
-    } = useSortable({
-        id: activity.id,
-        data: {
-            type: "Activity",
-            activity,
-        }
-    });
-
-    const style = {
-        transform: CSS.Transform.toString(transform),
-        transition,
-        opacity: isDragging ? 0.4 : 1,
-        zIndex: isDragging ? 50 : 1,
-    };
-
     return (
-        <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={cn("relative group touch-none", isDragging && "scale-105")}>
+        <div className="relative group animate-in fade-in zoom-in-95 duration-200">
             <div
-                onPointerDown={(e) => {
-                    // Handled by dnd-kit
-                }}
                 onClick={onClick}
                 className={cn(
                     "flex flex-col bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-3 rounded-2xl cursor-pointer transition-all",
@@ -78,7 +51,7 @@ export function SidebarItem({ activity, onDelete, onAddClick, onClick }: Sidebar
                         e.stopPropagation();
                         onAddClick(activity.id);
                     }}
-                    className="w-full mt-auto py-2 bg-slate-800 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 active:scale-95"
+                    className="w-full mt-auto py-2 bg-slate-800 dark:bg-white hover:bg-slate-700 dark:hover:bg-slate-200 text-white dark:text-slate-900 rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 active:scale-95 border border-transparent dark:hover:border-slate-300"
                 >
                     <Plus className="w-3 h-3" />
                     <span className="opacity-90">Planifier</span>

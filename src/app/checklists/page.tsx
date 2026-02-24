@@ -200,7 +200,7 @@ export default function ChecklistsPage() {
                 </div>
 
                 {/* Fixed add button container relative to bottom */}
-                <div className="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-slate-50 via-slate-50 to-transparent dark:from-slate-950 dark:via-slate-950 pb-8 md:pb-6 z-20 pointer-events-none">
+                <div className="fixed bottom-24 pb-safe left-0 right-0 p-4 bg-gradient-to-t from-slate-50 via-slate-50 to-transparent dark:from-slate-950 dark:via-slate-950 z-20 pointer-events-none">
                     <form onSubmit={addItem} className="max-w-2xl mx-auto flex gap-2 pointer-events-auto">
                         <input
                             type="text"
