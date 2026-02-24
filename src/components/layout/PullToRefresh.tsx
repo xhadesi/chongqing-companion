@@ -73,9 +73,9 @@ export function PullToRefresh({ children }: { children: React.ReactNode }) {
             {/* Spinner Overlay */}
             <div
                 className={cn("fixed top-0 left-0 right-0 z-40 bg-transparent flex justify-center items-start pointer-events-none transition-all duration-200 ease-out", pullChange > 0 ? "opacity-100 visible" : "opacity-0 invisible")}
-                style={{ transform: `translateY(${Math.max(0, pullChange - 50)}px)` }}
+                style={{ transform: `translateY(${pullChange - 50}px)` }}
             >
-                <div className="bg-white dark:bg-slate-900 rounded-full p-2 shadow-xl border border-slate-100 dark:border-slate-800 mt-4 pointer-events-auto">
+                <div className="bg-white dark:bg-slate-900 rounded-full p-2 shadow-xl border border-slate-100 dark:border-slate-800 mt-safe pointer-events-none">
                     <Loader2 className={`w-5 h-5 text-primary ${loading || pullChange > 80 ? 'animate-spin' : ''}`} style={{ transform: `rotate(${pullChange * 2}deg)` }} />
                 </div>
             </div>

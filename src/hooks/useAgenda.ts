@@ -3,37 +3,13 @@
 import { useState, useEffect } from "react";
 import { TripDay, Activity } from "@/lib/types";
 
-const STORAGE_KEY = "chongqing-agenda";
+const STORAGE_KEY = "chongqing-agenda-v1.5";
 
-// Generate a 13-day itinerary starting from today
+import { DEFAULT_ITINERARY } from "@/data/defaultItinerary";
+
+// Generate a 12-day itinerary based on the user's specific trip
 const generateDefaultItinerary = (): TripDay[] => {
-    const days: TripDay[] = [];
-    const today = new Date();
-
-    for (let i = 0; i < 13; i++) {
-        const d = new Date(today);
-        d.setDate(today.getDate() + i);
-
-        days.push({
-            id: `day-${i + 1}`,
-            date: d.toISOString().split('T')[0],
-            dayNumber: i + 1,
-            activities: i === 0 ? [
-                {
-                    "id": "isu8ysdpg",
-                    "time": "20:30",
-                    "title": "Arrivée à Chongqing",
-                    "description": "Bienvenue !",
-                    "icon": "🛬",
-                    "location": "Aéroport",
-                    "address": "",
-                    "image": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Chongqing_Jiefangbei_night_view_2019.jpg",
-                    "completed": false
-                }
-            ] : []
-        });
-    }
-    return days;
+    return DEFAULT_ITINERARY;
 };
 
 // Helper to generate IDs
