@@ -24,26 +24,28 @@ export function AgendaView() {
 
     // Details Slide State
     const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
+    const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
     // Handling browser back button / iOS swipe back for the Details Slide
     useEffect(() => {
         const handlePopState = (e: PopStateEvent) => {
-            if (selectedActivity) {
+            if (isDetailsOpen) {
                 // If the slide was open and user swiped back/pressed back, close the slide
-                setSelectedActivity(null);
+                setIsDetailsOpen(false);
             }
         };
         window.addEventListener('popstate', handlePopState);
         return () => window.removeEventListener('popstate', handlePopState);
-    }, [selectedActivity]);
+    }, [isDetailsOpen]);
 
     const handleOpenActivity = (activity: any, containerId: string) => {
-        window.history.pushState({ activityDetailsOpen: true }, "");
         setSelectedActivity({ ...activity, _containerId: containerId } as any);
+        setIsDetailsOpen(true);
+        window.history.pushState({ activityDetailsOpen: true }, "");
     };
 
     const handleCloseActivity = () => {
-        setSelectedActivity(null);
+        setIsDetailsOpen(false);
         if (window.history.state?.activityDetailsOpen) {
             window.history.back();
         }
@@ -256,122 +258,129 @@ export function AgendaView() {
                 }}
             />
 
-            {/* Details Sliding Modal */}
-            {selectedActivity && (
-                <div className="fixed inset-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm p-0 flex flex-col animate-in slide-in-from-bottom-10 lg:slide-in-from-right-10 duration-300">
-                    <div className="relative h-64 md:h-80 w-full shrink-0 bg-slate-100 dark:bg-slate-900">
-                        {selectedActivity.image ? (
-                            <img
-                                src={selectedActivity.image}
-                                alt={selectedActivity.title}
-                                className="object-cover w-full h-full"
-                            />
-                        ) : (
-                            <div className="w-full h-full flex items-center justify-center text-6xl">
-                                {selectedActivity.icon || "🏙️"}
-                            </div>
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                        <button
-                            onClick={handleCloseActivity}
-                            className="absolute top-4 left-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/40 text-white transition-colors"
-                        >
-                            <ArrowLeft className="w-6 h-6" />
-                        </button>
-                        <div className="absolute bottom-6 left-6 right-6">
-                            <h1 className="text-2xl md:text-3xl font-black text-white mb-1 shadow-black/50 text-shadow-sm leading-tight">{selectedActivity.title}</h1>
-                            {selectedActivity.time && (
-                                <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-600 rounded-full text-white text-xs font-bold shadow-md">
-                                    <Clock className="w-3.5 h-3.5" />
-                                    {selectedActivity.time}
-                                </span>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 max-w-4xl mx-auto w-full pb-32">
-
-                        {(selectedActivity.location || selectedActivity.address) && (
-                            <div className="flex flex-col gap-3">
-                                <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
-                                    <MapPin className="w-5 h-5 text-indigo-600" />
-                                    Localisation
-                                </h3>
-                                {selectedActivity.location && <p className="text-sm font-medium text-slate-700 dark:text-slate-300"><span className="text-slate-400">Quartier:</span> {selectedActivity.location}</p>}
-                                {selectedActivity.address && <p className="text-sm font-medium text-slate-700 dark:text-slate-300"><span className="text-slate-400">Adresse:</span> {selectedActivity.address}</p>}
-                            </div>
-                        )}
-
-                        {selectedActivity.description && (
-                            <div className="flex flex-col gap-3">
-                                <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
-                                    <span className="text-xl">📝</span> Détails / Notes
-                                </h3>
-                                <div className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm bg-amber-50 dark:bg-amber-900/10 p-5 rounded-2xl border border-amber-100 dark:border-amber-900/30 whitespace-pre-wrap">
-                                    {selectedActivity.description}
-                                </div>
-                            </div>
-                        )}
-
-                        <div className="flex flex-col sm:flex-row items-center gap-3 pt-4">
-                            {(selectedActivity as any)._containerId === "unscheduled" ? (
-                                <button
-                                    onClick={() => {
-                                        setActivityToAddId(selectedActivity.id);
-                                        setIsAddModalOpen(true);
-                                        setSelectedActivity(null);
-                                    }}
-                                    className="w-full sm:flex-1 h-14 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-black flex items-center justify-center gap-2 shadow-lg shadow-amber-200 dark:shadow-none transition-transform active:scale-95"
-                                >
-                                    <Plus className="w-5 h-5" />
-                                    Planifier ce lieu
-                                </button>
+            {/* Details Sliding Modal - Persisted in DOM for smooth exit animation */}
+            <div
+                className={cn(
+                    "fixed inset-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm p-0 flex flex-col duration-300 transition-transform shadow-2xl",
+                    isDetailsOpen ? "translate-x-0" : "translate-x-full"
+                )}
+            >
+                {selectedActivity && (
+                    <>
+                        <div className="relative h-64 md:h-80 w-full shrink-0 bg-slate-100 dark:bg-slate-900">
+                            {selectedActivity.image ? (
+                                <img
+                                    src={selectedActivity.image}
+                                    alt={selectedActivity.title}
+                                    className="object-cover w-full h-full"
+                                />
                             ) : (
-                                <div className="w-full sm:flex-1 flex gap-2">
-                                    <button
-                                        onClick={() => {
-                                            const newVal = window.prompt("Nouvelle heure (ex: 20:00):", selectedActivity.time);
-                                            if (newVal !== null && newVal !== selectedActivity.time) {
-                                                updateActivity((selectedActivity as any)._containerId, selectedActivity.id, { time: newVal });
-                                                setSelectedActivity({ ...selectedActivity, time: newVal });
-                                            }
-                                        }}
-                                        className="flex-1 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold flex items-center justify-center gap-2 transition-colors active:scale-95"
-                                    >
-                                        <Clock className="w-5 h-5" />
-                                        Heure
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            const newVal = window.prompt("Nouvelle durée (ex: 1h30):", selectedActivity.duration || "");
-                                            if (newVal !== null) {
-                                                updateActivity((selectedActivity as any)._containerId, selectedActivity.id, { duration: newVal });
-                                                setSelectedActivity({ ...selectedActivity, duration: newVal });
-                                            }
-                                        }}
-                                        className="flex-1 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold flex items-center justify-center gap-2 transition-colors active:scale-95"
-                                    >
-                                        <Timer className="w-5 h-5" />
-                                        Durée
-                                    </button>
+                                <div className="w-full h-full flex items-center justify-center text-6xl">
+                                    {selectedActivity.icon || "🏙️"}
+                                </div>
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                            <button
+                                onClick={handleCloseActivity}
+                                className="absolute top-4 left-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/40 text-white transition-colors"
+                            >
+                                <ArrowLeft className="w-6 h-6" />
+                            </button>
+                            <div className="absolute bottom-6 left-6 right-6">
+                                <h1 className="text-2xl md:text-3xl font-black text-white mb-1 shadow-black/50 text-shadow-sm leading-tight">{selectedActivity.title}</h1>
+                                {selectedActivity.time && (
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-600 rounded-full text-white text-xs font-bold shadow-md">
+                                        <Clock className="w-3.5 h-3.5" />
+                                        {selectedActivity.time}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+
+                        <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 max-w-4xl mx-auto w-full pb-32">
+
+                            {(selectedActivity.location || selectedActivity.address) && (
+                                <div className="flex flex-col gap-3">
+                                    <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
+                                        <MapPin className="w-5 h-5 text-indigo-600" />
+                                        Localisation
+                                    </h3>
+                                    {selectedActivity.location && <p className="text-sm font-medium text-slate-700 dark:text-slate-300"><span className="text-slate-400">Quartier:</span> {selectedActivity.location}</p>}
+                                    {selectedActivity.address && <p className="text-sm font-medium text-slate-700 dark:text-slate-300"><span className="text-slate-400">Adresse:</span> {selectedActivity.address}</p>}
                                 </div>
                             )}
 
-                            {selectedActivity.address && (
-                                <a
-                                    href={`https://www.amap.com/search?query=${encodeURIComponent(selectedActivity.address)}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="w-full sm:w-auto h-14 px-8 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 font-bold flex items-center justify-center gap-2 transition-colors active:scale-95"
-                                >
-                                    <Navigation className="w-5 h-5" />
-                                    Ouvrir GPS
-                                </a>
+                            {selectedActivity.description && (
+                                <div className="flex flex-col gap-3">
+                                    <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
+                                        <span className="text-xl">📝</span> Détails / Notes
+                                    </h3>
+                                    <div className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm bg-amber-50 dark:bg-amber-900/10 p-5 rounded-2xl border border-amber-100 dark:border-amber-900/30 whitespace-pre-wrap">
+                                        {selectedActivity.description}
+                                    </div>
+                                </div>
                             )}
+
+                            <div className="flex flex-col sm:flex-row items-center gap-3 pt-4">
+                                {(selectedActivity as any)._containerId === "unscheduled" ? (
+                                    <button
+                                        onClick={() => {
+                                            setActivityToAddId(selectedActivity.id);
+                                            setIsAddModalOpen(true);
+                                            setSelectedActivity(null);
+                                        }}
+                                        className="w-full sm:flex-1 h-14 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-black flex items-center justify-center gap-2 shadow-lg shadow-amber-200 dark:shadow-none transition-transform active:scale-95"
+                                    >
+                                        <Plus className="w-5 h-5" />
+                                        Planifier ce lieu
+                                    </button>
+                                ) : (
+                                    <div className="w-full sm:flex-1 flex gap-2">
+                                        <button
+                                            onClick={() => {
+                                                const newVal = window.prompt("Nouvelle heure (ex: 20:00):", selectedActivity.time);
+                                                if (newVal !== null && newVal !== selectedActivity.time) {
+                                                    updateActivity((selectedActivity as any)._containerId, selectedActivity.id, { time: newVal });
+                                                    setSelectedActivity({ ...selectedActivity, time: newVal });
+                                                }
+                                            }}
+                                            className="flex-1 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold flex items-center justify-center gap-2 transition-colors active:scale-95"
+                                        >
+                                            <Clock className="w-5 h-5" />
+                                            Heure
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                const newVal = window.prompt("Nouvelle durée (ex: 1h30):", selectedActivity.duration || "");
+                                                if (newVal !== null) {
+                                                    updateActivity((selectedActivity as any)._containerId, selectedActivity.id, { duration: newVal });
+                                                    setSelectedActivity({ ...selectedActivity, duration: newVal });
+                                                }
+                                            }}
+                                            className="flex-1 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold flex items-center justify-center gap-2 transition-colors active:scale-95"
+                                        >
+                                            <Timer className="w-5 h-5" />
+                                            Durée
+                                        </button>
+                                    </div>
+                                )}
+
+                                {selectedActivity.address && (
+                                    <a
+                                        href={`https://www.amap.com/search?query=${encodeURIComponent(selectedActivity.address)}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-full sm:w-auto h-14 px-8 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 font-bold flex items-center justify-center gap-2 transition-colors active:scale-95"
+                                    >
+                                        <Navigation className="w-5 h-5" />
+                                        Ouvrir GPS
+                                    </a>
+                                )}
+                            </div>
                         </div>
-                    </div>
-                </div>
-            )}
+                    </>
+                )}
+            </div>
         </div>
     );
 }
