@@ -11,38 +11,56 @@ export function PullToRefresh({ children }: { children: React.ReactNode }) {
     const [loading, setLoading] = useState(false);
 
     // Use refs instead of state for touch tracking to prevent re-binding DOM events on every pixel scrolled
-    const startPoint = useRef<number | null>(null);
+    const startPoint = useRef<{ x: number, y: number } | null>(null);
     const isPulling = useRef(false);
+    const isHorizontalSwipe = useRef(false);
 
     useEffect(() => {
         const handleTouchStart = (e: TouchEvent) => {
             if (window.scrollY <= 0 && e.targetTouches.length > 0) {
-                startPoint.current = e.targetTouches[0].clientY;
+                startPoint.current = {
+                    x: e.targetTouches[0].clientX,
+                    y: e.targetTouches[0].clientY
+                };
                 isPulling.current = false;
+                isHorizontalSwipe.current = false;
             } else {
                 startPoint.current = null;
             }
         };
 
         const handleTouchMove = (e: TouchEvent) => {
-            if (!startPoint.current || e.targetTouches.length === 0) return;
+            if (!startPoint.current || e.targetTouches.length === 0 || isHorizontalSwipe.current) return;
 
+            const currentX = e.targetTouches[0].clientX;
             const currentY = e.targetTouches[0].clientY;
-            const diff = currentY - startPoint.current;
 
-            if (window.scrollY <= 0 && diff > 0) {
+            const diffX = currentX - startPoint.current.x;
+            const diffY = currentY - startPoint.current.y;
+
+            // Determine if it's primarily a horizontal swipe
+            if (!isPulling.current && Math.abs(diffX) > Math.abs(diffY)) {
+                isHorizontalSwipe.current = true;
+                return;
+            }
+
+            if (window.scrollY <= 0 && diffY > 0) {
                 isPulling.current = true;
                 e.preventDefault(); // Prevent native bounce
-                const newPull = Math.min(diff * 0.4, 150);
+                const newPull = Math.min(diffY * 0.4, 150);
                 setPullChange(newPull);
             }
         };
 
         const handleTouchEnd = () => {
-            if (!startPoint.current || !isPulling.current) return;
+            if (!startPoint.current || !isPulling.current) {
+                startPoint.current = null;
+                isHorizontalSwipe.current = false;
+                return;
+            }
 
             setPullChange((currentPull) => {
-                if (currentPull > 80) {
+                if (currentPull > 120) { // Require a stronger pull to refresh
                     setLoading(true);
                     setTimeout(() => {
                         window.location.reload();
@@ -54,6 +72,7 @@ export function PullToRefresh({ children }: { children: React.ReactNode }) {
 
             startPoint.current = null;
             isPulling.current = false;
+            isHorizontalSwipe.current = false;
         };
 
         const options = { passive: false };
