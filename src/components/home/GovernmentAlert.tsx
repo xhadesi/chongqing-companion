@@ -12,29 +12,33 @@ interface GovernmentAlertProps {
 
 export function GovernmentAlert({ initialAlert = false, initialMessage }: GovernmentAlertProps) {
     const [hasAlert, setHasAlert] = useState(initialAlert);
-    const [message, setMessage] = useState(initialMessage);
-    const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState(initialMessage || "Aucune annonce gouvernementale importante. Tout est OK.");
 
     useEffect(() => {
         const checkStatus = async () => {
+            const cached = sessionStorage.getItem("gov_alert_cache");
+            if (cached) {
+                try {
+                    const data = JSON.parse(cached);
+                    setHasAlert(data.hasAlert);
+                    setMessage(data.message);
+                    return;
+                } catch (e) { }
+            }
+
             try {
                 const data = await getGeminiAlertStatus();
                 if (data) {
                     setHasAlert(data.hasAlert);
                     setMessage(data.message);
+                    sessionStorage.setItem("gov_alert_cache", JSON.stringify(data));
                 }
             } catch (e) {
                 console.error(e);
-            } finally {
-                setLoading(false);
             }
         };
         checkStatus();
     }, []);
-
-    if (loading) return (
-        <div className="w-full h-16 rounded-[1.5rem] bg-slate-100 dark:bg-slate-800 animate-pulse border border-slate-200 dark:border-slate-700" />
-    );
 
     return (
         <a href="https://translate.google.com/translate?sl=zh-CN&tl=fr&u=www.gov.cn" target="_blank" rel="noopener noreferrer" className={cn(

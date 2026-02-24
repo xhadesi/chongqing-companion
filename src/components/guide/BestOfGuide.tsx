@@ -104,7 +104,7 @@ export function BestOfGuide() {
     // --- VIEW: CATEGORY SELECTION (DASHBOARD) ---
     if (!activeCategory) {
         return (
-            <Card variant="premium" className="flex flex-col h-[500px]">
+            <Card variant="premium" className="flex flex-col h-auto max-h-[500px]">
                 <div className="p-6 pb-4 shrink-0">
                     <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">
                         Le Guide <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-red-600">Ultime</span>
@@ -113,7 +113,7 @@ export function BestOfGuide() {
                 </div>
 
                 <div className="flex-1 overflow-y-auto p-4 pt-0 custom-scrollbar">
-                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 md:gap-4 pb-20"> {/* pb-20 for scroll space */}
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 md:gap-4 pb-6">
                         {CATEGORIES.map(cat => (
                             <button
                                 key={cat.id}
