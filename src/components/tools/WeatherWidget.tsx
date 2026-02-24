@@ -10,6 +10,24 @@ const CITIES = [
     { name: "Shanghai", lat: 31.2304, lng: 121.4737 },
 ];
 
+const getWeatherBackground = (code: number, idx: number) => {
+    // 0: Clear sky (Sunny Blue)
+    if (code === 0) return "bg-gradient-to-br from-blue-400 to-blue-600";
+    // 1, 2, 3: Partly cloudy, cloudy (Steel Gray)
+    if (code >= 1 && code <= 3) return "bg-gradient-to-br from-slate-400 to-slate-600";
+    // 45, 48: Fog (Muted Gray)
+    if (code === 45 || code === 48) return "bg-gradient-to-br from-gray-400 to-slate-500";
+    // Drops/Rain (Deep Rainy Blue)
+    if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return "bg-gradient-to-br from-cyan-700 to-blue-900";
+    // Snow (Icy White/Blue)
+    if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return "bg-gradient-to-br from-indigo-200 to-slate-400";
+    // Thunderstorm (Dark Storm)
+    if (code >= 95) return "bg-gradient-to-br from-slate-700 to-slate-900";
+
+    // Default fallback
+    return idx % 2 === 0 ? "bg-gradient-to-br from-blue-500/90 to-indigo-600/90" : "bg-gradient-to-br from-indigo-500/90 to-purple-600/90";
+};
+
 export function WeatherWidget() {
     const [cities, setCities] = useState<{ name: string, lat: number, lng: number }[]>([
         { name: "Chongqing", lat: 29.5623, lng: 106.5774 }
@@ -124,7 +142,7 @@ export function WeatherWidget() {
                                 onClick={() => setSelectedCityName(city.name)}
                                 className={cn(
                                     "relative w-full aspect-[4/5] rounded-[2rem] p-4 text-white shadow-lg flex flex-col justify-between transition-transform active:scale-95 overflow-hidden border border-white/20 cursor-pointer transform-gpu",
-                                    idx % 2 === 0 ? "bg-gradient-to-br from-blue-500/90 to-indigo-600/90" : "bg-gradient-to-br from-indigo-500/90 to-purple-600/90"
+                                    w ? getWeatherBackground(w.weather_code, idx) : (idx % 2 === 0 ? "bg-gradient-to-br from-blue-500/90 to-indigo-600/90" : "bg-gradient-to-br from-indigo-500/90 to-purple-600/90")
                                 )}
                             >
                                 {/* Decorative Circles */}
@@ -148,11 +166,14 @@ export function WeatherWidget() {
                                 </div>
 
                                 <div className="relative z-10">
-                                    <div className="flex justify-between items-end mb-1">
-                                        <span className="text-5xl font-black tracking-tighter drop-shadow-md">
-                                            {w ? Math.round(w.temperature_2m) + "°" : "--"}
-                                        </span>
-                                        <div className="filter drop-shadow-lg scale-110 origin-bottom-right">
+                                    <div className="flex justify-between items-center mb-1">
+                                        <div className="flex items-start">
+                                            <span className="text-5xl font-black tracking-tighter drop-shadow-md">
+                                                {w ? Math.round(w.temperature_2m) : "--"}
+                                            </span>
+                                            <span className="text-xl font-bold mt-1 ml-0.5 opacity-90 drop-shadow-sm">°</span>
+                                        </div>
+                                        <div className="filter drop-shadow-lg scale-125 origin-right pl-4">
                                             {w && getWeatherIcon(w.weather_code)}
                                         </div>
                                     </div>
