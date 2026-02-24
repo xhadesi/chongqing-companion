@@ -75,28 +75,11 @@ export default function Home() {
             href="/guide/culture"
           />
 
-          {/* Social - WeChat */}
-          <GuideBanner
-            icon={<MessageSquare className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />}
-            title="WeChat"
-            subtitle="Tout-en-un"
-            href="https://www.wechat.com/"
-            external
-          />
-
-          {/* Transport - Metro */}
-          <GuideBanner
-            icon={<Map className="w-6 h-6 text-slate-600 dark:text-slate-400" />}
-            title="Métro"
-            subtitle="Carte"
-            href="/metro"
-          />
-
           {/* Guide: Emergency */}
           <GuideBanner
             icon={<Phone className="w-6 h-6 text-red-600 dark:text-red-400" />}
             title="Urgences"
-            subtitle="110 / 120"
+            subtitle="110 / 119 / 120"
             isEmergency={true}
             href="tel:110"
             external

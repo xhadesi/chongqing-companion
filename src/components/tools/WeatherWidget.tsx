@@ -47,7 +47,7 @@ export function WeatherWidget() {
                 }
                 try {
                     const res = await fetch(
-                        `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lng}&current=temperature_2m,weather_code`
+                        `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lng}&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature`
                     );
                     const data = await res.json();
                     newWeatherData[city.name] = data.current;
@@ -58,7 +58,7 @@ export function WeatherWidget() {
             setWeatherData(prev => ({ ...prev, ...newWeatherData }));
         };
         fetchAllWeather();
-    }, [cities]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [cities, weatherData]);
 
     useEffect(() => {
         const timer = setTimeout(async () => {
@@ -136,12 +136,24 @@ export function WeatherWidget() {
                                 </div>
 
                                 <div className="relative z-10">
-                                    <div className="flex justify-between items-end">
+                                    <div className="flex justify-between items-end mb-1">
                                         <span className="text-5xl font-black tracking-tighter drop-shadow-md">
                                             {w ? Math.round(w.temperature_2m) + "°" : "--"}
                                         </span>
-                                        <div className="filter drop-shadow-lg">
+                                        <div className="filter drop-shadow-lg scale-110 origin-bottom-right">
                                             {w && getWeatherIcon(w.weather_code)}
+                                        </div>
+                                    </div>
+
+                                    {/* Additional weather details */}
+                                    <div className="flex items-center gap-2 mt-2 opacity-90 text-[10px] sm:text-xs">
+                                        <div className="flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded border border-white/10 shadow-sm backdrop-blur-sm">
+                                            <span className="font-bold">Ressenti:</span>
+                                            {w ? Math.round(w.apparent_temperature) + "°C" : "--"}
+                                        </div>
+                                        <div className="flex items-center gap-1 bg-white/10 px-2 py-0.5 rounded border border-white/10 shadow-sm backdrop-blur-sm">
+                                            <Droplets className="w-3 h-3 text-blue-200" />
+                                            {w ? w.relative_humidity_2m + "%" : "--"}
                                         </div>
                                     </div>
                                 </div>

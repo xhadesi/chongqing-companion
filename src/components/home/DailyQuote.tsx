@@ -29,17 +29,72 @@ const QUOTES = [
         hanzi: "四海为家",
         pinyin: "Sì hǎi wéi jiā",
         translation: "Considérer les quatre mers comme sa maison."
+    },
+    {
+        hanzi: "授人以鱼不如授人以渔",
+        pinyin: "Shòu rén yǐ yú bù rú shòu rén yǐ yú",
+        translation: "Mieux vaut apprendre à pêcher que donner un poisson."
+    },
+    {
+        hanzi: "塞翁失马，焉知非福",
+        pinyin: "Sài wēng shī mǎ, yān zhī fēi fú",
+        translation: "À quelque chose malheur est bon."
+    },
+    {
+        hanzi: "三思而后行",
+        pinyin: "Sān sī ér hòu xíng",
+        translation: "Tourner sept fois sa langue dans sa bouche avant de parler."
+    },
+    {
+        hanzi: "温故而知新",
+        pinyin: "Wēn gù ér zhī xīn",
+        translation: "Comprendre le présent en examinant le passé."
+    },
+    {
+        hanzi: "百闻不如一见",
+        pinyin: "Bǎi wén bù rú yī jiàn",
+        translation: "Une image vaut mille mots (Mieux vaut voir une fois)."
+    },
+    {
+        hanzi: "大智若愚",
+        pinyin: "Dà zhì ruò yú",
+        translation: "La grande sagesse a l'apparence de la stupidité."
+    },
+    {
+        hanzi: "青出于蓝而胜于蓝",
+        pinyin: "Qīng chū yú lán ér shèng yú lán",
+        translation: "L'élève dépasse le maître."
+    },
+    {
+        hanzi: "有志者，事竟成",
+        pinyin: "Yǒu zhì zhě, shì jìng chéng",
+        translation: "Quand on veut, on peut."
+    },
+    {
+        hanzi: "萝卜青菜，各有所爱",
+        pinyin: "Luóbo qīngcài, gè yǒu suǒ ài",
+        translation: "Les goûts et les couleurs ne se discutent pas."
+    },
+    {
+        hanzi: "吃一堑，长一智",
+        pinyin: "Chī yī qiàn, zhǎng yī zhì",
+        translation: "De ses erreurs on apprend."
     }
 ];
 
 export function DailyQuote() {
     const [quote, setQuote] = useState(QUOTES[0]);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
-        // Simple day-based randomization
-        const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
-        setQuote(QUOTES[dayOfYear % QUOTES.length]);
+        // Randomize on every mount
+        const randomIndex = Math.floor(Math.random() * QUOTES.length);
+        setQuote(QUOTES[randomIndex]);
+        setIsMounted(true);
     }, []);
+
+    // Prevent hydration mismatch by enforcing same initial render strategy or conditional render
+    if (!isMounted) return null;
 
     return (
         <Card variant="premium" className="p-6 group hover:shadow-lg transition-all duration-500">
@@ -51,7 +106,7 @@ export function DailyQuote() {
             <div className="relative z-10 flex flex-col gap-3">
                 <div className="flex items-center gap-2 mb-1">
                     <span className="px-2.5 py-1 bg-red-100/50 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-[10px] font-bold uppercase tracking-wider rounded-full border border-red-200/50 dark:border-red-800/50">
-                        Proverbe du Jour
+                        Proverbe du Moment
                     </span>
                 </div>
 
