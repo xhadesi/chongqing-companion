@@ -35,13 +35,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen bg-background text-foreground antialiased bg-pearl`}>
+      <body className={`${inter.className} min-h-screen bg-background text-foreground antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
+          {/* Isolated Background Layer for Safari iOS Fix */}
+          <div className="fixed inset-0 bg-pearl z-[-1] pointer-events-none" />
+
           <main className="pb-20 relative min-h-screen">
             {children}
           </main>
