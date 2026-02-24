@@ -1,9 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, Languages, Utensils, ShieldCheck, HeartHandshake, CloudRain } from "lucide-react";
+import { ArrowLeft, Languages, Utensils, ShieldCheck, HeartHandshake, CloudRain, Volume2 } from "lucide-react";
 
 export default function CultureGuidePage() {
+    const playAudio = (text: string) => {
+        if ('speechSynthesis' in window) {
+            // Cancel any ongoing speech
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.85; // Slightly slower for clarity
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("Désolé, la lecture audio n'est pas supportée sur ce navigateur.");
+        }
+    };
+
     return (
         <div className="min-h-screen bg-white pb-32">
             {/* Header */}
@@ -33,17 +47,33 @@ export default function CultureGuidePage() {
                     <div className="bg-slate-50 rounded-2xl p-5 border border-slate-100 space-y-4">
                         <p className="text-sm text-slate-600">L'anglais est très peu parlé. Le dialecte local (Chongqinghua) est différent du Mandarin.</p>
                         <div className="grid grid-cols-2 gap-3">
-                            <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                            <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm relative group">
                                 <p className="text-xs text-slate-400">Bonjour</p>
                                 <p className="font-bold text-slate-800">Ni hao (你好)</p>
+                                <button onClick={() => playAudio('你好')} className="absolute top-3 right-3 p-1.5 bg-blue-50 text-blue-500 rounded-full hover:bg-blue-100 transition-colors">
+                                    <Volume2 className="w-4 h-4" />
+                                </button>
                             </div>
-                            <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                            <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm relative group">
                                 <p className="text-xs text-slate-400">Merci</p>
                                 <p className="font-bold text-slate-800">Xie xie (谢谢)</p>
+                                <button onClick={() => playAudio('谢谢')} className="absolute top-3 right-3 p-1.5 bg-blue-50 text-blue-500 rounded-full hover:bg-blue-100 transition-colors">
+                                    <Volume2 className="w-4 h-4" />
+                                </button>
                             </div>
-                            <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm col-span-2">
-                                <p className="text-xs text-slate-400">Je ne veux pas épicé (Crucial !)</p>
-                                <p className="font-bold text-slate-800">Bu yao la (不要辣) / Wei la (微辣 - un peu épicé)</p>
+                            <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm col-span-2 relative group flex justify-between items-center">
+                                <div>
+                                    <p className="text-xs text-slate-400">Je ne veux pas épicé (Crucial !)</p>
+                                    <p className="font-bold text-slate-800">Bu yao la (不要辣) / Wei la (微辣)</p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button onClick={() => playAudio('不要辣')} className="p-1.5 bg-red-50 text-red-500 rounded-full hover:bg-red-100 transition-colors" title="Pas épicé">
+                                        <Volume2 className="w-4 h-4" />
+                                    </button>
+                                    <button onClick={() => playAudio('微辣')} className="p-1.5 bg-amber-50 text-amber-500 rounded-full hover:bg-amber-100 transition-colors" title="Légèrement épicé">
+                                        <Volume2 className="w-4 h-4" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -100,31 +130,46 @@ export default function CultureGuidePage() {
                         <div>
                             <h4 className="font-bold text-slate-900 border-b border-slate-200 pb-2 mb-3">Phrases de Survie (Icebreakers)</h4>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm">
+                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm relative group">
                                     <p className="text-[11px] uppercase tracking-wider text-pink-500 font-bold mb-1">La base absolue</p>
                                     <p className="text-xs text-slate-400">On peut s'ajouter sur WeChat ?</p>
                                     <p className="font-bold text-slate-800">Kěyǐ jiā gè wēixìn ma? (可以加个微信吗?)</p>
+                                    <button onClick={() => playAudio('可以加个微信吗?')} className="absolute top-3 right-3 p-1.5 bg-pink-50 text-pink-500 rounded-full hover:bg-pink-100 transition-colors">
+                                        <Volume2 className="w-4 h-4" />
+                                    </button>
                                 </div>
-                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm">
+                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm relative group">
                                     <p className="text-[11px] uppercase tracking-wider text-pink-500 font-bold mb-1">Le compliment direct</p>
                                     <p className="text-xs text-slate-400">Tu es très jolie !</p>
                                     <p className="font-bold text-slate-800">Nǐ hěn piàoliang! (你很漂亮!)</p>
+                                    <button onClick={() => playAudio('你很漂亮!')} className="absolute top-3 right-3 p-1.5 bg-pink-50 text-pink-500 rounded-full hover:bg-pink-100 transition-colors">
+                                        <Volume2 className="w-4 h-4" />
+                                    </button>
                                 </div>
-                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm">
+                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm relative group">
                                     <p className="text-[11px] uppercase tracking-wider text-pink-500 font-bold mb-1">L'approche indirecte</p>
-                                    <p className="text-xs text-slate-400">Tu as un super style (vêtements).</p>
+                                    <p className="text-xs text-slate-400">Tu as un super style.</p>
                                     <p className="font-bold text-slate-800">Nǐ de yīfú hěn hǎokàn (你的衣服很好看)</p>
+                                    <button onClick={() => playAudio('你的衣服很好看')} className="absolute top-3 right-3 p-1.5 bg-pink-50 text-pink-500 rounded-full hover:bg-pink-100 transition-colors">
+                                        <Volume2 className="w-4 h-4" />
+                                    </button>
                                 </div>
-                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm">
+                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm relative group">
                                     <p className="text-[11px] uppercase tracking-wider text-pink-500 font-bold mb-1">Pour inviter</p>
                                     <p className="text-xs text-slate-400">Puis-je t'offrir un verre ?</p>
                                     <p className="font-bold text-slate-800">Wǒ qǐng nǐ hē yībēi? (我请你喝一杯?)</p>
+                                    <button onClick={() => playAudio('我请你喝一杯?')} className="absolute top-3 right-3 p-1.5 bg-pink-50 text-pink-500 rounded-full hover:bg-pink-100 transition-colors">
+                                        <Volume2 className="w-4 h-4" />
+                                    </button>
                                 </div>
-                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm col-span-1 md:col-span-2 flex flex-col items-center text-center">
+                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm col-span-1 md:col-span-2 flex flex-col items-center text-center relative group">
                                     <p className="text-[11px] uppercase tracking-wider text-pink-500 font-bold mb-1">Si elle sourit et valide, sors direct :</p>
                                     <p className="text-xs text-slate-400">Je scanne ton QR code ?</p>
                                     <p className="font-bold text-slate-800">Wǒ sǎo nǐ? (我扫你?)</p>
-                                    <span className="text-[10px] text-slate-400 mt-1">(Prépare ton WeChat ouvert sur la fonction 'Scanner')</span>
+                                    <span className="text-[10px] text-slate-400 mt-1">(Prépare ton WeChat ouvert sur Scanner)</span>
+                                    <button onClick={() => playAudio('我扫你?')} className="absolute top-3 right-3 md:top-auto md:bottom-3 md:right-3 p-1.5 bg-pink-50 text-pink-500 rounded-full hover:bg-pink-100 transition-colors">
+                                        <Volume2 className="w-4 h-4" />
+                                    </button>
                                 </div>
                             </div>
                         </div>
