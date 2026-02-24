@@ -194,10 +194,9 @@ export function AgendaView() {
 
             {/* Custom Activity Form Modal */}
             {isAdding && (
-                <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4">
+                <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
                     <div className="absolute inset-0 bg-slate-900/40 dark:bg-black/80 backdrop-blur-sm" onClick={() => setIsAdding(false)} />
-                    <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-[2rem] p-6 relative animate-in slide-in-from-bottom-8 sm:zoom-in-95 z-10 shadow-2xl border border-slate-100 dark:border-slate-800">
-                        <div className="w-12 h-1.5 bg-slate-200 dark:bg-slate-800 rounded-full mx-auto mb-6 sm:hidden" />
+                    <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-[2rem] p-6 relative animate-in zoom-in-95 z-10 shadow-2xl border border-slate-100 dark:border-slate-800">
                         <h3 className="text-xl font-black mb-6 text-slate-800 dark:text-white flex items-center gap-3">
                             <div className="w-8 h-8 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center">
                                 <Plus className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
@@ -205,7 +204,7 @@ export function AgendaView() {
                             Organiser
                         </h3>
                         <form onSubmit={handleAdd} className="space-y-4">
-                            <input autoFocus type="text" placeholder="Titre (ex: Restaurant, Musée...)" value={newTitle} onChange={e => setNewTitle(e.target.value)} className="w-full p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-bold outline-none ring-2 ring-transparent focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-800 transition-all placeholder:text-slate-400" />
+                            <input type="text" placeholder="Titre (ex: Restaurant, Musée...)" value={newTitle} onChange={e => setNewTitle(e.target.value)} className="w-full p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-bold outline-none ring-2 ring-transparent focus:ring-indigo-500 focus:bg-white dark:focus:bg-slate-800 transition-all placeholder:text-slate-400" />
 
                             <div className="flex gap-3">
                                 <input type="text" placeholder="Heure" value={newTime} onChange={e => setNewTime(e.target.value)} className="w-1/3 p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-bold outline-none ring-2 ring-transparent focus:ring-indigo-500 text-sm placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 transition-all" />
