@@ -38,31 +38,32 @@ export function WeatherWidget() {
     }, [cities]);
 
     useEffect(() => {
+        let isMounted = true;
         const fetchAllWeather = async () => {
-            const newWeatherData: Record<string, any> = {};
-
             for (const city of cities) {
-                if (weatherData[city.name]) {
-                    newWeatherData[city.name] = weatherData[city.name];
-                    continue;
-                }
                 try {
                     const res = await fetch(
                         `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lng}&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`
                     );
                     const data = await res.json();
-                    newWeatherData[city.name] = {
-                        ...data.current,
-                        daily: data.daily
-                    };
+
+                    if (isMounted) {
+                        setWeatherData(prev => ({
+                            ...prev,
+                            [city.name]: {
+                                ...data.current,
+                                daily: data.daily
+                            }
+                        }));
+                    }
                 } catch (e) {
                     console.error("Failed to fetch weather for " + city.name);
                 }
             }
-            setWeatherData(prev => ({ ...prev, ...newWeatherData }));
         };
         fetchAllWeather();
-    }, [cities, weatherData]);
+        return () => { isMounted = false };
+    }, [cities]); // removed weatherData from dependency to fix infinite loop
 
     useEffect(() => {
         const timer = setTimeout(async () => {

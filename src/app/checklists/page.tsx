@@ -98,8 +98,8 @@ export default function ChecklistsPage() {
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
-            <header className="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800">
-                <div className="flex items-center gap-4 p-4">
+            <header className="sticky top-0 z-30 pt-safe bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800">
+                <div className="flex items-center gap-4 p-4 pb-2">
                     <Link href="/tools" className="p-2 -ml-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
                         <ArrowLeft className="w-6 h-6" />
                     </Link>
