@@ -75,16 +75,66 @@ export default function CultureGuidePage() {
                     </ul>
                 </section>
 
-                {/* Section: Social */}
+                {/* Section: Social & Rencontres (Drague / Expat) */}
                 <section className="space-y-4">
                     <h3 className="text-xl font-bold flex items-center gap-2 text-slate-800">
-                        <span className="p-2 bg-purple-100 text-purple-600 rounded-xl"><HeartHandshake className="w-5 h-5" /></span>
-                        Social & Mœurs
+                        <span className="p-2 bg-pink-100 text-pink-600 rounded-xl"><HeartHandshake className="w-5 h-5" /></span>
+                        Rencontre, Drague & Social
                     </h3>
-                    <div className="bg-slate-50 rounded-2xl p-5 border border-slate-100 space-y-3 text-sm text-slate-700">
-                        <p>Les habitants de Chongqing sont connus pour être bruyants et passionnés ("Huo La" - chaud et épicé comme leur cuisine).</p>
-                        <p><strong className="text-slate-900">Espace personnel :</strong> Il est réduit. On vous poussera peut-être dans le métro. Ce n'est pas agressif, juste pratique.</p>
-                        <p><strong className="text-slate-900">Photos :</strong> On vous prendra en photo si vous êtes étranger. Souriez, c'est de la curiosité.</p>
+                    <div className="bg-slate-50 rounded-2xl p-5 border border-slate-100 space-y-5 text-sm text-slate-700">
+
+                        <div>
+                            <h4 className="font-bold text-slate-900 border-b border-slate-200 pb-2 mb-2">L'Avantage du Laowai (Étranger)</h4>
+                            <p>En tant que Français blond aux yeux bleus, tu corresponds à 100% au standard de beauté occidental recherché ici. Tu vas attirer les regards. Les filles seront souvent intimidées de t'aborder en premier par peur que leur anglais soit mauvais. <strong>C'est à toi de faire le premier pas, toujours avec le sourire.</strong></p>
+                        </div>
+
+                        <div>
+                            <h4 className="font-bold text-slate-900 border-b border-slate-200 pb-2 mb-2">Les 3 règles d'or de l'approche</h4>
+                            <ul className="space-y-2">
+                                <li><span className="text-pink-500 font-bold">1. Le WeChat (微信) :</span> C'est la base absolue. On ne demande <strong>jamais</strong> un numéro de téléphone, on demande à s'ajouter sur WeChat. C'est l'étape 1 de toute relation (amicale ou amoureuse).</li>
+                                <li><span className="text-pink-500 font-bold">2. L'approche indirecte :</span> Dans les lieux calmes (parcs, cafés), demande de l'aide ou pose une question simple (ex: "Peux-tu me prendre en photo ?"). C'est moins agressif qu'un compliment frontal.</li>
+                                <li><span className="text-pink-500 font-bold">3. L'approche directe (Clubs/Bars) :</span> En soirée (Nine Street), tu peux y aller frontalement. Les filles sont là pour s'amuser et sociabiliser. Le contact visuel prolongé suivi d'un sourire est un feu vert.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 className="font-bold text-slate-900 border-b border-slate-200 pb-2 mb-3">Phrases de Survie (Icebreakers)</h4>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm">
+                                    <p className="text-[11px] uppercase tracking-wider text-pink-500 font-bold mb-1">La base absolue</p>
+                                    <p className="text-xs text-slate-400">On peut s'ajouter sur WeChat ?</p>
+                                    <p className="font-bold text-slate-800">Kěyǐ jiā gè wēixìn ma? (可以加个微信吗?)</p>
+                                </div>
+                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm">
+                                    <p className="text-[11px] uppercase tracking-wider text-pink-500 font-bold mb-1">Le compliment direct</p>
+                                    <p className="text-xs text-slate-400">Tu es très jolie !</p>
+                                    <p className="font-bold text-slate-800">Nǐ hěn piàoliang! (你很漂亮!)</p>
+                                </div>
+                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm">
+                                    <p className="text-[11px] uppercase tracking-wider text-pink-500 font-bold mb-1">L'approche indirecte</p>
+                                    <p className="text-xs text-slate-400">Tu as un super style (vêtements).</p>
+                                    <p className="font-bold text-slate-800">Nǐ de yīfú hěn hǎokàn (你的衣服很好看)</p>
+                                </div>
+                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm">
+                                    <p className="text-[11px] uppercase tracking-wider text-pink-500 font-bold mb-1">Pour inviter</p>
+                                    <p className="text-xs text-slate-400">Puis-je t'offrir un verre ?</p>
+                                    <p className="font-bold text-slate-800">Wǒ qǐng nǐ hē yībēi? (我请你喝一杯?)</p>
+                                </div>
+                                <div className="bg-white p-3 rounded-xl border border-pink-100 shadow-sm col-span-1 md:col-span-2 flex flex-col items-center text-center">
+                                    <p className="text-[11px] uppercase tracking-wider text-pink-500 font-bold mb-1">Si elle sourit et valide, sors direct :</p>
+                                    <p className="text-xs text-slate-400">Je scanne ton QR code ?</p>
+                                    <p className="font-bold text-slate-800">Wǒ sǎo nǐ? (我扫你?)</p>
+                                    <span className="text-[10px] text-slate-400 mt-1">(Prépare ton WeChat ouvert sur la fonction 'Scanner')</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h4 className="font-bold text-slate-900 border-b border-slate-200 pb-2 mb-2">Les Dates & Le Comportement</h4>
+                            <p className="mb-2"><strong>Le paiement :</strong> En Chine, l'homme paie <strong>toujours</strong> lors des premiers dates. Ne propose jamais de faire 50/50, c'est très mal vu et perçu comme un manque de virilité ou de politesse.</p>
+                            <p className="mb-2"><strong>La "Face" (Mianzi) :</strong> Ne mets jamais quelqu'un mal à l'aise en public. Si une fille refuse ton WeChat poliment (souvent en disant qu'elle n'accepte pas les inconnus), réponds simplement "Méi guānxì" (Pas de problème) et pars avec le sourire.</p>
+                            <p><strong>L'Anglais :</strong> Utilise un anglais très simple, parle doucement. N'hésite pas à utiliser l'application de traduction de ton téléphone si vous coincez sur un sujet. C'est tout à fait normal et très utilisé pour les dates avec des étrangers.</p>
+                        </div>
                     </div>
                 </section>
 
