@@ -127,7 +127,9 @@ export function WeatherWidget() {
                                     idx % 2 === 0 ? "bg-gradient-to-br from-blue-500/90 to-indigo-600/90" : "bg-gradient-to-br from-indigo-500/90 to-purple-600/90"
                                 )}
                             >
-                                {/* Decorative Circles Removed for WebKit Compatibility */}
+                                {/* Decorative Circles */}
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-full blur-2xl -mr-8 -mt-8" />
+                                <div className="absolute bottom-0 left-0 w-20 h-20 bg-black/20 rounded-full blur-2xl -ml-8 -mb-8" />
 
                                 <div className="relative z-10 flex justify-between items-start">
                                     <div>
