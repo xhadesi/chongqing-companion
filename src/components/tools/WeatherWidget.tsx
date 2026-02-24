@@ -94,13 +94,13 @@ export function WeatherWidget() {
         setCities(cities.filter(c => c.name !== name));
     };
 
-    const getWeatherIcon = (code: number) => {
-        const iconClass = "w-8 h-8 text-white drop-shadow-md";
-        if (code <= 1) return <Sun className={iconClass} />;
-        if (code <= 3) return <CloudSun className={iconClass} />;
-        if (code <= 48) return <Cloud className={iconClass} />;
-        if (code <= 67) return <CloudRain className={iconClass} />;
-        return <CloudSun className={iconClass} />;
+    const getWeatherIcon = (code: number, isModal = false) => {
+        const iconClass = isModal ? "w-8 h-8 drop-shadow-md" : "w-8 h-8 text-white drop-shadow-md";
+        if (code <= 1) return <Sun className={cn(iconClass, isModal && "text-amber-500")} />;
+        if (code <= 3) return <CloudSun className={cn(iconClass, isModal && "text-slate-400 dark:text-slate-300")} />;
+        if (code <= 48) return <Cloud className={cn(iconClass, isModal && "text-slate-400 dark:text-slate-300")} />;
+        if (code <= 67) return <CloudRain className={cn(iconClass, isModal && "text-blue-500")} />;
+        return <CloudSun className={cn(iconClass, isModal && "text-slate-400 dark:text-slate-300")} />;
     };
 
     return (
@@ -233,11 +233,11 @@ export function WeatherWidget() {
                             <X className="w-5 h-5" />
                         </button>
 
-                        <h3 className="text-xl font-black text-slate-800 dark:text-white mb-6 pr-8">{selectedCityName} <br /><span className="text-sm font-bold text-amber-500 uppercase tracking-widest">Prévisions 5 Jours</span></h3>
+                        <h3 className="text-xl font-black text-slate-800 dark:text-white mb-6 pr-8">{selectedCityName} <br /><span className="text-sm font-bold text-amber-500 uppercase tracking-widest">Prévisions 7 Jours</span></h3>
 
                         <div className="space-y-3">
                             {weatherData[selectedCityName]?.daily ? (
-                                weatherData[selectedCityName].daily.time.slice(0, 5).map((dateStr: string, i: number) => {
+                                weatherData[selectedCityName].daily.time.slice(0, 7).map((dateStr: string, i: number) => {
                                     const date = new Date(dateStr);
                                     const dayName = date.toLocaleDateString('fr-FR', { weekday: 'short' });
                                     const min = Math.round(weatherData[selectedCityName].daily.temperature_2m_min[i]);
@@ -251,7 +251,7 @@ export function WeatherWidget() {
                                             </div>
                                             <div className="flex items-center gap-4 flex-1">
                                                 <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center shrink-0">
-                                                    <div className="scale-[0.6] text-slate-700 dark:text-slate-300">{getWeatherIcon(code)}</div>
+                                                    <div className="scale-[0.8]">{getWeatherIcon(code, true)}</div>
                                                 </div>
                                                 <div className="flex-1 flex items-center justify-end gap-3 text-sm font-bold">
                                                     <span className="text-slate-400">{min}°</span>
