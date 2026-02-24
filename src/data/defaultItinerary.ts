@@ -104,8 +104,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 id: generateId(),
                 time: "22:00",
                 duration: "3h",
-                title: "Nightlife : Nine Street (Jiujie)",
-                description: "Le quartier de la fête à Chongqing. Clubs recommandés : Space Club ou Play House. Très animé jusqu'à l'aube.",
+                title: "Nightlife EDM (Nine Street)",
+                description: "L'épicentre de la fête (Space Club, Play House). En tant que Français blond aux yeux bleus, tu seras le centre d'attention (souvent invité aux tables VIP). C'est LE spot numéro 1 pour faire la fête avec de jeunes chinoises.",
                 location: "Jiangbei",
                 address: "Nine Street (Jiujie), Guanyinqiao",
                 icon: "🪩",
@@ -289,8 +289,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 id: generateId(),
                 time: "20:00",
                 duration: "3h",
-                title: "Bar Design (Sol Vague) & Cocktails",
-                description: "Soirée chic dans un bar lounge prestigieux réputé pour son sol interactif en forme de vagues et sa vue imprenable sur la skyline de Yuzhong.",
+                title: "Bar VIP Lounge & Cocktails",
+                description: "Lounge prestigieux (sol en vagues interactives) très fréquenté par les filles chics de Chongqing. L'ambiance feutrée avec vue sur la skyline est idéale pour aborder ou pour un premier date.",
                 location: "Nan'an",
                 address: "Nanbin Road",
                 icon: "🍸",
@@ -380,10 +380,20 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 time: "16:30",
                 duration: "2h",
                 title: "Testbed 2 (贰厂)",
-                description: "Ancienne imprimerie transformée en centre artistique hipster, cafés, boutiques design.",
+                description: "Ancienne imprimerie transformée en centre artistique hipster, cafés, boutiques design. Extrêmement populaire auprès des jeunes étudiantes pour faire des photos, endroit stratégique d'après-midi.",
                 location: "Yuzhong",
                 address: "Testbed 2",
                 icon: "🎨",
+                completed: false
+            },
+            {
+                id: generateId(),
+                time: "21:30",
+                duration: "3h",
+                title: "Bars Mixtes (Locaux & Expats)",
+                description: "Direction des endroits de style Revolucion Cocktail ou Helen's. C'est là que se rendent spécifiquement les jeunes Chinoises étudiantes ou actives, souvent bilingues, qui cherchent à rencontrer des Occidentaux et sociabiliser facilement.",
+                location: "Centro",
+                icon: "🍻",
                 completed: false
             }
         ]
