@@ -127,11 +127,6 @@ export function WeatherWidget() {
                                     idx % 2 === 0 ? "bg-gradient-to-br from-blue-500/90 to-indigo-600/90" : "bg-gradient-to-br from-indigo-500/90 to-purple-600/90"
                                 )}
                             >
-                                {/* Noise Texture */}
-                                <div className="absolute inset-0 opacity-20 pointer-events-none"
-                                    style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\' opacity=\'1\'/%3E%3C/svg%3E")' }}
-                                />
-
                                 {/* Decorative Circles */}
                                 <div className="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-full blur-2xl -mr-8 -mt-8" />
                                 <div className="absolute bottom-0 left-0 w-20 h-20 bg-black/20 rounded-full blur-2xl -ml-8 -mb-8" />

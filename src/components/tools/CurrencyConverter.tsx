@@ -42,9 +42,9 @@ export function CurrencyConverter() {
     return (
         <Card variant="premium" className="w-full p-6 flex flex-col relative overflow-hidden group hover:shadow-lg transition-all duration-300">
             {/* Background Decoration */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50/50 dark:bg-indigo-900/20 rounded-full blur-3xl -z-10 opacity-50 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50/50 dark:bg-indigo-900/20 rounded-full blur-3xl z-0 opacity-50 pointer-events-none" />
 
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-6 relative z-10">
                 <h3 className="font-black text-slate-800 dark:text-white text-lg flex items-center gap-2">
                     <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl text-indigo-600 dark:text-indigo-400">
                         <RefreshCw className="w-4 h-4" />
@@ -56,7 +56,7 @@ export function CurrencyConverter() {
                 </span>
             </div>
 
-            <div className="flex flex-col gap-2 relative" suppressHydrationWarning>
+            <div className="flex flex-col gap-2 relative z-10" suppressHydrationWarning>
                 {/* Input Section */}
                 <div className="bg-slate-50/50 dark:bg-slate-800/50 rounded-2xl p-4 transition-all focus-within:ring-2 focus-within:ring-indigo-100/50 dark:focus-within:ring-indigo-500/20 border border-transparent focus-within:border-indigo-200/50 dark:focus-within:border-indigo-500/30">
                     <div className="flex justify-between items-center mb-2">
