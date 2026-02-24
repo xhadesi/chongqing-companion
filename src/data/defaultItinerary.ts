@@ -73,9 +73,9 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 id: generateId(),
                 time: "13:30",
                 duration: "1h30",
-                title: "Déjeuner : Hotpot",
-                description: "Premier vrai hotpot (fondue sichuanaise) ! Demander \"Wei La\" (légèrement épicé) pour survivre au premier round.",
-                location: "Jiefangbei",
+                title: "Déjeuner : Hotpot Prémium (Pipa Yuan)",
+                description: "Le plus grand restaurant de fondue au monde, construit à flanc de colline. Demander \"Wei La\" (légèrement épicé) pour survivre au premier round.",
+                location: "Nan'an",
                 icon: "🍲",
                 completed: false
             },
@@ -88,6 +88,16 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Yuzhong",
                 address: "Minzu Road, Yuzhong",
                 icon: "🛕",
+                completed: false
+            },
+            {
+                id: generateId(),
+                time: "19:00",
+                duration: "2h",
+                title: "Dîner avec vue sur Hongya Cave",
+                description: "Dîner gastronomique chic de l'autre côté de la rivière (Jiangbei) offrant un panorama frontal spectaculaire sur Hongyadong illuminée.",
+                location: "Jiangbei",
+                icon: "🍷",
                 completed: false
             },
             {
@@ -122,11 +132,11 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 id: generateId(),
                 time: "13:00",
                 duration: "4h",
-                title: "Guanyinqiao & Outlets",
-                description: "Déjeuner rapide puis après-midi shopping. Visite d'un Outlet de Marques (type Florentia Village) ou exploration mode locale à Guanyinqiao.",
+                title: "Shopping VIP avec Personal Shopper",
+                description: "Séance de shopping privatisée avec styliste à Starlight 68 Plaza ou Florentia Village pour des pièces créateurs et conseils mode.",
                 location: "Jiangbei",
-                address: "Guanyinqiao Pedestrian Street",
-                icon: "👗",
+                address: "Starlight 68 Plaza",
+                icon: "🛍️",
                 completed: false
             },
             {
@@ -217,13 +227,13 @@ export const DEFAULT_ITINERARY: TripDay[] = [
             },
             {
                 id: generateId(),
-                time: "14:30",
-                duration: "3h",
-                title: "Shibati (Les 18 Marches)",
-                description: "Vieux quartier récemment restauré connectant le haut et le bas de la ville. Architecture Qing et Ming, nombreux spots photos et salons de thé.",
+                time: "15:00",
+                duration: "4h",
+                title: "Photoshoot Traditionnel & Shibati",
+                description: "Location d'une tenue (Hanfu/Qipao), maquillage pro (Zhuangzao) et séance photo magique dans les ruelles restaurées des 18 Marches (Shibati) jusqu'au crépuscule.",
                 location: "Yuzhong",
                 address: "Shibati Traditional Custom Area",
-                icon: "🏮",
+                icon: "📸",
                 completed: false
             },
             {
@@ -277,10 +287,10 @@ export const DEFAULT_ITINERARY: TripDay[] = [
             },
             {
                 id: generateId(),
-                time: "19:00",
+                time: "20:00",
                 duration: "3h",
-                title: "Nuit à Nan'an & Cocktails",
-                description: "Nanbin Road pour la vue de nuit sur Yuzhong, suivi d'un bar lounge élégant au bord du fleuve.",
+                title: "Bar Design (Sol Vague) & Cocktails",
+                description: "Soirée chic dans un bar lounge prestigieux réputé pour son sol interactif en forme de vagues et sa vue imprenable sur la skyline de Yuzhong.",
                 location: "Nan'an",
                 address: "Nanbin Road",
                 icon: "🍸",
