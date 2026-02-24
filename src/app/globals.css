@@ -161,8 +161,7 @@ body {
         rgba(240, 240, 245, 0.5) 40%,
         transparent 80%);
 
-    background-attachment: fixed;
-    background-size: cover;
+    background-size: 100vw 100vh;
   }
 
   .dark .bg-pearl {

@@ -81,7 +81,7 @@ export function PullToRefresh({ children }: { children: React.ReactNode }) {
             </div>
 
             <div
-                className={cn("transition-transform duration-200 ease-out min-h-screen", (loading || pullChange > 0) && "will-change-transform")}
+                className={cn("transition-transform duration-200 ease-out min-h-screen transform-gpu")}
                 style={(loading || pullChange > 0) ? { transform: `translateY(${loading ? 60 : pullChange * 0.5}px)` } : undefined}
             >
                 {children}
