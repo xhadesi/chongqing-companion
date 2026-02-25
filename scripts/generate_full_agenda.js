@@ -8,27 +8,68 @@ const rawData = [
         "dayNumber": 1,
         "activities": [
             {
-                "time": "18:00",
-                "title": "Arrivée et Installation",
-                "description": "Check-in à l'hôtel et première bouffée d'air humide de Chongqing.",
-                "location": "Hôtel",
+                "time": "17:00",
+                "title": "Départ pour l'aéroport",
+                "description": "Direction Paris-Charles-de-Gaulle T1 pour le début de l'aventure.",
+                "location": "Paris",
                 "address": "",
-                "icon": "🧳",
-                "image": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Jiefangbei_Chongqing.jpg"
+                "icon": "🛫",
+                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Paris_Charles_de_Gaulle_Airport_Terminal_1.jpg/800px-Paris_Charles_de_Gaulle_Airport_Terminal_1.jpg"
+            },
+            {
+                "time": "20:20",
+                "title": "Vol Paris - Pékin (NH2NKC)",
+                "description": "Décollage pour Pékin T3. Vol de nuit de 10h.",
+                "location": "Paris CDG T1",
+                "address": "Aéroport de Paris-Charles-de-Gaulle T1",
+                "icon": "✈️",
+                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Air_China_Boeing_777-300ER_%28B-2006%29.jpg/800px-Air_China_Boeing_777-300ER_%28B-2006%29.jpg"
+            }
+        ]
+    },
+    {
+        "dayNumber": 2,
+        "activities": [
+            {
+                "time": "12:20",
+                "title": "Escale à Pékin",
+                "description": "Arrivée à l'aéroport international de Pékin T3. Attente pour la correspondance vers Chongqing.",
+                "location": "Pékin T3",
+                "address": "Beijing Capital International Airport T3",
+                "icon": "⏱️",
+                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Beijing_Capital_International_Airport_Terminal_3.jpg/800px-Beijing_Capital_International_Airport_Terminal_3.jpg"
+            },
+            {
+                "time": "16:00",
+                "title": "Vol Pékin - Chongqing (NH2NKC)",
+                "description": "Décollage de Pékin T3. Vol de 2h55 vers Chongqing.",
+                "location": "Pékin T3",
+                "address": "Aéroport de Pékin T3",
+                "icon": "✈️",
+                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Chongqing_Jiangbei_International_Airport_T3A.jpg/800px-Chongqing_Jiangbei_International_Airport_T3A.jpg"
+            },
+            {
+                "time": "18:55",
+                "title": "Arrivée à Chongqing (CKG)",
+                "description": "Atterrissage à l'aéroport international de Chongqing Jiangbei T3.",
+                "location": "Aéroport CKG",
+                "address": "Chongqing Jiangbei International Airport T3",
+                "icon": "🛬",
+                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Chongqing_Jiangbei_International_Airport_T3A.jpg/800px-Chongqing_Jiangbei_International_Airport_T3A.jpg"
             },
             {
                 "time": "20:30",
-                "title": "Bayi Road Food Street (八一路好吃街)",
-                "description": "Premier dîner street-food : xiaomian, brochettes, snacks locaux pour se mettre dans l'ambiance.",
-                "location": "Jiefangbei",
-                "address": "Bayi Road, Yuzhong District",
-                "icon": "🍢",
-                "image": "https://upload.wikimedia.org/wikipedia/commons/8/85/Chongqing_Street_Food.jpg"
+                "title": "Check-in au Deya Hotel",
+                "description": "Installation à Dreeya·德涯酒店 (Dree· Superior Delight Double Bed Room, City View). Adresse: 解放碑洪崖洞店. Votre camp de base pour 11 nuits.",
+                "location": "Hôtel",
+                "address": "Jiefangbei, près de Hongyadong",
+                "icon": "🏨",
+                "image": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Jiefangbei_Chongqing.jpg"
             },
             {
-                "time": "22:00",
+                "time": "21:30",
                 "title": "Hongyadong (洪崖洞)",
-                "description": "Balade nocturne dans ce complexe illuminé aux airs du Voyage de Chihiro perchée sur la falaise.",
+                "description": "Comme vous logez juste à côté, première balade nocturne dans ce complexe illuminé aux airs du Voyage de Chihiro.",
                 "location": "Yuzhong",
                 "address": "No. 88 Binjiang Road",
                 "icon": "🌃",
@@ -37,19 +78,19 @@ const rawData = [
         ]
     },
     {
-        "dayNumber": 2,
+        "dayNumber": 3,
         "activities": [
             {
-                "time": "09:00",
+                "time": "09:30",
                 "title": "Chongqing Xiaomian (Nouilles)",
                 "description": "Le vrai petit-déj local, assis sur un tabouret en plastique dans la rue.",
                 "location": "Jiefangbei",
-                "address": "Stand de rue",
+                "address": "Stand de rue près de l'hôtel",
                 "icon": "🍜",
                 "image": "https://upload.wikimedia.org/wikipedia/commons/4/47/Chongqing_noodles.jpg"
             },
             {
-                "time": "10:30",
+                "time": "11:00",
                 "title": "Luohan Temple (罗汉寺)",
                 "description": "Un temple bouddhiste de 1000 ans caché au milieu des gratte-ciel vertigineux.",
                 "location": "Yuzhong",
@@ -68,17 +109,17 @@ const rawData = [
             },
             {
                 "time": "19:00",
-                "title": "Le Vrai Hotpot de Chongqing",
-                "description": "Baptême du feu avec la fondue au piment et au poivre de Sichuan (Mala).",
-                "location": "Yuzhong",
-                "address": "Restaurant local",
+                "title": "Bayi Road Food Street & Hotpot",
+                "description": "Découverte de la street food à Bayi Road suivi d'un premier baptême du feu avec la fondue au piment.",
+                "location": "Jiefangbei",
+                "address": "Bayi Road, Yuzhong District",
                 "icon": "🍲",
                 "image": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Chongqing_hot_pot.jpg"
             }
         ]
     },
     {
-        "dayNumber": 3,
+        "dayNumber": 4,
         "activities": [
             {
                 "time": "10:00",
@@ -110,7 +151,7 @@ const rawData = [
         ]
     },
     {
-        "dayNumber": 4,
+        "dayNumber": 5,
         "activities": [
             {
                 "time": "09:30",
@@ -151,7 +192,7 @@ const rawData = [
         ]
     },
     {
-        "dayNumber": 5,
+        "dayNumber": 6,
         "activities": [
             {
                 "time": "08:30",
@@ -169,7 +210,7 @@ const rawData = [
                 "location": "Jiulongpo",
                 "address": "Huangjueping",
                 "icon": "🖌️",
-                "image": "https://upload.wikimedia.org/wikipedia/commons/7/75/Old_street_China.jpg" // Fallback pour street art
+                "image": "https://upload.wikimedia.org/wikipedia/commons/7/75/Old_street_China.jpg"
             },
             {
                 "time": "18:00",
@@ -183,7 +224,7 @@ const rawData = [
         ]
     },
     {
-        "dayNumber": 6,
+        "dayNumber": 7,
         "activities": [
             {
                 "time": "08:00",
@@ -215,7 +256,7 @@ const rawData = [
         ]
     },
     {
-        "dayNumber": 7,
+        "dayNumber": 8,
         "activities": [
             {
                 "time": "10:30",
@@ -256,7 +297,7 @@ const rawData = [
         ]
     },
     {
-        "dayNumber": 8,
+        "dayNumber": 9,
         "activities": [
             {
                 "time": "10:00",
@@ -288,7 +329,7 @@ const rawData = [
         ]
     },
     {
-        "dayNumber": 9,
+        "dayNumber": 10,
         "activities": [
             {
                 "time": "08:30",
@@ -320,7 +361,7 @@ const rawData = [
         ]
     },
     {
-        "dayNumber": 10,
+        "dayNumber": 11,
         "activities": [
             {
                 "time": "11:00",
@@ -329,7 +370,7 @@ const rawData = [
                 "location": "Yuzhong",
                 "address": "Changjiang Binjiang Road",
                 "icon": "⛩️",
-                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Huguang_Guild_Hall_in_Chongqing.jpg/800px-Huguang_Guild_Hall_in_Chongqing.jpg" // Fallback temple
+                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Huguang_Guild_Hall_in_Chongqing.jpg/800px-Huguang_Guild_Hall_in_Chongqing.jpg"
             },
             {
                 "time": "16:00",
@@ -352,12 +393,12 @@ const rawData = [
         ]
     },
     {
-        "dayNumber": 11,
+        "dayNumber": 12,
         "activities": [
             {
                 "time": "11:00",
-                "title": "Danzishi Old Street",
-                "description": "Quartier réhabilité mêlant vues sur le fleuve, ruelles pittoresques et ancienne caserne française.",
+                "title": "Danzishi Old Street & Achats",
+                "description": "Quartier réhabilité et achats de souvenirs (sauce Mala, snacks).",
                 "location": "Nan'an",
                 "address": "Nanbin Road",
                 "icon": "🏘️",
@@ -366,43 +407,11 @@ const rawData = [
             {
                 "time": "15:00",
                 "title": "Sources thermales (Hot Springs)",
-                "description": "Chongqing est la capitale des sources chaudes. Après midi détente à l'une des sources (Ronghui ou Bolian).",
+                "description": "Chongqing est la capitale des sources chaudes. Après-midi détente à l'une des sources (Ronghui).",
                 "location": "Banlieue",
                 "address": "Ronghui Hot Springs",
                 "icon": "🧖",
-                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Onsen_Rotenburo.jpg/800px-Onsen_Rotenburo.jpg" // Fallback onsen
-            },
-            {
-                "time": "20:00",
-                "title": "Dîner sur Nanbin Road",
-                "description": "Repas haut de gamme ou décontracté avec une brise douce depuis le sud du fleuve Yangtsé.",
-                "location": "Nan'an",
-                "address": "Nanbin Road",
-                "icon": "🍽️",
-                "image": "https://upload.wikimedia.org/wikipedia/commons/d/de/Jialing_River_Chongqing.jpg"
-            }
-        ]
-    },
-    {
-        "dayNumber": 12,
-        "activities": [
-            {
-                "time": "10:00",
-                "title": "Derniers Achats (Souvenirs & Épices)",
-                "description": "Courses pour rapporter de la sauce Mala, des snacks locaux et des souvenirs.",
-                "location": "Jiefangbei",
-                "address": "",
-                "icon": "🎁",
-                "image": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Jiefangbei_Chongqing.jpg"
-            },
-            {
-                "time": "14:00",
-                "title": "Flânerie libre",
-                "description": "Revisite tes spots favoris ou déguste un dernier Bubble Tea.",
-                "location": "Au choix",
-                "address": "",
-                "icon": "🧋",
-                "image": "https://upload.wikimedia.org/wikipedia/commons/4/45/Bubble_tea.jpg"
+                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Onsen_Rotenburo.jpg/800px-Onsen_Rotenburo.jpg"
             },
             {
                 "time": "19:00",
@@ -419,23 +428,57 @@ const rawData = [
         "dayNumber": 13,
         "activities": [
             {
-                "time": "06:30",
-                "title": "Aéroport / Avion ✈️",
-                "description": "Vol retour de Chongqing (CKG). N'oublie rien à l'hôtel !",
+                "time": "06:00",
+                "title": "Départ de l'hôtel",
+                "description": "Check-out du Deya Hotel et direction l'Aéroport Jiangbei T3.",
+                "location": "Jiefangbei",
+                "address": "Hôtel",
+                "icon": "🏨",
+                "image": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Jiefangbei_Chongqing.jpg"
+            },
+            {
+                "time": "09:05",
+                "title": "Vol Chongqing - Pékin (NH2NKC)",
+                "description": "Décollage de l'Aéroport Jiangbei T3 vers l'Aéroport de Pékin T3. Vol de 2h25.",
                 "location": "Aéroport CKG",
-                "address": "Chongqing Jiangbei International Airport",
+                "address": "Chongqing Jiangbei International Airport T3",
                 "icon": "🛫",
                 "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Chongqing_Jiangbei_International_Airport_T3A.jpg/800px-Chongqing_Jiangbei_International_Airport_T3A.jpg"
+            },
+            {
+                "time": "11:30",
+                "title": "Escale à Pékin",
+                "description": "Arrivée au T3 de Pékin. Attente de la correspondance.",
+                "location": "Aéroport PEK",
+                "address": "Beijing Capital International Airport T3",
+                "icon": "⏱️",
+                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Beijing_Capital_International_Airport_Terminal_3.jpg/800px-Beijing_Capital_International_Airport_Terminal_3.jpg"
+            },
+            {
+                "time": "13:30",
+                "title": "Vol de retour Pékin - Paris (NH2NKC)",
+                "description": "Décollage de Pékin T3 pour Paris CDG T1. Vol de 10h45.",
+                "location": "Pékin T3",
+                "address": "Aéroport de Pékin T3",
+                "icon": "✈️",
+                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Air_China_Boeing_777-300ER_%28B-2006%29.jpg/800px-Air_China_Boeing_777-300ER_%28B-2006%29.jpg"
+            },
+            {
+                "time": "18:15",
+                "title": "Arrivée à Paris",
+                "description": "Atterrissage à Paris Charles-de-Gaulle T1. Fin du voyage !",
+                "location": "Paris CDG T1",
+                "address": "Aéroport CDG T1",
+                "icon": "🛬",
+                "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Paris_Charles_de_Gaulle_Airport_Terminal_1.jpg/800px-Paris_Charles_de_Gaulle_Airport_Terminal_1.jpg"
             }
         ]
     }
 ];
 
 const processedData = rawData.map((day, index) => {
-    // Start date is April 29th, 2024
-    // Note: Assuming 2024 since current year in system might be different from user travel, 
-    // but the prompt says April 29 to May 11
-    const baseDate = new Date('2024-04-29T12:00:00Z');
+    // Start date is April 29th, 2026
+    const baseDate = new Date('2026-04-29T12:00:00Z');
     baseDate.setDate(baseDate.getDate() + index);
 
     return {

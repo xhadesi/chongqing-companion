@@ -5,8 +5,38 @@ const generateId = () => Math.random().toString(36).substr(2, 9);
 export const DEFAULT_ITINERARY: TripDay[] = [
     {
         id: `day-${generateId()}`,
-        date: "2026-04-30",
+        date: "2026-04-29",
         dayNumber: 1,
+        activities: [
+            {
+                id: generateId(),
+                time: "17:00",
+                duration: "3h",
+                title: "Départ pour l'Aéroport",
+                description: "Direction l'aéroport de Paris-Charles-de-Gaulle T1. C'est le grand départ vers la mégalopole chinoise.",
+                tips: "Vérifie bien ton passeport et ton visa une dernière fois !",
+                location: "Paris CDG T1",
+                icon: "🛫",
+                completed: false
+            },
+            {
+                id: generateId(),
+                time: "20:20",
+                duration: "10h",
+                title: "Vol Paris - Pékin (Réf: NH2NKC)",
+                description: "Embarquement pour le vol de nuit vers l'Aéroport international de Pékin T3.",
+                tips: "Dors un maximum dans l'avion pour encaisser le décalage horaire (+6h).",
+                location: "Dans les airs",
+                icon: "✈️",
+                completed: false
+            }
+        ]
+    },
+
+    {
+        id: `day-${generateId()}`,
+        date: "2026-04-30",
+        dayNumber: 2,
         activities: [
             {
                 id: generateId(),
@@ -49,7 +79,7 @@ export const DEFAULT_ITINERARY: TripDay[] = [
     {
         id: `day-${generateId()}`,
         date: "2026-05-01",
-        dayNumber: 2,
+        dayNumber: 3,
         activities: [
             {
                 id: generateId(),
@@ -114,7 +144,7 @@ export const DEFAULT_ITINERARY: TripDay[] = [
     {
         id: `day-${generateId()}`,
         date: "2026-05-02",
-        dayNumber: 3,
+        dayNumber: 4,
         activities: [
             {
                 id: generateId(),
@@ -156,7 +186,7 @@ export const DEFAULT_ITINERARY: TripDay[] = [
     {
         id: `day-${generateId()}`,
         date: "2026-05-03",
-        dayNumber: 4,
+        dayNumber: 5,
         activities: [
             {
                 id: generateId(),
@@ -199,7 +229,7 @@ export const DEFAULT_ITINERARY: TripDay[] = [
     {
         id: `day-${generateId()}`,
         date: "2026-05-04",
-        dayNumber: 5,
+        dayNumber: 6,
         activities: [
             {
                 id: generateId(),
@@ -241,7 +271,7 @@ export const DEFAULT_ITINERARY: TripDay[] = [
     {
         id: `day-${generateId()}`,
         date: "2026-05-05",
-        dayNumber: 6,
+        dayNumber: 7,
         activities: [
             {
                 id: generateId(),
@@ -293,7 +323,7 @@ export const DEFAULT_ITINERARY: TripDay[] = [
     {
         id: `day-${generateId()}`,
         date: "2026-05-06",
-        dayNumber: 7,
+        dayNumber: 8,
         activities: [
             {
                 id: generateId(),
@@ -335,7 +365,7 @@ export const DEFAULT_ITINERARY: TripDay[] = [
     {
         id: `day-${generateId()}`,
         date: "2026-05-07",
-        dayNumber: 8,
+        dayNumber: 9,
         activities: [
             {
                 id: generateId(),
@@ -389,7 +419,7 @@ export const DEFAULT_ITINERARY: TripDay[] = [
     {
         id: `day-${generateId()}`,
         date: "2026-05-08",
-        dayNumber: 9,
+        dayNumber: 10,
         activities: [
             {
                 id: generateId(),
@@ -441,7 +471,7 @@ export const DEFAULT_ITINERARY: TripDay[] = [
     {
         id: `day-${generateId()}`,
         date: "2026-05-09",
-        dayNumber: 10,
+        dayNumber: 11,
         activities: [
             {
                 id: generateId(),
@@ -483,7 +513,7 @@ export const DEFAULT_ITINERARY: TripDay[] = [
     {
         id: `day-${generateId()}`,
         date: "2026-05-10",
-        dayNumber: 11,
+        dayNumber: 12,
         activities: [
             {
                 id: generateId(),
@@ -534,39 +564,72 @@ export const DEFAULT_ITINERARY: TripDay[] = [
     {
         id: `day-${generateId()}`,
         date: "2026-05-11",
-        dayNumber: 12,
+        dayNumber: 13,
         activities: [
             {
                 id: generateId(),
-                time: "07:00",
+                time: "06:00",
                 duration: "1h",
-                title: "Réveil cruel & Check-out Final de l'Hôtel",
-                description: "Le Deya Hotel te paraitra lointain, on sent déjà tristement l'envie cruelle d'embrasser de nouveau ces matelas trop durs comme des planches et pourtant les rues s'échauffent déjà. Tu descends avec les poches lourdes de monnaie virtuelles inutilisable et d'un corps fracassé par un nombre stupide de kilomètres à pied escaladé ou un peu abasourdi d'avoir tant mangé de piment destructeurs en une petite douzaine de jour ! Les bagages bien verrouillé à glisser doucement sur les marbres silencieux du hall des départ de la grande couronne des CBD !",
-                tips: "Pas le droit d'oublier de câbles où ton sublime nouveau passeport flambant ou le visa tant durement perquisitionné de sueur à paris au consolat ! Lance vite fait la géniale \"Checklist\" sur cette application mobile, regarde en balayant méthodiquement de hauts du plafond chaque prises murales suspectes de l'hôtel avant de claquer irrémédiablement le pommeau des serrures automatiques lourdes... un bon adieu du bout des lèvres !",
+                title: "Check-out Final de l'Hôtel",
+                description: "Fin du séjour au Deya Hotel, check-out express.",
+                tips: "Vérifie bien les tiroirs et les placards pour ne rien oublier.",
                 location: "Deya Hôtel",
-                icon: "🕰️",
+                icon: "🏨",
                 completed: false
             },
             {
                 id: generateId(),
-                time: "08:00",
-                duration: "1h",
-                title: "Trajet retour Aéroport fuyant (CKG)",
-                description: "Au volant du Didi silencieux en voiture neuve luxueuse électrique sans le bruit du turbo occidental ou ce taxi jaunâtre grincheux puant le clou de girofle aux suspensions rabaissées. Tout le vaste centre de la gigantesque forêt d'acier se dissipe peu a peu sur un viaducs surdimensionnés s'envolant dangereusement toujours plus sur l'étreinte grisonnante des montagnes industrielles. T'as quitté le monstre de Cyberpunk en l'amputant d'un bout de son cœur, tout seul, en étant venu les poignées digne ! Les pistes en béton monumentale de Jiangbei se pointent de marbre à l'horizon...!",
-                tips: "On fait hyper simple pour ne surtout pas se prendre le plus bête pépin logistique à l'aube ou la précipitation angoissante des queues chinoises ! Clique illico dans ton appli sur la rubrique \"Taxi\", tourne fièrement le gros écran majuscule de ton téléphone jaune en plein nez au conducteur au volant : tu pointeras en gras la petite et géniale ligne magique salvatrice traduite de : \"Direction directement à l'aéroport !\" pour glisser tranquille sur les voies express !",
-                location: "Aéroport (CKG)",
+                time: "06:30",
+                duration: "2h",
+                title: "Trajet vers l'Aéroport (CKG)",
+                description: "Dernier trajet en DiDi ou taxi à travers Chongqing endormie.",
+                tips: "Prévient un peu en avance ton chauffeur si besoin sur DiDi.",
+                location: "Aéroport (CKG) T3",
                 icon: "🚕",
                 completed: false
             },
             {
                 id: generateId(),
-                time: "10:30",
-                duration: "12h",
-                title: "Long Vol Intercontinental vers Paris !",
-                description: "Fini l'incroyable densité accablante de l'épice ou du grouillement poétique fou amoureux du ciel Asiatiques brumeux de pollution... la lointaine, plate et si mignonne contrée paisiblement vide des parisiens pressé sans les néons vert bouteille t'attends à pas de plomb devant sa Tour Eiffel minuscule et un métro archaïque grèvant surchauffé comparé au système 3D futuriste d'orient extrême.",
-                tips: "Laisse littéralement de côtés ton téléphone aux applications sans VPN, enclenche un masque de nuit aux senteur occulte, passe directemenmt hors des réseaux de tes données du bout d'un pouce. Fin de l'ère incroyable. Bon vol monumental bg !",
-                location: "Air",
+                time: "09:05",
+                duration: "2h25",
+                title: "Vol Chongqing - Pékin (NH2NKC)",
+                description: "Décollage de CKG T3 vers Beijing T3.",
+                tips: "Détends-toi, la partie domestique est presque passée.",
+                location: "Avion",
                 icon: "🛫",
+                completed: false
+            },
+            {
+                id: generateId(),
+                time: "11:30",
+                duration: "2h",
+                title: "Escale à Pékin T3",
+                description: "Arrivée et transit pour le vol international.",
+                tips: "Derniers achats duty-free chinois si tu as des oublis !",
+                location: "Aéroport PEK T3",
+                icon: "⏱️",
+                completed: false
+            },
+            {
+                id: generateId(),
+                time: "13:30",
+                duration: "10h45",
+                title: "Vol Pékin - Paris (NH2NKC)",
+                description: "Long vol retour vers l'Europe.",
+                tips: "Prépare tes playlists et tes films hors ligne.",
+                location: "Air",
+                icon: "✈️",
+                completed: false
+            },
+            {
+                id: generateId(),
+                time: "18:15",
+                duration: "1h",
+                title: "Arrivée à Paris CDG T1",
+                description: "Atterrissage en France. Accueil par le ciel parisien.",
+                tips: "Bon retour, c'est la fin du cyberpunk pour l'instant !",
+                location: "Paris CDG T1",
+                icon: "🛬",
                 completed: false
             }
         ]
