@@ -25,15 +25,15 @@ export function BottomNav() {
                             key={item.href}
                             href={item.href}
                             className={cn(
-                                "flex flex-col items-center justify-center w-full h-full space-y-1.5 transition-all duration-300 relative group",
-                                isActive ? "opacity-100 scale-105" : "opacity-70 hover:opacity-100"
+                                "flex flex-col items-center justify-center w-full h-full space-y-1.5 transition-all duration-100 relative group active:scale-95 active:opacity-50",
+                                isActive ? "opacity-100 scale-105" : "opacity-80 hover:opacity-100"
                             )}
                         >
                             {isActive && (
                                 <span className="absolute -top-3 w-8 h-1 bg-primary rounded-b-full shadow-sm animate-in fade-in" />
                             )}
 
-                            <div className={cn("text-2xl transition-transform duration-300 drop-shadow-sm", isActive && "scale-110 drop-shadow-md")}>
+                            <div className={cn("text-2xl transition-transform duration-100 drop-shadow-sm", isActive && "scale-110 drop-shadow-md")}>
                                 {item.emoji}
                             </div>
 
