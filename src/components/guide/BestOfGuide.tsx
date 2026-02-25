@@ -7,11 +7,13 @@ import { MapPin, Star, Plus, Check, Info, Navigation, ArrowLeft, Lightbulb, Cloc
 import { cn } from "@/lib/utils";
 import { useAgenda } from "@/hooks/useAgenda";
 import { Card } from "@/components/ui/Card";
+import { TaxiModal } from "@/components/ui/TaxiModal";
 
 export function BestOfGuide() {
     const [activeCategory, setActiveCategory] = useState<CategoryId | null>(null);
     const [selectedPlace, setSelectedPlace] = useState<GuidePlace | null>(null);
     const [now, setNow] = useState<Date | null>(null);
+    const [isTaxiModalOpen, setIsTaxiModalOpen] = useState(false);
     const { addActivity, unscheduled, days } = useAgenda();
 
     useEffect(() => {
@@ -336,8 +338,26 @@ export function BestOfGuide() {
                         </div>
 
                         <div className="space-y-2">
-                            <h3 className="font-bold text-slate-900">À propos</h3>
-                            <p className="text-slate-600 text-sm leading-relaxed">
+                            <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <MapPin className="w-5 h-5 text-slate-500" />
+                                Adresse
+                            </h3>
+                            <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between p-3 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl">
+                                <p className="text-slate-600 dark:text-slate-400 text-sm max-w-[200px] truncate">
+                                    {selectedPlace.address}
+                                </p>
+                                <button
+                                    onClick={() => setIsTaxiModalOpen(true)}
+                                    className="shrink-0 text-xs font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-3 py-2 rounded-xl border border-amber-200 dark:border-amber-900/50 flex items-center gap-2 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors active:scale-95"
+                                >
+                                    <span>🚕</span> Montrer au Taxi
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <h3 className="font-bold text-slate-900 dark:text-white">À propos</h3>
+                            <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
                                 {selectedPlace.description}
                             </p>
                         </div>
@@ -381,6 +401,13 @@ export function BestOfGuide() {
                             </div>
                         </div>
                     </div>
+                    {/* Taxi Modal overlay, separate from the details modal flow */}
+                    <TaxiModal
+                        isOpen={isTaxiModalOpen}
+                        onClose={() => setIsTaxiModalOpen(false)}
+                        destinationName={selectedPlace.title}
+                        address={selectedPlace.chineseTitle || selectedPlace.address}
+                    />
                 </div>
             )}
         </Card>

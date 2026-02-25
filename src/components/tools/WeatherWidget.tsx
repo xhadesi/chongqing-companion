@@ -84,7 +84,7 @@ export function WeatherWidget() {
             for (const city of cities) {
                 try {
                     const res = await fetch(
-                        `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lng}&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`
+                        `/api/weather?lat=${city.lat}&lng=${city.lng}`
                     );
                     const data = await res.json();
                     newWeatherData[city.name] = {

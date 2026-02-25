@@ -47,8 +47,8 @@ export function ConfirmModal({
                             onClose();
                         }}
                         className={`flex-1 py-3.5 rounded-xl font-bold text-white shadow-lg transition-transform active:scale-95 ${isDestructive
-                                ? "bg-red-500 shadow-red-200 hover:bg-red-600"
-                                : "bg-slate-900 shadow-slate-200 hover:bg-slate-800 dark:bg-white dark:text-slate-900"
+                            ? "bg-red-500 shadow-red-200 hover:bg-red-600 dark:shadow-red-900/20"
+                            : "bg-slate-900 shadow-slate-200 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:shadow-white/10 dark:hover:bg-slate-100"
                             }`}
                     >
                         {confirmText}

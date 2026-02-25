@@ -96,6 +96,37 @@ export default function Home() {
 
 
 
+      {/* Currency Cheat Sheet */}
+      <section className="animate-in slide-in-from-bottom-8 duration-700 delay-200">
+        <div className="bg-slate-900 dark:bg-slate-800 rounded-2xl p-4 flex items-center justify-between text-white shadow-lg shadow-slate-900/10">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-lg">
+              💶
+            </div>
+            <div>
+              <p className="font-bold text-sm">Pense-bête Devises</p>
+              <p className="text-[10px] text-slate-300">1€ ≈ 7.8¥</p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <div className="text-center">
+              <p className="text-[10px] text-slate-400 font-bold mb-0.5">5€</p>
+              <p className="font-black text-sm text-green-400">39¥</p>
+            </div>
+            <div className="w-px h-8 bg-white/10" />
+            <div className="text-center">
+              <p className="text-[10px] text-slate-400 font-bold mb-0.5">10€</p>
+              <p className="font-black text-sm text-green-400">78¥</p>
+            </div>
+            <div className="w-px h-8 bg-white/10" />
+            <div className="text-center">
+              <p className="text-[10px] text-slate-400 font-bold mb-0.5">50€</p>
+              <p className="font-black text-sm text-green-400">390¥</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Tools Quick Access */}
       <section className="animate-in slide-in-from-bottom-8 duration-700 delay-300">
         <Link href="/tools">

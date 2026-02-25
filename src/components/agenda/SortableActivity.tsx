@@ -4,6 +4,9 @@ import { Activity } from "@/lib/types";
 import { Clock, MapPin, Check, X, ImageIcon, ChevronRight, Edit2, Timer } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+import { TaxiModal } from "@/components/ui/TaxiModal";
+import { useState } from "react";
+
 interface SortableActivityProps {
     activity: Activity;
     onToggle: (id: string) => void;
@@ -14,6 +17,8 @@ interface SortableActivityProps {
 }
 
 export function SortableActivity({ activity, onToggle, onDelete, onClick, onTimeEdit, onDurationEdit }: SortableActivityProps) {
+    const [isTaxiModalOpen, setIsTaxiModalOpen] = useState(false);
+
     return (
         <div className="relative group touch-none animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div
@@ -105,6 +110,18 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                         </span>
                     )}
 
+                    {activity.address && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setIsTaxiModalOpen(true);
+                            }}
+                            className="text-xs font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-2.5 py-1.5 rounded-xl border border-amber-200 dark:border-amber-900/50 flex items-center gap-1.5 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors active:scale-95"
+                        >
+                            <span>🚕</span> Taxi
+                        </button>
+                    )}
+
                     {activity.image && (
                         <span className="text-xs font-bold text-slate-500 flex items-center gap-1.5 opacity-70 bg-slate-100 dark:bg-slate-800 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
                             <ImageIcon className="w-3.5 h-3.5" />
@@ -113,6 +130,15 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                     )}
                 </div>
             </div>
+
+            {activity.address && (
+                <TaxiModal
+                    isOpen={isTaxiModalOpen}
+                    onClose={() => setIsTaxiModalOpen(false)}
+                    destinationName={activity.location || activity.title}
+                    address={activity.address}
+                />
+            )}
         </div>
     );
 }
