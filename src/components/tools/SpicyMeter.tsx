@@ -51,10 +51,17 @@ export function SpicyMeter() {
                         <span className={cn("text-6xl font-black tracking-tighter mb-2 transition-colors duration-300 drop-shadow-sm", currentSpice.color)}>
                             {currentSpice.chinese}
                         </span>
-                        <div className={cn("flex items-center gap-2 bg-card/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-border/40 shadow-sm transition-all duration-300")}>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                speak(currentSpice.chinese);
+                            }}
+                            className={cn("flex items-center gap-2 bg-card/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-border/40 shadow-sm hover:scale-105 active:scale-95 transition-all duration-300")}
+                            aria-label="Écouter la prononciation"
+                        >
                             <span className="text-sm font-bold text-slate-700 font-mono">{currentSpice.pinyin}</span>
                             <Volume2 className={cn("w-4 h-4", currentSpice.color)} />
-                        </div>
+                        </button>
                     </div>
                 </div>
 

@@ -105,23 +105,23 @@ export default function Home() {
             </div>
             <div>
               <p className="font-bold text-sm">Pense-bête Devises</p>
-              <p className="text-[10px] text-slate-300">1€ ≈ 7.8¥</p>
+              <p className="text-[10px] text-slate-300">1€ ≈ 8¥</p>
             </div>
           </div>
           <div className="flex gap-3">
             <div className="text-center">
               <p className="text-[10px] text-slate-400 font-bold mb-0.5">5€</p>
-              <p className="font-black text-sm text-green-400">39¥</p>
+              <p className="font-black text-sm text-green-400">40¥</p>
             </div>
             <div className="w-px h-8 bg-white/10" />
             <div className="text-center">
               <p className="text-[10px] text-slate-400 font-bold mb-0.5">10€</p>
-              <p className="font-black text-sm text-green-400">78¥</p>
+              <p className="font-black text-sm text-green-400">80¥</p>
             </div>
             <div className="w-px h-8 bg-white/10" />
             <div className="text-center">
               <p className="text-[10px] text-slate-400 font-bold mb-0.5">50€</p>
-              <p className="font-black text-sm text-green-400">390¥</p>
+              <p className="font-black text-sm text-green-400">400¥</p>
             </div>
           </div>
         </div>

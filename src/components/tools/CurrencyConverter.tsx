@@ -5,7 +5,7 @@ import { ArrowUpDown, Euro, Coins, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/Card";
 
-const EXCHANGE_RATE = 7.75; // 1 EUR = 7.75 CNY (Approx)
+const EXCHANGE_RATE = 8.0; // 1 EUR = 8 CNY (Approx)
 
 export function CurrencyConverter() {
     const [amount, setAmount] = useState<number | "">("");
