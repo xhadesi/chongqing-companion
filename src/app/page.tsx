@@ -113,7 +113,7 @@ export default function Home() {
             </div>
 
             {/* Decoration */}
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-slate-900/5 dark:bg-white/5 rounded-full blur-2xl group-hover:bg-slate-900/10 dark:group-hover:bg-white/10 transition-colors" />
+            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-slate-900/5 dark:bg-white/5 rounded-full blur-lg group-hover:bg-slate-900/10 dark:group-hover:bg-white/10 transition-colors" />
           </Card>
         </Link>
       </section>

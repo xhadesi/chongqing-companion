@@ -58,25 +58,49 @@ export function WeatherWidget() {
     useEffect(() => {
         let isMounted = true;
         const fetchAllWeather = async () => {
+            // Check cache first
+            const cacheKey = "weather_data_cache";
+            const timeKey = "weather_data_time";
+            const cachedData = localStorage.getItem(cacheKey);
+            const cachedTime = localStorage.getItem(timeKey);
+            const now = Date.now();
+
+            // Use cache if it's less than 30 minutes old
+            if (cachedData && cachedTime && (now - parseInt(cachedTime)) < 1000 * 60 * 30) {
+                try {
+                    const parsed = JSON.parse(cachedData);
+                    // Check if cache contains all current cities
+                    const hasAllCities = cities.every(c => parsed[c.name]);
+                    if (hasAllCities) {
+                        setWeatherData(parsed);
+                        return; // Skip fetch
+                    }
+                } catch (e) {
+                    console.error("Cache parsing error", e);
+                }
+            }
+
+            const newWeatherData: Record<string, any> = {};
             for (const city of cities) {
                 try {
                     const res = await fetch(
                         `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lng}&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`
                     );
                     const data = await res.json();
-
-                    if (isMounted) {
-                        setWeatherData(prev => ({
-                            ...prev,
-                            [city.name]: {
-                                ...data.current,
-                                daily: data.daily
-                            }
-                        }));
-                    }
+                    newWeatherData[city.name] = {
+                        ...data.current,
+                        daily: data.daily
+                    };
                 } catch (e) {
                     console.error("Failed to fetch weather for " + city.name);
                 }
+            }
+
+            if (isMounted) {
+                setWeatherData(newWeatherData);
+                // Save to cache
+                localStorage.setItem(cacheKey, JSON.stringify(newWeatherData));
+                localStorage.setItem(timeKey, now.toString());
             }
         };
         fetchAllWeather();
@@ -146,8 +170,8 @@ export function WeatherWidget() {
                                 )}
                             >
                                 {/* Decorative Circles */}
-                                <div className="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-full blur-2xl -mr-8 -mt-8" />
-                                <div className="absolute bottom-0 left-0 w-20 h-20 bg-black/20 rounded-full blur-2xl -ml-8 -mb-8" />
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-white/20 rounded-full blur-lg -mr-8 -mt-8" />
+                                <div className="absolute bottom-0 left-0 w-20 h-20 bg-black/20 rounded-full blur-lg -ml-8 -mb-8" />
 
                                 <div className="relative z-10 flex justify-between items-start">
                                     <div>
