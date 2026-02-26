@@ -188,6 +188,32 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 address: "Shibati Traditional Custom Area",
                 icon: "📸",
                 completed: false
+            },
+            {
+                id: generateId(),
+                time: "20:00",
+                duration: "2h",
+                title: "Dîner Street Food (Baozi & Nouilles)",
+                images: ["/images/places/bf_3_3.jpg", "/images/places/bf_2_2.jpg"],
+                description: "Après le photoshoot, remontez vers le centre de Yuzhong pour dîner sur le pouce dans les ruelles animées. L'occasion idéale de tester des petits baos brûlants et des brochettes croustillantes.",
+                tips: "Ne cherchez pas un grand restaurant ce soir : les meilleurs repas se prennent souvent sur un coin de table en plastique avec une bière locale fraîche (Shancheng Pijiu).",
+                location: "Yuzhong",
+                address: "Jiefangbei Food Streets",
+                icon: "🥟",
+                completed: false
+            },
+            {
+                id: generateId(),
+                time: "22:30",
+                duration: "3h",
+                title: "SPACE Club (Jiefangbei)",
+                images: ["/images/places/bf_12_1.jpg", "/images/places/bf_13_3.jpg"],
+                description: "Puisque nous sommes samedi soir, impossible de rater l'expérience d'un ultra-club chinois ! SPACE est l'une des franchises les plus folles du pays : écrans géants, EDM surpuissant, shows pyrotechniques en salle et tables remplies de jeunes très apprêtés.",
+                tips: "Le secret pour rentrer facilement et avoir une bonne place : aborde un groupe stylé à l'entrée avec ton WeChat et un sourire confiant. Reste cool et souris quand on te tendra un verre (Ganbei !).",
+                location: "Yuzhong",
+                address: "Jiefangbei",
+                icon: "🪩",
+                completed: false
             }
         ]
     },
@@ -233,6 +259,19 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Yuzhong Ouest",
                 address: "Eling & Testbed 2",
                 icon: "🌳",
+                completed: false
+            },
+            {
+                id: generateId(),
+                time: "19:00",
+                duration: "3h",
+                title: "Dîner et Balade à Guanyinqiao",
+                images: ["/images/places/sight_21_1.jpg", "/images/places/bf_5_3.jpg"],
+                description: "Prenez le métro vers le nord pour découvrir Guanyinqiao, le cœur vibrant et ultramoderne de Jiangbei. Profitez des immenses écrans 3D, de la foule jeune et branchée, et choisissez un grand restaurant dans l'un des somptueux centres commerciaux (Paradise Walk).",
+                tips: "C'est l'endroit parfait pour observer la mode locale de pointe (très audacieuse). N'hésitez pas à demander aux habitants dans la rue pour trouver les restaurants populaires nichés dans les hauts étages.",
+                location: "Jiangbei",
+                address: "Guanyinqiao",
+                icon: "🏙️",
                 completed: false
             }
         ]
