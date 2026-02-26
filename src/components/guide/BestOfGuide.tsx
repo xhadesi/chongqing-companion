@@ -278,9 +278,9 @@ export function BestOfGuide() {
                 </div>
             </div>
 
-            {/* Details Modal - Kept relatively similar but cleaner */}
+            {/* Details Modal */}
             {selectedPlace && (
-                <div className="absolute inset-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm p-0 flex flex-col h-full min-h-screen animate-in slide-in-from-bottom-10 duration-300">
+                <div className="absolute inset-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm p-0 flex flex-col overflow-y-auto custom-scrollbar animate-in slide-in-from-bottom-10 duration-300">
                     <div ref={(node) => {
                         if (node) {
                             node.scrollIntoView({ behavior: "instant", block: "start" });
@@ -401,14 +401,14 @@ export function BestOfGuide() {
                             </div>
                         </div>
 
-                        {/* Big Back Button at the bottom */}
-                        <div className="sticky bottom-4 left-0 right-0 mt-8 flex justify-center pb-4">
+                        {/* Standard Back Button at the bottom (static flow) */}
+                        <div className="mt-6 flex justify-center pb-8 border-t border-slate-100 dark:border-slate-800 pt-6">
                             <button
                                 onClick={() => setSelectedPlace(null)}
-                                className="w-full max-w-sm h-14 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white font-black flex items-center justify-center gap-2 shadow-xl shadow-slate-900/20 active:scale-95 transition-all"
+                                className="w-full max-w-[200px] h-12 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold flex items-center justify-center gap-2 hover:bg-slate-200 dark:hover:bg-slate-700 shadow-sm active:scale-95 transition-all"
                             >
-                                <ArrowLeft className="w-5 h-5" />
-                                Retour à la liste
+                                <ArrowLeft className="w-4 h-4" />
+                                Fermer
                             </button>
                         </div>
                     </div>
