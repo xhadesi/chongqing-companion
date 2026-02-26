@@ -10,6 +10,7 @@ import { UnscheduledSidebar } from "./UnscheduledSidebar";
 import { Activity } from "@/lib/types";
 import { ConfirmModal } from "@/components/ui/ConfirmModal";
 import { AddToAgendaModal } from "./AddToAgendaModal";
+import { ImageSlider } from "@/components/ui/ImageSlider";
 
 export function AgendaView() {
     const { days, unscheduled, isLoading, addActivity, moveActivity, toggleActivity, deleteActivity, updateActivity, addDay, removeDay, updateDate } = useAgenda();
@@ -76,7 +77,7 @@ export function AgendaView() {
             time: newTime || "09:00",
             title: newTitle,
             location: newLocation,
-            image: "https://images.unsplash.com/photo-1550951298-5c7b95a66b90?q=80&w=600&auto=format&fit=crop"
+            images: ["https://images.unsplash.com/photo-1550951298-5c7b95a66b90?q=80&w=600&auto=format&fit=crop"]
         };
 
         if (newAddress) newActivity.address = newAddress;
@@ -263,11 +264,11 @@ export function AgendaView() {
                 <div className="fixed inset-0 z-50 bg-white dark:bg-slate-950 p-0 flex flex-col animate-in slide-in-from-bottom-10 lg:slide-in-from-right-10 duration-200">
                     <>
                         <div className="relative h-64 md:h-80 w-full shrink-0 bg-slate-100 dark:bg-slate-900">
-                            {selectedActivity.image ? (
-                                <img
-                                    src={selectedActivity.image}
+                            {selectedActivity.images && selectedActivity.images.length > 0 ? (
+                                <ImageSlider
+                                    images={selectedActivity.images}
                                     alt={selectedActivity.title}
-                                    className="object-cover w-full h-full"
+                                    className="h-full w-full"
                                 />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center text-6xl">

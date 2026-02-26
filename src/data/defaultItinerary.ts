@@ -24,8 +24,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 time: "20:20",
                 duration: "10h",
                 title: "Vol Paris - Pékin (Réf: NH2NKC)",
-                description: "Embarquement pour le vol de nuit vers l'Aéroport international de Pékin T3.",
-                tips: "Dors un maximum dans l'avion pour encaisser le décalage horaire (+6h).",
+                description: "Promenade du soir pour voir les bâtiments illuminés, semblables au Voyage de Chihiro.",
+                images: ["https://images.unsplash.com/photo-1549491745-f0cd2b6ff1a3?q=80&w=600&auto=format&fit=crop"],
                 location: "Dans les airs",
                 icon: "✈️",
                 completed: false
@@ -69,9 +69,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 description: "C'est l'attraction phare de la ville, une structure labyrinthique accrochée à une falaise abrupte qui s'illumine de mille feux dorés à la nuit tombée, rappelant le film d'animation Le Voyage de Chihiro. Tu vas descendre les marches, te faufiler entre les foules immenses, et ressentir l'énergie folle de la Chine nocturne. Le meilleur spot pour savourer la vue est de traverser le fleuve sur le pont Qiansimen, pour regarder le bâtiment majestueux de face.",
                 tips: "Attention, tu vas créer l'événement. Avec tes 1m84, ta carrure mince, tes cheveux clairs et tes yeux bleus, l'effet \"Laowai\" (étranger) sera décuplé dans cette zone très touristique pour les Chinois des autres provinces. Tu remarqueras beaucoup de téléphones pointés discrètement vers toi. La tactique : marche droit, confiant, avec un léger sourire mystérieux. Si tu croises le regard émerveillé d'une fille de ton âge, souris franchement et lâche un \"Hěn piàoliang!\" (C'est très beau !) audacieux. Succès garanti.",
                 location: "Yuzhong (À pied)",
-                address: "No. 88 Binjiang Road",
                 icon: "🌃",
-                image: "https://upload.wikimedia.org/wikipedia/commons/3/36/Hongyadong_Chongqing_Night_View.jpg",
+                images: ["https://upload.wikimedia.org/wikipedia/commons/3/36/Hongyadong_Chongqing_Night_View.jpg"],
                 completed: false
             }
         ]

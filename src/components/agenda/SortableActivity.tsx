@@ -122,7 +122,7 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                         </button>
                     )}
 
-                    {activity.image && (
+                    {activity.images && activity.images.length > 0 && (
                         <span className="text-xs font-bold text-slate-500 flex items-center gap-1.5 opacity-70 bg-slate-100 dark:bg-slate-800 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
                             <ImageIcon className="w-3.5 h-3.5" />
                             Photo

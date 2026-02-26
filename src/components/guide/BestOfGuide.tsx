@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { useAgenda } from "@/hooks/useAgenda";
 import { Card } from "@/components/ui/Card";
 import { TaxiModal } from "@/components/ui/TaxiModal";
+import { ImageSlider } from "@/components/ui/ImageSlider";
 
 export function BestOfGuide() {
     const [activeCategory, setActiveCategory] = useState<CategoryId | null>(null);
@@ -70,7 +71,7 @@ export function BestOfGuide() {
             description: `${place.chineseTitle} (${place.pinyin}) - ${place.description.substring(0, 50)}... [ID:${place.id}]`,
             location: place.district,
             address: place.address,
-            image: place.image
+            images: place.images
         });
     };
 
@@ -124,7 +125,7 @@ export function BestOfGuide() {
                             >
                                 <div className="relative w-full aspect-square rounded-[1.2rem] overflow-hidden shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-amber-500/20 transition-all active:scale-[0.95] border border-white/40 dark:border-white/10 group-hover:border-amber-400/50">
                                     <Image
-                                        src={cat.image}
+                                        src={cat.images[0]}
                                         alt={cat.label}
                                         fill
                                         className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -189,13 +190,13 @@ export function BestOfGuide() {
                             >
                                 {/* LEFT: Image + Rank */}
                                 <div className="relative w-32 h-32 shrink-0 rounded-xl overflow-hidden bg-slate-100">
-                                    <Image
-                                        src={place.image}
+                                    <ImageSlider
+                                        images={place.images}
                                         alt={place.title}
-                                        fill
-                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                        className="h-full w-full"
+                                        imageClassName="transition-transform duration-500 group-hover:scale-105"
                                     />
-                                    <div className="absolute top-2 left-0 bg-yellow-400 text-black text-[10px] font-black px-2 py-0.5 shadow-sm">
+                                    <div className="absolute top-2 left-0 bg-yellow-400 text-black text-[10px] font-black px-2 py-0.5 shadow-sm z-10">
                                         #{index + 1}
                                     </div>
                                     <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white hover:text-red-500 transition-colors">
@@ -286,13 +287,12 @@ export function BestOfGuide() {
                         }
                     }} />
                     <div className="relative h-64 w-full shrink-0">
-                        <Image
-                            src={selectedPlace.image}
+                        <ImageSlider
+                            images={selectedPlace.images}
                             alt={selectedPlace.title}
-                            fill
-                            className="object-cover"
+                            className="h-full w-full"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
                         <button
                             onClick={() => setSelectedPlace(null)}
                             className="absolute top-4 left-4 w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/40 text-white transition-colors"

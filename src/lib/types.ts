@@ -9,7 +9,7 @@ export interface Activity {
     location?: string;
     address?: string; // For navigation
     completed: boolean;
-    image?: string;
+    images?: string[];
 }
 
 export interface TripDay {
