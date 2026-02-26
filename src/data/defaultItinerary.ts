@@ -247,7 +247,6 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 time: "11:00",
                 duration: "1h30",
                 title: "Arrail Dental VIP (Détartrage, Caries)",
-                images: ["/images/places/bf_7_1.jpg"],
                 description: "L'expérience médicale premium en Chine est bluffante de confort. Dans un cabinet tel qu'Arrail Dental (au design de spa avec fauteuils massants et vue en hauteur sur la ville de Jiangbei), tu t'offriras un soin profond.",
                 tips: "Montre traduction à l'accueil : \"Xǐ Yá\" (Détartrage). Le personnel infirmier, très jeune et encadrant, est excessivement attentif et protecteur envers les étrangers. Ta blondeur et tes yeux bleus susciteront beaucoup de murmures intrigués en salle de soin. Si l'infirmière t'aide gentiment après le soin, c'est ta chance. Demande une photo de tes dents avec ton tel et ajoute très candidement : \"Wǒ xiǎng liànxī Zhōngwén... Kěyǐ jiā wēixìn ma?\" (J'aimerais m'entraîner en chinois... On s'ajoute sur WeChat ?). C'est la phrase passe-partout imparable.",
                 location: "Jiangbei",

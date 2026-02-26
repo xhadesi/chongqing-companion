@@ -39,6 +39,22 @@ export function AgendaView() {
         return () => window.removeEventListener('popstate', handlePopState);
     }, [isDetailsOpen]);
 
+    // Lock body scroll when modal is open
+    useEffect(() => {
+        if (isDetailsOpen) {
+            document.body.style.overflow = 'hidden';
+            // Also prevent touchmove on the background for iOS Safari
+            document.documentElement.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+        };
+    }, [isDetailsOpen]);
+
     const handleOpenActivity = (activity: any, containerId: string) => {
         setSelectedActivity({ ...activity, _containerId: containerId } as any);
         setIsDetailsOpen(true);
