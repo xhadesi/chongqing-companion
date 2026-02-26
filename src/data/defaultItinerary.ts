@@ -207,7 +207,7 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 time: "22:30",
                 duration: "3h",
                 title: "SPACE Club (Jiefangbei)",
-                images: ["/images/places/bf_12_1.jpg", "/images/places/bf_13_3.jpg"],
+                images: ["https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=600&auto=format&fit=crop"],
                 description: "Puisque nous sommes samedi soir, impossible de rater l'expérience d'un ultra-club chinois ! SPACE est l'une des franchises les plus folles du pays : écrans géants, EDM surpuissant, shows pyrotechniques en salle et tables remplies de jeunes très apprêtés.",
                 tips: "Le secret pour rentrer facilement et avoir une bonne place : aborde un groupe stylé à l'entrée avec ton WeChat et un sourire confiant. Reste cool et souris quand on te tendra un verre (Ganbei !).",
                 location: "Yuzhong",
