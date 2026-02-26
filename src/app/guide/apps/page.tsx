@@ -28,10 +28,10 @@ export default function AppGuidePage() {
         },
         {
             name: "Didi (Ride Hailing)",
-            icon: <CarFront className="w-8 h-8 text-orange-500" />,
+            icon: <CarFront className="w-8 h-8 text-indigo-500" />,
             desc: "L'équivalent d'Uber. Indispensable car les taxis sont difficiles à héler.",
             link: "https://web.didiglobal.com/en/",
-            color: "bg-orange-50 text-orange-700 border-orange-200"
+            color: "bg-indigo-50 text-indigo-700 border-indigo-200"
         },
         {
             name: "Trip.com",

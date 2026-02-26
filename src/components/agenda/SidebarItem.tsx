@@ -3,6 +3,7 @@
 import { Activity } from "@/lib/types";
 import { MapPin, X, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface SidebarItemProps {
     activity: Activity;
@@ -23,9 +24,21 @@ export function SidebarItem({ activity, onDelete, onAddClick, onClick }: Sidebar
                 )}
             >
                 <div className="flex justify-between items-start gap-2 mb-2">
-                    <h4 className="font-bold text-slate-800 dark:text-white text-sm flex-1 leading-tight line-clamp-2">
-                        {activity.title}
-                    </h4>
+                    <div className="flex-1 min-w-0 pr-2">
+                        <h4 className="font-bold text-slate-800 dark:text-white text-sm leading-tight line-clamp-2">
+                            {activity.title}
+                        </h4>
+                    </div>
+                    {activity.images && activity.images.length > 0 && (
+                        <div className="relative w-12 h-12 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 shrink-0 shadow-sm mr-2 mt-0.5">
+                            <Image
+                                src={activity.images[0]}
+                                alt={activity.title}
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
+                    )}
                     <button
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => {

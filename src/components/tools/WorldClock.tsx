@@ -78,8 +78,8 @@ export function WorldClock() {
         <Card variant="premium" className="p-6">
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
-                    <div className="bg-orange-100 dark:bg-orange-900/30 p-2 rounded-xl">
-                        <Clock className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                    <div className="bg-indigo-100 dark:bg-indigo-900/30 p-2 rounded-xl">
+                        <Clock className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
                     </div>
                     <div>
                         <h3 className="font-bold text-slate-800 dark:text-white">Horloge Monde</h3>
@@ -105,7 +105,7 @@ export function WorldClock() {
                                 placeholder="Rechercher une ville..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="flex-1 bg-slate-50/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-orange-500"
+                                className="flex-1 bg-slate-50/50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
                             />
                             <button onClick={() => setShowSearch(false)}><X className="w-4 h-4 text-slate-400" /></button>
                         </div>
@@ -115,7 +115,7 @@ export function WorldClock() {
                                 <button
                                     key={res.id}
                                     onClick={() => addZone(res)}
-                                    className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-orange-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex justify-between"
+                                    className="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-indigo-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 flex justify-between"
                                 >
                                     <span>{res.name}</span>
                                     <span className="text-xs text-slate-400 uppercase">{res.country_code}</span>
@@ -136,7 +136,7 @@ export function WorldClock() {
 
                     // Theme Logic - Refined for Premium
                     let themeClass = "bg-blue-50/50 border-blue-100 text-slate-900";
-                    let icon = <Sun className="w-4 h-4 text-orange-500" />;
+                    let icon = <Sun className="w-4 h-4 text-indigo-500" />;
                     let label = "Journée";
 
                     // Night

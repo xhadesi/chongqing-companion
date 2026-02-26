@@ -65,42 +65,53 @@ export function WeatherWidget() {
             const cachedTime = localStorage.getItem(timeKey);
             const now = Date.now();
 
-            // Use cache if it's less than 30 minutes old
-            if (cachedData && cachedTime && (now - parseInt(cachedTime)) < 1000 * 60 * 30) {
+            let hasValidCache = false;
+
+            // Immediately use cache if available (stale-while-revalidate approach for instant UI)
+            if (cachedData) {
                 try {
                     const parsed = JSON.parse(cachedData);
-                    // Check if cache contains all current cities
                     const hasAllCities = cities.every(c => parsed[c.name]);
                     if (hasAllCities) {
                         setWeatherData(parsed);
-                        return; // Skip fetch
+
+                        // If cache is less than 30 minutes old, don't even refetch in background
+                        if (cachedTime && (now - parseInt(cachedTime)) < 1000 * 60 * 30) {
+                            return;
+                        }
                     }
                 } catch (e) {
                     console.error("Cache parsing error", e);
                 }
             }
 
-            const newWeatherData: Record<string, any> = {};
-            for (const city of cities) {
-                try {
-                    const res = await fetch(
-                        `/api/weather?lat=${city.lat}&lng=${city.lng}`
-                    );
+            // Fetch real data in parallel for speed
+            try {
+                const fetchPromises = cities.map(async (city) => {
+                    const res = await fetch(`/api/weather?lat=${city.lat}&lng=${city.lng}`);
                     const data = await res.json();
-                    newWeatherData[city.name] = {
-                        ...data.current,
-                        daily: data.daily
+                    return {
+                        name: city.name,
+                        data: {
+                            ...data.current,
+                            daily: data.daily
+                        }
                     };
-                } catch (e) {
-                    console.error("Failed to fetch weather for " + city.name);
-                }
-            }
+                });
 
-            if (isMounted) {
-                setWeatherData(newWeatherData);
-                // Save to cache
-                localStorage.setItem(cacheKey, JSON.stringify(newWeatherData));
-                localStorage.setItem(timeKey, now.toString());
+                const results = await Promise.all(fetchPromises);
+                const newWeatherData: Record<string, any> = {};
+                results.forEach(res => {
+                    newWeatherData[res.name] = res.data;
+                });
+
+                if (isMounted) {
+                    setWeatherData(prev => ({ ...prev, ...newWeatherData }));
+                    localStorage.setItem(cacheKey, JSON.stringify({ ...weatherData, ...newWeatherData }));
+                    localStorage.setItem(timeKey, now.toString());
+                }
+            } catch (e) {
+                console.error("Failed to fetch weather in background", e);
             }
         };
         fetchAllWeather();

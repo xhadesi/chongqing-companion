@@ -3,6 +3,7 @@
 import { Activity } from "@/lib/types";
 import { Clock, MapPin, Check, X, ImageIcon, ChevronRight, Edit2, Timer } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 import { TaxiModal } from "@/components/ui/TaxiModal";
 import { useState } from "react";
@@ -62,12 +63,12 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                                         }
                                     }
                                 }}
-                                className="inline-flex items-center gap-1.5 text-xs font-black px-3 py-1.5 rounded-xl border shadow-sm bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-800 hover:bg-orange-100 dark:hover:bg-orange-900/50 transition-colors active:scale-95"
+                                className="inline-flex items-center gap-1.5 text-xs font-black px-3 py-1.5 rounded-xl border shadow-sm bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors active:scale-95"
                                 title="Modifier la durée"
                             >
                                 <Timer className="w-3.5 h-3.5 shrink-0" />
                                 {activity.duration || "--"}
-                                <Edit2 className="w-2.5 h-2.5 text-orange-300 ml-1 opacity-50 shrink-0" />
+                                <Edit2 className="w-2.5 h-2.5 text-indigo-300 ml-1 opacity-50 shrink-0" />
                             </button>
                         </div>
                         <h3 className={cn("font-black text-slate-800 dark:text-white text-lg leading-tight mt-1", activity.completed && "line-through text-slate-400")}>
@@ -123,10 +124,14 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                     )}
 
                     {activity.images && activity.images.length > 0 && (
-                        <span className="text-xs font-bold text-slate-500 flex items-center gap-1.5 opacity-70 bg-slate-100 dark:bg-slate-800 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
-                            <ImageIcon className="w-3.5 h-3.5" />
-                            Photo
-                        </span>
+                        <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-sm shrink-0 border border-slate-200 dark:border-slate-700 ml-auto">
+                            <Image
+                                src={activity.images[0]}
+                                alt={activity.title}
+                                fill
+                                className="object-cover"
+                            />
+                        </div>
                     )}
                 </div>
             </div>

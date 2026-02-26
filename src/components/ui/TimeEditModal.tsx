@@ -64,7 +64,7 @@ export function TimeEditModal({ isOpen, onClose, onConfirm, initialTime }: TimeE
                         <button
                             type="button"
                             onClick={() => handleQuickTime("14:00")}
-                            className="p-2 rounded-xl bg-orange-50 text-orange-700 text-sm font-bold border border-orange-100 hover:bg-orange-100"
+                            className="p-2 rounded-xl bg-indigo-50 text-indigo-700 text-sm font-bold border border-indigo-100 hover:bg-indigo-100"
                         >
                             Aprèm
                         </button>

@@ -280,7 +280,7 @@ export function BestOfGuide() {
 
             {/* Details Modal - Kept relatively similar but cleaner */}
             {selectedPlace && (
-                <div className="absolute inset-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm p-0 flex flex-col animate-in slide-in-from-bottom-10 duration-300">
+                <div className="absolute inset-0 z-50 bg-white/95 dark:bg-slate-950/95 backdrop-blur-sm p-0 flex flex-col h-full min-h-screen animate-in slide-in-from-bottom-10 duration-300">
                     <div ref={(node) => {
                         if (node) {
                             node.scrollIntoView({ behavior: "instant", block: "start" });
@@ -305,7 +305,7 @@ export function BestOfGuide() {
                         </div>
                     </div>
 
-                    <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                    <div className="flex-1 p-6 space-y-6 pb-24">
 
                         {/* All Ratings Detailed */}
                         <div className="grid grid-cols-3 gap-2">
@@ -399,6 +399,17 @@ export function BestOfGuide() {
                                     <Navigation className="w-5 h-5" />
                                 </a>
                             </div>
+                        </div>
+
+                        {/* Big Back Button at the bottom */}
+                        <div className="sticky bottom-4 left-0 right-0 mt-8 flex justify-center pb-4">
+                            <button
+                                onClick={() => setSelectedPlace(null)}
+                                className="w-full max-w-sm h-14 rounded-2xl bg-slate-900 dark:bg-slate-800 text-white font-black flex items-center justify-center gap-2 shadow-xl shadow-slate-900/20 active:scale-95 transition-all"
+                            >
+                                <ArrowLeft className="w-5 h-5" />
+                                Retour à la liste
+                            </button>
                         </div>
                     </div>
                     {/* Taxi Modal overlay, separate from the details modal flow */}
