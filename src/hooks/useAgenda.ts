@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { TripDay, Activity } from "@/lib/types";
 
-const STORAGE_KEY = "chongqing-agenda-v2.0";
+const STORAGE_KEY = "chongqing-agenda-v2.1";
 
 import { DEFAULT_ITINERARY } from "@/data/defaultItinerary";
 
