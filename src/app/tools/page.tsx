@@ -30,19 +30,19 @@ export default function ToolsPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Link href="/taxi" className="bg-card dark:bg-card p-5 rounded-[2rem] border border-border shadow-sm hover:shadow-md transition-all active:scale-95 group relative overflow-hidden flex flex-col justify-between h-48">
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-blue-50 dark:bg-blue-900/20 rounded-full -mr-8 -mt-8 group-hover:scale-150 transition-transform duration-500" />
+                    <Link href="/taxi" className="bg-gradient-to-br from-blue-500 to-indigo-600 p-5 rounded-[2rem] shadow-sm hover:shadow-lg transition-all active:scale-95 group relative overflow-hidden flex flex-col justify-between h-48 text-white">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-lg -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500" />
 
                         <div className="relative z-10">
-                            <div className="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                            <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-4 border border-white/30">
                                 <span className="text-2xl drop-shadow-sm">🚕</span>
                             </div>
-                            <h3 className="font-bold text-xl text-foreground mb-1">Taxi Cards</h3>
-                            <p className="text-xs text-muted-foreground">Montrer au chauffeur</p>
+                            <h3 className="font-bold text-xl mb-1">Taxi Cards</h3>
+                            <p className="text-xs text-white/80 font-medium">Montrer au chauffeur</p>
                         </div>
 
                         <div className="relative z-10 flex justify-end">
-                            <span className="text-xs font-bold text-blue-600 dark:text-blue-400 group-hover:underline">Ouvrir &rarr;</span>
+                            <span className="text-xs font-bold text-white group-hover:translate-x-1 transition-transform">Ouvrir &rarr;</span>
                         </div>
                     </Link>
 
