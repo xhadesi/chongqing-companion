@@ -358,8 +358,8 @@ export function AgendaView() {
 
             {/* Details Sliding Modal */}
             {isDetailsOpen && selectedActivity && (
-                <div className="fixed inset-0 z-[60] bg-slate-50 dark:bg-slate-950 flex flex-col animate-in slide-in-from-bottom-10 lg:slide-in-from-right-10 duration-200 overflow-y-auto custom-scrollbar">
-                    <div className="relative min-h-full flex flex-col">
+                <div className="fixed inset-0 z-[60] bg-slate-50 dark:bg-slate-950 flex flex-col animate-in slide-in-from-bottom-10 lg:slide-in-from-right-10 duration-300 overflow-y-auto custom-scrollbar shadow-2xl">
+                    <div className="relative min-h-full flex flex-col bg-slate-50 dark:bg-slate-950">
                         <div className="relative h-64 md:h-80 w-full shrink-0 bg-slate-200 dark:bg-slate-900">
                             {selectedActivity.images && selectedActivity.images.length > 0 ? (
                                 <ImageSlider
