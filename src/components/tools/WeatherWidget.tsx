@@ -12,20 +12,20 @@ const CITIES = [
 
 const getWeatherBackground = (code: number, idx: number) => {
     // 0: Clear sky (Sunny Blue)
-    if (code === 0) return "bg-gradient-to-br from-blue-400 to-blue-600";
+    if (code === 0) return "bg-gradient-to-br from-blue-400 to-blue-600 dark:from-blue-900/90 dark:to-slate-900";
     // 1, 2, 3: Partly cloudy, cloudy (Steel Gray)
-    if (code >= 1 && code <= 3) return "bg-gradient-to-br from-slate-400 to-slate-600";
+    if (code >= 1 && code <= 3) return "bg-gradient-to-br from-slate-400 to-slate-600 dark:from-slate-800 dark:to-slate-900";
     // 45, 48: Fog (Muted Gray)
-    if (code === 45 || code === 48) return "bg-gradient-to-br from-gray-400 to-slate-500";
+    if (code === 45 || code === 48) return "bg-gradient-to-br from-gray-400 to-slate-500 dark:from-gray-700 dark:to-slate-900";
     // Drops/Rain (Deep Rainy Blue)
-    if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return "bg-gradient-to-br from-cyan-700 to-blue-900";
+    if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) return "bg-gradient-to-br from-cyan-600 to-blue-800 dark:from-cyan-900/80 dark:to-slate-900";
     // Snow (Icy White/Blue)
-    if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return "bg-gradient-to-br from-indigo-200 to-slate-400";
+    if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) return "bg-gradient-to-br from-indigo-200 to-slate-400 dark:from-slate-700 dark:to-slate-900";
     // Thunderstorm (Dark Storm)
-    if (code >= 95) return "bg-gradient-to-br from-slate-700 to-slate-900";
+    if (code >= 95) return "bg-gradient-to-br from-slate-700 to-slate-900 dark:from-slate-900 dark:to-black";
 
     // Default fallback
-    return idx % 2 === 0 ? "bg-gradient-to-br from-blue-500/90 to-indigo-600/90" : "bg-gradient-to-br from-indigo-500/90 to-purple-600/90";
+    return idx % 2 === 0 ? "bg-gradient-to-br from-blue-500/90 to-indigo-600/90 dark:from-blue-900 dark:to-slate-900" : "bg-gradient-to-br from-indigo-500/90 to-purple-600/90 dark:from-indigo-900 dark:to-slate-900";
 };
 
 export function WeatherWidget() {
@@ -195,8 +195,8 @@ export function WeatherWidget() {
                                 key={city.name}
                                 onClick={() => setSelectedCityName(city.name)}
                                 className={cn(
-                                    "relative w-full aspect-[4/5] rounded-[2rem] p-4 text-white shadow-lg flex flex-col justify-between transition-transform active:scale-95 overflow-hidden border border-white/20 cursor-pointer transform-gpu",
-                                    w ? getWeatherBackground(w.weather_code, idx) : (idx % 2 === 0 ? "bg-gradient-to-br from-blue-500/90 to-indigo-600/90" : "bg-gradient-to-br from-indigo-500/90 to-purple-600/90")
+                                    "relative w-full aspect-[4/5] rounded-[2rem] p-4 text-white shadow-lg flex flex-col justify-between transition-transform active:scale-95 overflow-hidden cursor-pointer transform-gpu border border-white/20 dark:border-white/10 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]",
+                                    w ? getWeatherBackground(w.weather_code, idx) : (idx % 2 === 0 ? "bg-gradient-to-br from-blue-500/90 to-indigo-600/90 dark:from-blue-900 dark:to-slate-900" : "bg-gradient-to-br from-indigo-500/90 to-purple-600/90 dark:from-indigo-900 dark:to-slate-900")
                                 )}
                             >
                                 {/* Decorative Circles */}

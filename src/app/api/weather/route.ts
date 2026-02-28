@@ -10,12 +10,12 @@ export async function GET(request: Request) {
     }
 
     try {
-        const fetchUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto`;
+        // Added models=best_match for highest precision local forecasting
+        const fetchUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lng}&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&models=best_match`;
 
         const response = await fetch(fetchUrl, {
-            // Aggressive caching for 2 hours (7200 seconds) since weather doesn't change rapidly
-            // and we want to avoid getting rate limited or blocked.
-            next: { revalidate: 7200 }
+            // Cache for 15 minutes (900 seconds) to ensure highly precise, real-time data
+            next: { revalidate: 900 }
         });
 
         if (!response.ok) {
@@ -27,7 +27,7 @@ export async function GET(request: Request) {
         // Add cache-control headers to tell CDN/Browser to cache it as well
         return NextResponse.json(data, {
             headers: {
-                'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=7200',
+                'Cache-Control': 'public, s-maxage=900, stale-while-revalidate=1800',
             },
         });
     } catch (error) {
