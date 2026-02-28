@@ -15,6 +15,8 @@ import { ImageSlider } from "@/components/ui/ImageSlider";
 export function AgendaView() {
     const { days, unscheduled, isLoading, addActivity, moveActivity, toggleActivity, deleteActivity, updateActivity, addDay, removeDay, updateDate } = useAgenda();
     const [selectedDayId, setSelectedDayId] = useState<string>("");
+    const [animationKey, setAnimationKey] = useState(0);
+    const [slideDirection, setSlideDirection] = useState<"left" | "right">("right");
 
     // Set default selected day once loaded
     useEffect(() => {
@@ -24,6 +26,19 @@ export function AgendaView() {
             }
         }
     }, [days, isLoading, selectedDayId]);
+
+    const changeDay = (newDayId: string) => {
+        if (newDayId === selectedDayId) return;
+
+        const currentIndex = days.findIndex(d => d.id === selectedDayId);
+        const newIndex = days.findIndex(d => d.id === newDayId);
+
+        if (currentIndex !== -1 && newIndex !== -1) {
+            setSlideDirection(newIndex > currentIndex ? "right" : "left");
+            setAnimationKey(prev => prev + 1);
+        }
+        setSelectedDayId(newDayId);
+    };
 
     // UI State
     const [dayToDelete, setDayToDelete] = useState<string | null>(null);
@@ -68,10 +83,10 @@ export function AgendaView() {
                 const actualIndex = currentIndex !== -1 ? currentIndex : 0;
 
                 if (isLeftSwipe && actualIndex < days.length - 1) { // Swipe left -> Next day
-                    setSelectedDayId(days[actualIndex + 1].id);
+                    changeDay(days[actualIndex + 1].id);
                 }
                 if (isRightSwipe && actualIndex > 0) { // Swipe right -> Prev day
-                    setSelectedDayId(days[actualIndex - 1].id);
+                    changeDay(days[actualIndex - 1].id);
                 }
             }
         }
@@ -176,7 +191,7 @@ export function AgendaView() {
                         return (
                             <button
                                 key={day.id}
-                                onClick={() => setSelectedDayId(day.id)}
+                                onClick={() => changeDay(day.id)}
                                 className={cn(
                                     "flex-shrink-0 flex flex-col items-center justify-center min-w-[5rem] px-2 h-20 rounded-2xl transition-all snap-center relative border",
                                     isSelected
@@ -208,7 +223,14 @@ export function AgendaView() {
                     onTouchEnd={onTouchEnd}
                 >
                     {selectedDay && (
-                        <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 min-h-[600px] overflow-hidden">
+                        <div
+                            key={`day-view-${animationKey}`}
+                            className={cn(
+                                "bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 min-h-[600px] overflow-hidden",
+                                "animate-in duration-300 fill-mode-forwards",
+                                slideDirection === "right" ? "slide-in-from-right-8 fade-in-0" : "slide-in-from-left-8 fade-in-0"
+                            )}
+                        >
                             {/* Day Header */}
                             <div className="p-6 border-b border-slate-50 dark:border-slate-800/50 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
                                 <div>
