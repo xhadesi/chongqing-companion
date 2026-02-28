@@ -224,11 +224,11 @@ export function AgendaView() {
                 >
                     {selectedDay && (
                         <div
-                            key={`day-view-${animationKey}`}
+                            key={`day-view-${selectedDay.id}-${animationKey}`}
                             className={cn(
                                 "bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 min-h-[600px] overflow-hidden",
-                                "animate-in duration-300 fill-mode-forwards",
-                                slideDirection === "right" ? "slide-in-from-right-8 fade-in-0" : "slide-in-from-left-8 fade-in-0"
+                                "animate-in duration-300 ease-out fill-mode-forwards",
+                                slideDirection === "right" ? "slide-in-from-right-12 fade-in-0 zoom-in-[0.98]" : "slide-in-from-left-12 fade-in-0 zoom-in-[0.98]"
                             )}
                         >
                             {/* Day Header */}
