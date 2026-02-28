@@ -46,7 +46,7 @@ export function CurrencyConverter() {
 
             <div className="flex justify-between items-center mb-6 relative z-10">
                 <h3 className="font-black text-slate-800 dark:text-white text-lg flex items-center gap-2">
-                    <div className="p-2 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl text-indigo-600 dark:text-indigo-400">
+                    <div className="p-2 bg-indigo-100 dark:bg-indigo-900/40 rounded-xl text-indigo-600 dark:text-indigo-300">
                         <RefreshCw className="w-4 h-4" />
                     </div>
                     Change
@@ -58,7 +58,7 @@ export function CurrencyConverter() {
 
             <div className="flex flex-col gap-2 relative z-10" suppressHydrationWarning>
                 {/* Input Section */}
-                <div className="bg-slate-50/50 dark:bg-slate-800/50 rounded-2xl p-4 transition-all focus-within:ring-2 focus-within:ring-indigo-100/50 dark:focus-within:ring-indigo-500/20 border border-transparent focus-within:border-indigo-200/50 dark:focus-within:border-indigo-500/30">
+                <div className="bg-slate-50/50 dark:bg-slate-900/50 rounded-2xl p-4 transition-all focus-within:ring-2 focus-within:ring-indigo-100/50 dark:focus-within:ring-indigo-500/20 border border-transparent focus-within:border-indigo-200/50 dark:focus-within:border-indigo-500/30 dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]">
                     <div className="flex justify-between items-center mb-2">
                         <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Montant</span>
                         <div className="flex items-center gap-1 text-slate-700 dark:text-slate-200 font-bold bg-white dark:bg-slate-700 px-2 py-1 rounded-lg shadow-sm border border-slate-100 dark:border-slate-600">
@@ -94,7 +94,7 @@ export function CurrencyConverter() {
                 </div>
 
                 {/* Result Section (Read Only) */}
-                <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-4 border border-transparent">
+                <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-4 border border-transparent dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]">
                     <div className="flex justify-between items-center mb-2">
                         <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Résultat</span>
                         <div className="flex items-center gap-1 text-slate-500 dark:text-slate-400 font-bold opacity-80">

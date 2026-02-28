@@ -44,8 +44,8 @@ export default function CultureGuidePage() {
                         <span className="p-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl"><Languages className="w-5 h-5" /></span>
                         Langue & Survie
                     </h3>
-                    <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-800 space-y-4">
-                        <p className="text-sm text-slate-600 dark:text-slate-400">L'anglais est très peu parlé. Le dialecte local (Chongqinghua) est différent du Mandarin.</p>
+                    <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-800 space-y-4 dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]">
+                        <p className="text-sm text-slate-600 dark:text-slate-300">L'anglais est très peu parlé. Le dialecte local (Chongqinghua) est différent du Mandarin.</p>
                         <div className="grid grid-cols-2 gap-3">
                             <div className="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm relative group">
                                 <p className="text-xs text-slate-400 dark:text-slate-500">Bonjour</p>
@@ -85,7 +85,7 @@ export default function CultureGuidePage() {
                         <span className="p-2 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-500 rounded-xl"><Utensils className="w-5 h-5" /></span>
                         À Table
                     </h3>
-                    <ul className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-800 space-y-3 text-sm text-slate-700 dark:text-slate-300">
+                    <ul className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-800 space-y-3 text-sm text-slate-700 dark:text-slate-300 dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]">
                         <li className="flex gap-3">
                             <span className="text-red-500 font-bold">✗</span>
                             <span>Ne plantez jamais vos baguettes verticalement dans le riz (signe de mort).</span>
@@ -111,7 +111,7 @@ export default function CultureGuidePage() {
                         <span className="p-2 bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 rounded-xl"><HeartHandshake className="w-5 h-5" /></span>
                         Rencontre, Drague & Social
                     </h3>
-                    <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-800 space-y-5 text-sm text-slate-700 dark:text-slate-300">
+                    <div className="bg-slate-50 dark:bg-slate-900/50 rounded-2xl p-5 border border-slate-100 dark:border-slate-800 space-y-5 text-sm text-slate-700 dark:text-slate-300 dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]">
 
                         <div>
                             <h4 className="font-bold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2 mb-2">L'Avantage du Laowai (Étranger)</h4>
@@ -190,14 +190,14 @@ export default function CultureGuidePage() {
                         Sécurité & Pratique
                     </h3>
                     <div className="space-y-3">
-                        <div className="flex gap-3 items-start p-3 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl">
+                        <div className="flex gap-3 items-start p-3 bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-xl dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]">
                             <CloudRain className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
                             <div>
                                 <h4 className="font-bold text-sm dark:text-white">Météo</h4>
                                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Chongqing est un "Four". En été (Juillet-Août), il fait 40°C+ et humide. Hiver doux mais gris et humide (pas de chauffage central au sud ! Prenez des vêtements chauds d'intérieur).</p>
                             </div>
                         </div>
-                        <div className="flex gap-3 items-start p-3 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl">
+                        <div className="flex gap-3 items-start p-3 bg-white dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-xl dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]">
                             <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
                             <div>
                                 <h4 className="font-bold text-sm dark:text-white">Sécurité</h4>

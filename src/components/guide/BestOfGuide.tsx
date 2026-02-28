@@ -218,7 +218,7 @@ export function BestOfGuide() {
                                             {/* All Ratings Detailed */}
                                             <div className="grid grid-cols-3 gap-2">
                                                 {place.ratings.map((rating, idx) => (
-                                                    <div key={idx} className="bg-slate-50 dark:bg-slate-900 p-2 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center">
+                                                    <div key={idx} className="bg-slate-50 dark:bg-slate-900/50 p-2 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]">
                                                         <span className="text-[10px] text-slate-400 uppercase font-bold mb-1">{rating.source}</span>
                                                         <span className={cn(
                                                             "text-xl font-black",
@@ -250,7 +250,7 @@ export function BestOfGuide() {
                                                     <MapPin className="w-5 h-5 text-slate-500" />
                                                     Adresse
                                                 </h3>
-                                                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between p-3 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-xl">
+                                                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-xl dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]">
                                                     <p className="text-slate-600 dark:text-slate-400 text-sm max-w-[200px] truncate">
                                                         {place.address}
                                                     </p>

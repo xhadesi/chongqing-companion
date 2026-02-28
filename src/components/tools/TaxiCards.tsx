@@ -103,7 +103,7 @@ export function TaxiCards() {
                     <Card
                         key={dest.id}
                         variant="premium"
-                        className="p-6 hover:shadow-lg transition-shadow bg-white/60 dark:bg-slate-900/60"
+                        className="p-6 hover:shadow-lg transition-shadow bg-white/60 dark:bg-slate-900/50 dark:border-slate-800 dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]"
                     >
                         <div className="flex justify-between items-start mb-4">
                             <div className="flex items-center gap-3">
@@ -125,7 +125,7 @@ export function TaxiCards() {
                             </button>
                         </div>
 
-                        <div className="bg-slate-50/50 dark:bg-slate-950/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 text-center mb-4 backdrop-blur-sm">
+                        <div className="bg-slate-50/50 dark:bg-slate-800/40 p-6 rounded-2xl border border-slate-100 dark:border-slate-700/50 text-center mb-4 backdrop-blur-sm dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.05)]">
                             <p className="text-3xl font-black text-slate-900 dark:text-white mb-2 leading-tight">
                                 {dest.chineseTitle}
                             </p>
@@ -134,7 +134,7 @@ export function TaxiCards() {
                             </p>
                         </div>
 
-                        <div className="flex items-center gap-2 text-slate-400 text-sm">
+                        <div className="flex items-center gap-2 text-slate-400 dark:text-slate-300 text-sm">
                             <MapPin className="w-4 h-4" />
                             <span className="truncate">{dest.address}</span>
                         </div>

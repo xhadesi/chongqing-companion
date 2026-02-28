@@ -139,7 +139,7 @@ export default function Home() {
               <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 font-bold uppercase tracking-wide opacity-80">Convertisseur • Météo</p>
             </div>
 
-            <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-white/10 flex items-center justify-center group-hover:bg-slate-200 dark:group-hover:bg-white/20 transition-colors border border-slate-200 dark:border-white/5 relative z-10 shadow-sm text-2xl drop-shadow-sm group-hover:scale-110">
+            <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center group-hover:bg-slate-200 dark:group-hover:bg-white/10 transition-colors border border-slate-200 dark:border-white/5 relative z-10 shadow-sm text-2xl drop-shadow-sm group-hover:scale-110">
               🧰
             </div>
 
@@ -163,7 +163,7 @@ function GuideBanner({
 
   return (
     // @ts-ignore
-    <Component href={href !== '#' ? href : undefined} {...props} className={`w-full min-h-[90px] p-3 flex flex-row items-center gap-3 relative overflow-hidden transition-all active:scale-95 group card-premium ${className || 'bg-white/60 dark:bg-slate-800/80'} ${isEmergency ? 'col-span-2' : ''}`}>
+    <Component href={href !== '#' ? href : undefined} {...props} className={`w-full min-h-[90px] p-3 flex flex-row items-center gap-3 relative overflow-hidden transition-all active:scale-95 group card-premium ${className || 'bg-white/60 dark:bg-slate-900/50 dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] dark:border-slate-800'} ${isEmergency ? 'col-span-2' : ''}`}>
       {/* Background Image (if provided and not emergency) */}
       {!isEmergency && image && (
         <div className="absolute inset-0">

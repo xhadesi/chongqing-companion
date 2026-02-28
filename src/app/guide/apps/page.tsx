@@ -93,7 +93,7 @@ export default function AppGuidePage() {
                             href={app.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`block p-5 rounded-2xl border-2 transition-all hover:scale-[1.02] hover:shadow-md ${app.color} dark:bg-slate-900/50 dark:border-slate-800 dark:text-slate-300`}
+                            className={`block p-5 rounded-2xl border-2 transition-all hover:scale-[1.02] hover:shadow-md ${app.color} dark:bg-slate-900/50 dark:border-slate-800 dark:text-slate-300 dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]`}
                         >
                             <div className="flex items-start gap-4">
                                 <div className="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-sm shrink-0">
@@ -111,7 +111,7 @@ export default function AppGuidePage() {
                     ))}
                 </div>
 
-                <div className="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl text-xs text-slate-400 dark:text-slate-500 text-center border border-slate-100 dark:border-slate-800">
+                <div className="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl text-xs text-slate-400 dark:text-slate-400 text-center border border-slate-100 dark:border-slate-800 dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.05)]">
                     Note: Un VPN est souvent nécessaire pour télécharger ou utiliser certaines apps occidentales, mais ces apps locales fonctionnent partout.
                 </div>
             </div>
