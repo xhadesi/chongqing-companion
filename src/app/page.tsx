@@ -98,8 +98,10 @@ export default function Home() {
 
       {/* Currency Cheat Sheet */}
       <section className="animate-in slide-in-from-bottom-8 duration-700 delay-200">
-        <div className="bg-slate-900 dark:bg-slate-800 rounded-2xl p-4 flex items-center justify-between text-white shadow-lg shadow-slate-900/10">
-          <div className="flex items-center gap-3">
+        <div className="bg-slate-900 dark:bg-slate-900/80 rounded-2xl p-4 flex items-center justify-between text-white shadow-lg shadow-slate-900/10 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] dark:border dark:border-white/5 relative overflow-hidden">
+          {/* Subtle inner light */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+          <div className="flex items-center gap-3 relative z-10">
             <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-lg">
               💶
             </div>
@@ -163,7 +165,7 @@ function GuideBanner({
 
   return (
     // @ts-ignore
-    <Component href={href !== '#' ? href : undefined} {...props} className={`w-full min-h-[90px] p-3 flex flex-row items-center gap-3 relative overflow-hidden transition-all active:scale-95 group card-premium ${className || 'bg-white/60 dark:bg-slate-900/50 dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] dark:border-slate-800'} ${isEmergency ? 'col-span-2' : ''}`}>
+    <Component href={href !== '#' ? href : undefined} {...props} className={`w-full min-h-[90px] p-3 flex flex-row items-center gap-3 relative overflow-hidden transition-all active:scale-95 group card-premium ${className || 'bg-white/60 dark:bg-slate-900/80'} ${isEmergency ? 'col-span-2 shadow-sm' : ''}`}>
       {/* Background Image (if provided and not emergency) */}
       {!isEmergency && image && (
         <div className="absolute inset-0">

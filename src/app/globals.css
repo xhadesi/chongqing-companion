@@ -199,16 +199,21 @@ body {
 
   /* Dark Mode Adaptation */
   .dark .card-premium {
-    background-color: rgba(30, 30, 35, 0.6);
-    border-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(15, 23, 42, 0.85);
+    /* Deep Slate 900 for consistency */
+    border-color: rgba(255, 255, 255, 0.08);
+    /* Subtle border */
 
+    /* Inner light effect to give volume */
     background-image:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 40%),
+      radial-gradient(circle at top right, rgba(99, 102, 241, 0.08), transparent 50%);
 
     box-shadow:
-      0 8px 32px -4px rgba(0, 0, 0, 0.5),
-      0 0 0 1px rgba(255, 255, 255, 0.05) inset,
-      0 0 15px rgba(0, 0, 0, 0.2);
+      0 8px 32px -4px rgba(0, 0, 0, 0.6),
+      0 1px 1px 0 rgba(255, 255, 255, 0.1) inset,
+      /* Top edge highlight */
+      0 0 20px rgba(0, 0, 0, 0.3);
     /* Depth */
   }
 
