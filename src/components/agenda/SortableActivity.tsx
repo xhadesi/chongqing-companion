@@ -140,7 +140,7 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                 <TaxiModal
                     isOpen={isTaxiModalOpen}
                     onClose={() => setIsTaxiModalOpen(false)}
-                    destinationName={activity.location || activity.title}
+                    destinationName={activity.chineseTitle || activity.location || activity.title}
                     address={activity.address}
                 />
             )}

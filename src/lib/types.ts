@@ -3,6 +3,7 @@ export interface Activity {
     time: string; // HH:MM
     duration?: string; // e.g. "1h" or "30m"
     title: string;
+    chineseTitle?: string; // For the Taxi Modal
     description?: string;
     tips?: string; // Additional context or advice
     icon?: string; // Lucide icon name or emoji
