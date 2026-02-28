@@ -71,13 +71,13 @@ export default function AppGuidePage() {
     ];
 
     return (
-        <div className="min-h-screen bg-white pb-32">
+        <div className="min-h-screen bg-white dark:bg-slate-950 pb-32">
             {/* Header */}
-            <div className="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-100 p-4 flex items-center gap-4 z-10">
-                <Link href="/" className="p-2 -ml-2 hover:bg-slate-100 rounded-full transition-colors">
-                    <ArrowLeft className="w-6 h-6 text-slate-700" />
+            <div className="sticky top-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 p-4 flex items-center gap-4 z-10 transition-colors">
+                <Link href="/" className="p-2 -ml-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                    <ArrowLeft className="w-6 h-6 text-slate-700 dark:text-slate-300" />
                 </Link>
-                <h1 className="text-xl font-bold text-slate-800">Apps Indispensables</h1>
+                <h1 className="text-xl font-bold text-slate-800 dark:text-white">Apps Indispensables</h1>
             </div>
 
             <div className="max-w-xl mx-auto p-6 space-y-6">
@@ -93,14 +93,14 @@ export default function AppGuidePage() {
                             href={app.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`block p-5 rounded-2xl border-2 transition-all hover:scale-[1.02] hover:shadow-md ${app.color}`}
+                            className={`block p-5 rounded-2xl border-2 transition-all hover:scale-[1.02] hover:shadow-md ${app.color} dark:bg-slate-900/50 dark:border-slate-800 dark:text-slate-300`}
                         >
                             <div className="flex items-start gap-4">
-                                <div className="bg-white p-2 rounded-xl shadow-sm shrink-0">
+                                <div className="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-sm shrink-0">
                                     {app.icon}
                                 </div>
                                 <div>
-                                    <h3 className="text-lg font-bold flex items-center gap-2">
+                                    <h3 className="text-lg font-bold flex items-center gap-2 dark:text-white">
                                         {app.name}
                                         <Download className="w-4 h-4 opacity-50" />
                                     </h3>
@@ -111,7 +111,7 @@ export default function AppGuidePage() {
                     ))}
                 </div>
 
-                <div className="p-4 bg-slate-50 rounded-2xl text-xs text-slate-400 text-center">
+                <div className="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl text-xs text-slate-400 dark:text-slate-500 text-center border border-slate-100 dark:border-slate-800">
                     Note: Un VPN est souvent nécessaire pour télécharger ou utiliser certaines apps occidentales, mais ces apps locales fonctionnent partout.
                 </div>
             </div>

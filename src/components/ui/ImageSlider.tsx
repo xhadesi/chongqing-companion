@@ -47,11 +47,12 @@ export function ImageSlider({ images, alt, className = "", imageClassName = "" }
         );
     }
 
-    // Slider for multiple images
     return (
         <div className={`relative group ${className}`}>
             <Swiper
                 modules={[Pagination]}
+                observer={true}
+                observeParents={true}
                 pagination={{
                     clickable: true,
                     // Custom pagination styles are often needed to make dots visible over images

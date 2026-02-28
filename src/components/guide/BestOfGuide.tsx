@@ -134,7 +134,7 @@ export function BestOfGuide() {
 
                                     {/* Icon centered */}
                                     <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white border border-white/30 shadow-sm group-hover:scale-110 transition-transform">
+                                        <div className="w-10 h-10 rounded-full bg-slate-900/50 dark:bg-black/50 backdrop-blur-md flex items-center justify-center text-white border border-white/30 dark:border-white/10 shadow-sm group-hover:scale-110 transition-transform">
                                             {getIcon(cat.iconName)}
                                         </div>
                                     </div>
@@ -369,7 +369,7 @@ export function BestOfGuide() {
                                                 <div className="flex items-center gap-1.5" title="Our Rating">
                                                     <span className="text-xs font-bold text-slate-900 dark:text-white">{place.averageRating}</span>
                                                     <RatingBubbles score={place.averageRating} colorClass="bg-amber-400 border-amber-400" />
-                                                    <span className="text-[10px] text-slate-400">({place.ratings.find(r => r.source === "Chongqing Companion")?.count || "62 avis"})</span>
+                                                    <span className="text-[10px] text-slate-500 dark:text-slate-400">({place.ratings.find(r => r.source === "Chongqing Companion")?.count || "62 avis"})</span>
                                                 </div>
                                             </div>
 

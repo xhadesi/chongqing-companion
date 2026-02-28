@@ -163,7 +163,7 @@ function GuideBanner({
 
   return (
     // @ts-ignore
-    <Component href={href !== '#' ? href : undefined} {...props} className={`w-full min-h-[90px] p-3 flex flex-row items-center gap-3 relative overflow-hidden transition-all active:scale-95 group card-premium ${className || 'bg-white/60 dark:bg-slate-900/60'} ${isEmergency ? 'col-span-2' : ''}`}>
+    <Component href={href !== '#' ? href : undefined} {...props} className={`w-full min-h-[90px] p-3 flex flex-row items-center gap-3 relative overflow-hidden transition-all active:scale-95 group card-premium ${className || 'bg-white/60 dark:bg-slate-800/80'} ${isEmergency ? 'col-span-2' : ''}`}>
       {/* Background Image (if provided and not emergency) */}
       {!isEmergency && image && (
         <div className="absolute inset-0">

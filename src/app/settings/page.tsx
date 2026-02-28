@@ -101,7 +101,7 @@ export default function SettingsPage() {
 function SettingsGroup({ children, title }: { children: React.ReactNode, title?: string }) {
     return (
         <div className="space-y-2">
-            {title && <h2 className="text-xs font-bold text-slate-500 uppercase px-4 ml-1">{title}</h2>}
+            {title && <h2 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase px-4 ml-1">{title}</h2>}
             <div className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800">
                 {children}
             </div>
