@@ -14,7 +14,16 @@ import { ImageSlider } from "@/components/ui/ImageSlider";
 
 export function AgendaView() {
     const { days, unscheduled, isLoading, addActivity, moveActivity, toggleActivity, deleteActivity, updateActivity, addDay, removeDay, updateDate } = useAgenda();
-    const [selectedDayId, setSelectedDayId] = useState<string>("day-1");
+    const [selectedDayId, setSelectedDayId] = useState<string>("");
+
+    // Set default selected day once loaded
+    useEffect(() => {
+        if (!isLoading && days.length > 0) {
+            if (!selectedDayId || !days.find(d => d.id === selectedDayId)) {
+                setSelectedDayId(days[0].id);
+            }
+        }
+    }, [days, isLoading, selectedDayId]);
 
     // UI State
     const [dayToDelete, setDayToDelete] = useState<string | null>(null);
@@ -22,6 +31,39 @@ export function AgendaView() {
     const [activityToAddId, setActivityToAddId] = useState<string | null>(null);
     const [isAdding, setIsAdding] = useState(false);
     const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
+
+    // Swipe state for changing days
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+    const [touchEnd, setTouchEnd] = useState<number | null>(null);
+    const minSwipeDistance = 50;
+
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const onTouchMove = (e: React.TouchEvent) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+
+        if (isLeftSwipe || isRightSwipe) {
+            const currentIndex = days.findIndex(d => d.id === selectedDayId);
+            const actualIndex = currentIndex !== -1 ? currentIndex : 0;
+
+            if (isLeftSwipe && actualIndex < days.length - 1) { // Swipe left -> Next day
+                setSelectedDayId(days[actualIndex + 1].id);
+            }
+            if (isRightSwipe && actualIndex > 0) { // Swipe right -> Prev day
+                setSelectedDayId(days[actualIndex - 1].id);
+            }
+        }
+    };
 
     // Details Slide State
     const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
@@ -147,7 +189,12 @@ export function AgendaView() {
 
             <div className="flex-1 flex flex-col lg:flex-row max-w-7xl mx-auto w-full gap-6 p-4 md:p-6 pb-32">
                 {/* Left: Main Timeline */}
-                <div className="flex-1 min-w-0">
+                <div
+                    className="flex-1 min-w-0"
+                    onTouchStart={onTouchStart}
+                    onTouchMove={onTouchMove}
+                    onTouchEnd={onTouchEnd}
+                >
                     {selectedDay && (
                         <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 min-h-[600px] overflow-hidden">
                             {/* Day Header */}
