@@ -25,7 +25,7 @@ export function BottomNav() {
                             key={item.href}
                             href={item.href}
                             className={cn(
-                                "flex flex-col items-center justify-center w-full h-full space-y-1.5 transition-all duration-100 relative group active:scale-95 active:opacity-50",
+                                "flex flex-col items-center justify-center w-full h-full space-y-1.5 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] relative group active:scale-90 active:opacity-60",
                                 isActive ? "opacity-100 scale-105" : "opacity-80 hover:opacity-100"
                             )}
                         >
