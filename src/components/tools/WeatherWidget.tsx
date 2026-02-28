@@ -125,13 +125,32 @@ export function WeatherWidget() {
                 return;
             }
             try {
-                const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchQuery)}&count=5&language=fr&format=json`);
+                // Fetch more results so we can deduplicate
+                const res = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchQuery)}&count=10&language=fr&format=json`);
                 const data = await res.json();
-                if (data.results) setSearchResults(data.results);
+
+                if (data.results) {
+                    // Deduplicate results based on proximity (e.g., same city returned under different aliases like "Pékin" and "Beijing")
+                    const uniqueResults: any[] = [];
+                    data.results.forEach((city: any) => {
+                        const isDuplicate = uniqueResults.some(
+                            (existing) =>
+                                Math.abs(existing.latitude - city.latitude) < 0.1 &&
+                                Math.abs(existing.longitude - city.longitude) < 0.1
+                        );
+                        if (!isDuplicate) {
+                            uniqueResults.push(city);
+                        }
+                    });
+
+                    setSearchResults(uniqueResults.slice(0, 5)); // Keep top 5 unique
+                } else {
+                    setSearchResults([]);
+                }
             } catch (e) {
-                console.error(e);
+                console.error("Geocoding search error", e);
             }
-        }, 500);
+        }, 600);
         return () => clearTimeout(timer);
     }, [searchQuery]);
 
@@ -276,8 +295,11 @@ export function WeatherWidget() {
                                         onClick={() => addCity(res)}
                                         className="w-full text-left p-3 rounded-xl hover:bg-indigo-50 transition-colors flex justify-between items-center group"
                                     >
-                                        <span className="font-bold text-sm text-slate-700 group-hover:text-indigo-700">{res.name}</span>
-                                        <span className="text-[10px] font-bold text-slate-300 uppercase bg-slate-50 px-2 py-1 rounded-md">{res.country_code}</span>
+                                        <div className="flex flex-col min-w-0 pr-2">
+                                            <span className="font-bold text-sm text-slate-700 group-hover:text-indigo-700 truncate">{res.name}</span>
+                                            {res.admin1 && <span className="text-[10px] text-slate-400 truncate">{res.admin1}</span>}
+                                        </div>
+                                        <span className="text-[10px] font-bold text-slate-300 uppercase bg-slate-50 px-2 py-1 rounded-md shrink-0">{res.country_code}</span>
                                     </button>
                                 ))}
                             </div>
