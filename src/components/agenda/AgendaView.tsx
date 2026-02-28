@@ -358,17 +358,17 @@ export function AgendaView() {
 
             {/* Details Sliding Modal */}
             {isDetailsOpen && selectedActivity && (
-                <div className="fixed inset-0 z-50 bg-slate-50 dark:bg-slate-950 p-0 flex flex-col animate-in slide-in-from-bottom-10 lg:slide-in-from-right-10 duration-200 overflow-y-auto custom-scrollbar">
-                    <>
-                        <div className="relative h-64 md:h-80 w-full shrink-0 bg-slate-100 dark:bg-slate-900">
+                <div className="fixed inset-0 z-[60] bg-slate-50 dark:bg-slate-950 flex flex-col animate-in slide-in-from-bottom-10 lg:slide-in-from-right-10 duration-200 overflow-y-auto custom-scrollbar">
+                    <div className="relative min-h-full flex flex-col">
+                        <div className="relative h-64 md:h-80 w-full shrink-0 bg-slate-200 dark:bg-slate-900">
                             {selectedActivity.images && selectedActivity.images.length > 0 ? (
                                 <ImageSlider
                                     images={selectedActivity.images}
                                     alt={selectedActivity.title}
-                                    className="h-full w-full"
+                                    className="h-full w-full object-cover"
                                 />
                             ) : (
-                                <div className="w-full h-full flex items-center justify-center text-6xl shadow-sm">
+                                <div className="w-full h-full flex items-center justify-center text-6xl shadow-inner">
                                     {selectedActivity.icon || "🏙️"}
                                 </div>
                             )}
@@ -481,7 +481,7 @@ export function AgendaView() {
                                 )}
                             </div>
                         </div>
-                    </>
+                    </div>
                 </div>
             )}
         </div>

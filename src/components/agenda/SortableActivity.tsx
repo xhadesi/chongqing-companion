@@ -21,7 +21,7 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
     const [isTaxiModalOpen, setIsTaxiModalOpen] = useState(false);
 
     return (
-        <div className="relative group touch-none animate-in fade-in slide-in-from-bottom-2 duration-300">
+        <div className="relative group animate-in fade-in slide-in-from-bottom-2 duration-300">
             <div
                 onClick={(e) => {
                     e.stopPropagation();
