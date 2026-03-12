@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Trash2, ChevronRight, X, Clock, MapPin, Navigation, ArrowLeft, Timer } from "lucide-react";
+import { Plus, Trash2, ChevronRight, X, Clock, MapPin, Navigation, ArrowLeft, Timer, Banknote } from "lucide-react";
 import { useAgenda } from "@/hooks/useAgenda";
 import { cn } from "@/lib/utils";
 import { DatePicker } from "@/components/ui/DatePicker";
@@ -383,52 +383,70 @@ export function AgendaView() {
                             >
                                 <ArrowLeft className="w-6 h-6" />
                             </button>
-                            <div className="absolute bottom-6 left-6 right-6">
-                                <h1 className="text-2xl md:text-3xl font-black text-white mb-1 shadow-black/50 text-shadow-sm leading-tight">{selectedActivity.title}</h1>
+                            <div className="absolute bottom-5 left-5 right-5 flex flex-col items-start">
                                 {selectedActivity.time && (
-                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-600 rounded-full text-white text-xs font-bold shadow-md">
+                                    <div className="flex items-center gap-2 mb-2 bg-black/40 backdrop-blur-md text-white/90 px-2.5 py-1 rounded-lg text-xs font-bold border border-white/10">
                                         <Clock className="w-3.5 h-3.5" />
                                         {selectedActivity.time}
-                                    </span>
+                                        {selectedActivity.duration && (
+                                            <>
+                                                <span className="w-1 h-1 rounded-full bg-white/50 mx-0.5" />
+                                                <Timer className="w-3.5 h-3.5" />
+                                                {selectedActivity.duration}
+                                            </>
+                                        )}
+                                    </div>
+                                )}
+                                <h1 className="text-2xl font-black text-white shadow-black/50 text-shadow-sm leading-tight inline-block bg-gradient-to-t from-black/60 to-transparent p-1 -ml-1 rounded">
+                                    {selectedActivity.icon && <span className="mr-2 drop-shadow-md">{selectedActivity.icon}</span>}
+                                    {selectedActivity.title}
+                                </h1>
+                                {selectedActivity.priceEstimate && (
+                                     <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/90 backdrop-blur text-white rounded-full text-xs font-bold shadow-md">
+                                         <Banknote className="w-3.5 h-3.5" />
+                                         {selectedActivity.priceEstimate}
+                                     </div>
                                 )}
                             </div>
                         </div>
-                        <div className="p-6 md:p-8 space-y-8 max-w-4xl mx-auto w-full pb-32">
+                        <div className="p-5 md:p-8 space-y-6 max-w-4xl mx-auto w-full pb-32">
 
                             {(selectedActivity.location || selectedActivity.address) && (
-                                <div className="flex flex-col gap-3">
-                                    <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
-                                        <MapPin className="w-5 h-5 text-indigo-600" />
-                                        Localisation
+                                <div className="flex flex-col gap-2">
+                                    <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                                        <MapPin className="w-4 h-4 text-indigo-500" />
+                                        Lieu
                                     </h3>
-                                    {selectedActivity.location && <p className="text-sm font-medium text-slate-700 dark:text-slate-300"><span className="text-slate-400">Quartier:</span> {selectedActivity.location}</p>}
-                                    {selectedActivity.address && <p className="text-sm font-medium text-slate-700 dark:text-slate-300"><span className="text-slate-400">Adresse:</span> {selectedActivity.address}</p>}
+                                    <div className="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-1.5">
+                                        {selectedActivity.location && <p className="text-sm font-bold text-slate-700 dark:text-slate-300">{selectedActivity.location}</p>}
+                                        {selectedActivity.address && <p className="text-xs font-medium text-slate-500 dark:text-slate-400">{selectedActivity.address}</p>}
+                                    </div>
                                 </div>
                             )}
 
                             {selectedActivity.description && (
-                                <div className="flex flex-col gap-3">
-                                    <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
-                                        <span className="text-xl">📝</span> Détails / Notes
+                                <div className="flex flex-col gap-2">
+                                    <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                                        <span className="text-base leading-none">📝</span> Détails
                                     </h3>
-                                    <div className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700 whitespace-pre-wrap">
+                                    <div className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 whitespace-pre-wrap">
                                         {selectedActivity.description}
                                     </div>
                                 </div>
                             )}
 
                             {selectedActivity.tips && (
-                                <div className="flex flex-col gap-3">
-                                    <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2 border-b border-slate-100 dark:border-slate-800 pb-2">
-                                        <span className="text-xl">💡</span> Conseils Spécialisés
+                                <div className="flex flex-col gap-2">
+                                    <h3 className="text-sm font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                                        <span className="text-base leading-none">💡</span> Conseils
                                     </h3>
-                                    <div className="text-slate-800 dark:text-slate-200 leading-relaxed text-sm bg-blue-50 dark:bg-indigo-900/20 p-5 rounded-2xl border border-blue-200 dark:border-indigo-800/40 whitespace-pre-wrap shadow-sm shadow-blue-100 dark:shadow-none">
+                                    <div className="text-amber-800 dark:text-amber-200 leading-relaxed text-[13px] font-medium bg-amber-50 dark:bg-amber-900/20 p-4 rounded-2xl border border-amber-200/60 dark:border-amber-800/40 whitespace-pre-wrap">
                                         {selectedActivity.tips}
                                     </div>
                                 </div>
                             )}
 
-                            <div className="flex flex-col sm:flex-row items-center gap-3 pt-4">
+                            <div className="grid grid-cols-2 gap-3 pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/60">
                                 {(selectedActivity as any)._containerId === "unscheduled" ? (
                                     <button
                                         onClick={() => {
@@ -436,13 +454,13 @@ export function AgendaView() {
                                             setIsAddModalOpen(true);
                                             setSelectedActivity(null);
                                         }}
-                                        className="w-full sm:flex-1 h-14 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-black flex items-center justify-center gap-2 shadow-lg shadow-amber-200 dark:shadow-none transition-transform active:scale-95"
+                                        className="col-span-2 h-12 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white font-black flex items-center justify-center gap-2 shadow-lg shadow-amber-200/50 dark:shadow-none transition-transform active:scale-95 text-sm"
                                     >
-                                        <Plus className="w-5 h-5" />
+                                        <Plus className="w-4 h-4" />
                                         Planifier ce lieu
                                     </button>
                                 ) : (
-                                    <div className="w-full sm:flex-1 flex gap-2">
+                                    <>
                                         <button
                                             onClick={() => {
                                                 const newVal = window.prompt("Nouvelle heure (ex: 20:00):", selectedActivity.time);
@@ -451,9 +469,9 @@ export function AgendaView() {
                                                     setSelectedActivity({ ...selectedActivity, time: newVal });
                                                 }
                                             }}
-                                            className="flex-1 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold flex items-center justify-center gap-2 transition-colors active:scale-95"
+                                            className="h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold flex items-center justify-center gap-2 transition-colors active:scale-95 text-sm"
                                         >
-                                            <Clock className="w-5 h-5" />
+                                            <Clock className="w-4 h-4 text-indigo-500" />
                                             Heure
                                         </button>
                                         <button
@@ -464,12 +482,12 @@ export function AgendaView() {
                                                     setSelectedActivity({ ...selectedActivity, duration: newVal });
                                                 }
                                             }}
-                                            className="flex-1 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold flex items-center justify-center gap-2 transition-colors active:scale-95"
+                                            className="h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-white font-bold flex items-center justify-center gap-2 transition-colors active:scale-95 text-sm"
                                         >
-                                            <Timer className="w-5 h-5" />
+                                            <Timer className="w-4 h-4 text-indigo-500" />
                                             Durée
                                         </button>
-                                    </div>
+                                    </>
                                 )}
 
                                 {selectedActivity.address && (
@@ -477,10 +495,10 @@ export function AgendaView() {
                                         href={`https://www.amap.com/search?query=${encodeURIComponent(selectedActivity.address)}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="w-full sm:w-auto h-14 px-8 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 font-bold flex items-center justify-center gap-2 transition-colors active:scale-95"
+                                        className="col-span-2 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 text-indigo-700 dark:text-indigo-400 font-bold flex items-center justify-center gap-2 transition-colors active:scale-95 text-sm"
                                     >
-                                        <Navigation className="w-5 h-5" />
-                                        Ouvrir GPS
+                                        <Navigation className="w-4 h-4" />
+                                        Ouvrir GPS (Amap)
                                     </a>
                                 )}
                             </div>

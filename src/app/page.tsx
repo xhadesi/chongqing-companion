@@ -82,7 +82,7 @@ export default function Home() {
             isEmergency={true}
             href="tel:110"
             external
-            className="col-span-2 bg-red-50/50 dark:bg-red-900/20"
+            className="col-span-2"
           />
         </div>
       </section>
@@ -165,7 +165,7 @@ function GuideBanner({
 
   return (
     // @ts-ignore
-    <Component href={href !== '#' ? href : undefined} {...props} className={`w-full min-h-[90px] p-3 flex flex-row items-center gap-3 relative overflow-hidden transition-all active:scale-95 group card-premium ${className || 'bg-white/60 dark:bg-slate-900/80'} ${isEmergency ? 'col-span-2 shadow-sm' : ''}`}>
+    <Component href={href !== '#' ? href : undefined} {...props} className={`w-full min-h-[90px] p-3 flex flex-row items-center gap-3 relative overflow-hidden transition-all active:scale-95 group card-premium ${className || ''} ${isEmergency ? 'shadow-sm border-red-500/30 dark:border-red-500/30 shadow-red-500/10' : ''}`}>
       {/* Background Image (if provided and not emergency) */}
       {!isEmergency && image && (
         <div className="absolute inset-0">
