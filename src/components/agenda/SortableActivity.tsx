@@ -28,8 +28,8 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                     onClick(activity);
                 }}
                 className={cn(
-                    "w-full bg-white dark:bg-slate-900 p-4 xl:p-5 rounded-3xl border shadow-sm transition-all cursor-pointer flex flex-col gap-3 group-hover:shadow-md",
-                    activity.completed ? "border-slate-100 dark:border-slate-800 opacity-60 bg-slate-50 dark:bg-slate-900/50" : "border-slate-100 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-500/50"
+                    "w-full bg-white dark:bg-slate-800 p-4 xl:p-5 rounded-3xl border shadow-md transition-all cursor-pointer flex flex-col gap-3 group-hover:shadow-lg dark:shadow-black/40",
+                    activity.completed ? "border-slate-200 dark:border-slate-700 opacity-60 bg-slate-50/50 dark:bg-slate-800/50 shadow-none" : "border-slate-100 dark:border-slate-600 hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:-translate-y-0.5"
                 )}>
 
                 {/* Top Row: Time & Duration context, Check/Cross actions */}
@@ -77,7 +77,7 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                             onClick={(e) => { e.stopPropagation(); onToggle(activity.id); }}
                             className={cn(
                                 "flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all active:scale-90 shadow-sm",
-                                activity.completed ? "bg-emerald-500 border-emerald-500 text-white shadow-emerald-500/20" : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-300 dark:text-slate-500 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-500 dark:hover:text-emerald-400"
+                                activity.completed ? "bg-emerald-500 border-emerald-500 text-white shadow-emerald-500/20" : "bg-slate-50 dark:bg-slate-700/50 border-slate-200 dark:border-slate-600 text-slate-400 dark:text-slate-400 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-500 dark:hover:text-emerald-400"
                             )}
                             title={activity.completed ? "Annuler terminer" : "Marquer terminé"}
                         >

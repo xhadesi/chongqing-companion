@@ -182,7 +182,7 @@ export function AgendaView() {
     };
 
     return (
-        <div className="flex flex-col h-full bg-slate-50 dark:bg-slate-950 min-h-screen relative">
+        <div className="flex flex-col h-full bg-slate-100 dark:bg-slate-950 min-h-screen relative">
 
             {/* Header / Day Selector */}
             <div className="sticky top-0 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md z-30 border-b border-slate-100 dark:border-slate-800 shadow-sm">
@@ -229,13 +229,13 @@ export function AgendaView() {
                         <div
                             key={`day-view-${selectedDay.id}-${animationKey}`}
                             className={cn(
-                                "bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 min-h-[600px] overflow-hidden",
+                                "bg-slate-50 dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-200 dark:border-slate-800 min-h-[600px] overflow-hidden",
                                 "animate-in duration-300 ease-out fill-mode-forwards",
                                 slideDirection === "right" ? "slide-in-from-right-12 fade-in-0 zoom-in-[0.98]" : "slide-in-from-left-12 fade-in-0 zoom-in-[0.98]"
                             )}
                         >
                             {/* Day Header */}
-                            <div className="p-6 border-b border-slate-50 dark:border-slate-800/50 flex justify-between items-center bg-slate-50/50 dark:bg-slate-900/50">
+                            <div className="p-6 border-b border-slate-200/60 dark:border-slate-800/50 flex justify-between items-center bg-slate-100/50 dark:bg-slate-900/50">
                                 <div>
                                     <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">
                                         <span>Jour {selectedDay.dayNumber}</span>
@@ -264,7 +264,7 @@ export function AgendaView() {
                             />
 
                             {/* Add Custom Activity Button */}
-                            <div className="p-6 border-t border-slate-100 dark:border-slate-800/60 flex justify-center bg-white/50 dark:bg-slate-900/20 backdrop-blur-sm">
+                            <div className="p-6 border-t border-slate-200/60 dark:border-slate-800/60 flex justify-center bg-slate-100/30 dark:bg-slate-900/20 backdrop-blur-sm">
                                 <button
                                     onClick={() => setIsAdding(true)}
                                     className="group flex flex-col items-center gap-2 transition-all active:scale-95"
