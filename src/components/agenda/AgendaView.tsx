@@ -196,15 +196,15 @@ export function AgendaView() {
                                 key={day.id}
                                 onClick={() => changeDay(day.id)}
                                 className={cn(
-                                    "flex-shrink-0 flex flex-col items-center justify-center min-w-[5rem] px-2 h-20 rounded-2xl transition-all snap-center relative border",
+                                    "flex-shrink-0 flex flex-col items-center justify-center min-w-[5rem] px-2 h-20 rounded-2xl transition-all snap-center relative border shadow-sm",
                                     isSelected
-                                        ? "bg-slate-900 dark:bg-indigo-600 text-white shadow-lg shadow-black/10 dark:shadow-indigo-500/20 scale-105 border-transparent"
-                                        : "bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 text-slate-400 hover:border-slate-300 dark:hover:border-slate-600"
+                                        ? "bg-indigo-600 dark:bg-indigo-500 text-white shadow-indigo-500/30 scale-105 border-transparent"
+                                        : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:border-indigo-300 dark:hover:border-slate-600"
                                 )}
                             >
-                                <span className={cn("text-[10px] uppercase font-bold", isSelected ? "text-slate-300 dark:text-indigo-100" : "")}>{dayName}</span>
+                                <span className={cn("text-[10px] uppercase font-black", isSelected ? "text-indigo-100 dark:text-indigo-100" : "")}>{dayName}</span>
                                 <span className="text-2xl font-black leading-none mt-1">{dateObj.getDate()}</span>
-                                {day.activities.length > 0 && <div className={cn("absolute bottom-2 w-1.5 h-1.5 rounded-full", isSelected ? "bg-indigo-500 dark:bg-white" : "bg-indigo-400")} />}
+                                {day.activities.length > 0 && <div className={cn("absolute bottom-2 w-1.5 h-1.5 rounded-full", isSelected ? "bg-white" : "bg-indigo-500")} />}
                             </button>
                         );
                     })}
@@ -235,14 +235,14 @@ export function AgendaView() {
                             )}
                         >
                             {/* Day Header */}
-                            <div className="p-6 border-b border-slate-200/60 dark:border-slate-800/50 flex justify-between items-center bg-slate-100/50 dark:bg-slate-900/50">
+                            <div className="p-6 border-b border-slate-200/60 dark:border-slate-800/50 flex justify-between items-center bg-white/60 dark:bg-slate-900/50 backdrop-blur-sm">
                                 <div>
-                                    <div className="flex items-center gap-2 text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">
+                                    <div className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 text-xs font-black uppercase tracking-wider mb-1">
                                         <span>Jour {selectedDay.dayNumber}</span>
                                     </div>
-                                    <button onClick={() => setIsDatePickerOpen(true)} className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-2 hover:text-indigo-500 transition-colors">
+                                    <button onClick={() => setIsDatePickerOpen(true)} className="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
                                         {new Date(selectedDay.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
-                                        <ChevronRight className="w-5 h-5 opacity-50" />
+                                        <ChevronRight className="w-5 h-5 opacity-40 text-slate-400" />
                                     </button>
                                     {isDatePickerOpen && (
                                         <DatePicker value={selectedDay.date} onChange={(d) => updateDate(selectedDay.id, d)} onClose={() => setIsDatePickerOpen(false)} />
