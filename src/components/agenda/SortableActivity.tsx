@@ -34,7 +34,7 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
 
                 {/* Top Row: Time & Duration context, Check/Cross actions */}
                 <div className="flex justify-between items-start gap-3 mb-1.5 pl-1.5 pr-1">
-                    <div className="flex flex-wrap items-center gap-2 text-[13px] font-bold text-slate-500 dark:text-slate-400">
+                    <div className="flex flex-wrap items-center gap-2">
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -45,14 +45,12 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                                     }
                                 }
                             }}
-                            className="flex items-center gap-1.5 px-2 py-1 -ml-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors active:scale-95"
+                            className="flex items-center gap-1.5 text-xs font-black px-2.5 py-1.5 -ml-1.5 rounded-xl border shadow-sm bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors active:scale-95"
                             title="Modifier l'heure"
                         >
-                            <Clock className="w-4 h-4 text-indigo-400 dark:text-indigo-500" />
+                            <Clock className="w-3.5 h-3.5" />
                             {activity.time || "--:--"}
                         </button>
-
-                        <span className="w-1 h-1 rounded-full bg-slate-200 dark:bg-slate-700 mx-0.5" />
 
                         <button
                             onClick={(e) => {
@@ -64,10 +62,10 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                                     }
                                 }
                             }}
-                            className="flex items-center gap-1.5 px-2 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors active:scale-95"
+                            className="flex items-center gap-1.5 text-xs font-black px-2.5 py-1.5 rounded-xl border shadow-sm bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors active:scale-95"
                             title="Modifier la durée"
                         >
-                            <Timer className="w-4 h-4 text-indigo-400 dark:text-indigo-500" />
+                            <Timer className="w-3.5 h-3.5" />
                             {activity.duration || "--"}
                         </button>
                     </div>

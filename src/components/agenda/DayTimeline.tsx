@@ -22,8 +22,8 @@ export function DayTimeline({ dayId, activities, onToggle, onDelete, onClick, on
                     <div className="w-16 h-16 bg-white dark:bg-slate-800 rounded-full flex items-center justify-center mb-4 shadow-sm">
                         <Clock className="w-6 h-6 text-slate-300 dark:text-slate-600" />
                     </div>
-                    <p className="text-slate-500 dark:text-slate-400 font-bold mb-1">Rien de prévu</p>
-                    <p className="text-slate-400 dark:text-slate-500 text-xs font-bold uppercase tracking-widest">Ajoutez des étapes à ce jour</p>
+                    <p className="text-slate-700 dark:text-slate-400 font-bold mb-1">Rien de prévu</p>
+                    <p className="text-slate-500 dark:text-slate-500 text-xs font-bold uppercase tracking-widest">Ajoutez des étapes à ce jour</p>
                 </div>
             )}
 
