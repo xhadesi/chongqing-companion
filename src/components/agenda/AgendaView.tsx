@@ -143,6 +143,7 @@ export function AgendaView() {
     const [newLocation, setNewLocation] = useState("");
     const [newAddress, setNewAddress] = useState("");
     const [newDescription, setNewDescription] = useState("");
+    const [newPrice, setNewPrice] = useState("");
 
     if (isLoading) {
         return (
@@ -167,6 +168,7 @@ export function AgendaView() {
 
         if (newAddress) newActivity.address = newAddress;
         if (newDescription) newActivity.description = newDescription;
+        if (newPrice) newActivity.priceEstimate = newPrice;
 
         addActivity(selectedDay.id, newActivity);
 
@@ -175,6 +177,7 @@ export function AgendaView() {
         setNewLocation("");
         setNewAddress("");
         setNewDescription("");
+        setNewPrice("");
         setIsAdding(false);
     };
 
@@ -308,7 +311,8 @@ export function AgendaView() {
 
                             <div className="flex gap-3">
                                 <input type="text" placeholder="Heure" value={newTime} onChange={e => setNewTime(e.target.value)} className="w-1/3 p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-bold outline-none ring-2 ring-transparent focus:ring-indigo-500 text-sm placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 transition-all" />
-                                <input type="text" placeholder="Lieu ou Quartier" value={newLocation} onChange={e => setNewLocation(e.target.value)} className="flex-1 p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-medium outline-none ring-2 ring-transparent focus:ring-indigo-500 text-sm placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 transition-all" />
+                                <input type="text" placeholder="Lieu ou Quartier" value={newLocation} onChange={e => setNewLocation(e.target.value)} className="w-1/3 p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-medium outline-none ring-2 ring-transparent focus:ring-indigo-500 text-sm placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 transition-all" />
+                                <input type="text" placeholder="Prix (ex: 5 €)" value={newPrice} onChange={e => setNewPrice(e.target.value)} className="w-1/3 p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-medium outline-none ring-2 ring-transparent focus:ring-indigo-500 text-sm placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 transition-all" />
                             </div>
 
                             <input type="text" placeholder="Adresse précise (si besoin)" value={newAddress} onChange={e => setNewAddress(e.target.value)} className="w-full p-4 bg-slate-50 dark:bg-slate-800/50 dark:text-white rounded-2xl font-medium outline-none ring-2 ring-transparent focus:ring-indigo-500 text-sm placeholder:text-slate-400 focus:bg-white dark:focus:bg-slate-800 transition-all" />

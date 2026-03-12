@@ -1,7 +1,7 @@
 "use client";
 
 import { Activity } from "@/lib/types";
-import { Clock, MapPin, Check, X, ImageIcon, ChevronRight, Edit2, Timer } from "lucide-react";
+import { Clock, MapPin, Check, X, ImageIcon, ChevronRight, Edit2, Timer, Banknote } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
@@ -108,6 +108,13 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                         <span className="text-sm font-bold bg-indigo-50 dark:bg-indigo-900/20 px-2.5 py-1.5 rounded-xl border border-indigo-100 dark:border-indigo-900/50 text-indigo-700 dark:text-indigo-500 flex items-center gap-1.5">
                             <MapPin className="w-3.5 h-3.5 shrink-0" />
                             <span className="truncate max-w-[200px]">{activity.location}</span>
+                        </span>
+                    )}
+
+                    {activity.priceEstimate && (
+                        <span className="text-sm font-bold bg-emerald-50 dark:bg-emerald-900/20 px-2.5 py-1.5 rounded-xl border border-emerald-100 dark:border-emerald-900/50 text-emerald-700 dark:text-emerald-500 flex items-center gap-1.5">
+                            <Banknote className="w-3.5 h-3.5 shrink-0" />
+                            <span className="truncate max-w-[200px]">{activity.priceEstimate}</span>
                         </span>
                     )}
 

@@ -18,6 +18,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Vérifie bien ton passeport et ton visa une dernière fois !",
                 location: "Paris CDG T1",
                 icon: "🛫",
+                priceEstimate: "12 € (RER B)",
+
                 completed: false
             },
             {
@@ -51,6 +53,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Aéroport -> Hôtel (Jiefangbei)",
                 address: "Deya Hotel, Jiefangbei CBD",
                 icon: "🛬",
+                priceEstimate: "10-15 € (DiDi)",
+
                 completed: false
             },
             {
@@ -64,6 +68,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Fais tes premiers pas dans l'interaction locale. N'aie pas peur de pointer les aliments du doigt avec enthousiasme. Demande \"Zhège shì shénme?\" (C'est quoi ça ?) pour montrer ta curiosité. En tant qu'étranger, ton estomac n'est pas prêt : précise toujours \"Bù yào là\" (Pas épicé) le premier soir pour éviter le court-circuit digestif immédiat.",
                 location: "Jiefangbei",
                 icon: "🍢",
+                priceEstimate: "4-6 €",
+
                 completed: false
             },
             {
@@ -77,6 +83,9 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Attention, tu vas créer l'événement. Avec tes 1m84, ta carrure mince, tes cheveux clairs et tes yeux bleus, l'effet \"Laowai\" (étranger) sera décuplé dans cette zone très touristique pour les Chinois des autres provinces. Tu remarqueras beaucoup de téléphones pointés discrètement vers toi. La tactique : marche droit, confiant, avec un léger sourire mystérieux. Si tu croises le regard émerveillé d'une fille de ton âge, souris franchement et lâche un \"Hěn piàoliang!\" (C'est très beau !) audacieux. Succès garanti.",
                 location: "Yuzhong (À pied)",
                 icon: "🌃",
+
+                priceEstimate: "Gratuit",
+
 
                 completed: false
             }
@@ -97,6 +106,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "C'est une expérience très brute et chaleureuse. L'astuce culturelle infaillible pour te faire accepter ici : quand tu as fini ton bol (même si tu transpires à grosses gouttes à cause de l'épice), lève le pouce vers le vieux chef qui t'a servi et dis bien fort \"Hǎo chī!\" (Délicieux !). L'ambiance entière de l'échoppe s'illuminera de sourires.",
                 location: "Yuzhong",
                 icon: "🍜",
+                priceEstimate: "2-3 €",
+
                 completed: false
             },
             {
@@ -111,6 +122,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Jiefangbei",
                 address: "Jiefangbei CBD (Tunnels ou Tours)",
                 icon: "👔",
+                priceEstimate: "Variable",
+
                 completed: false
             },
             {
@@ -125,6 +138,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Yuzhong",
                 address: "Minzu Road, Yuzhong",
                 icon: "🛕",
+                priceEstimate: "3 €",
+
                 completed: false
             },
             {
@@ -139,6 +154,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Yuzhong",
                 address: "Shancheng Alley",
                 icon: "🪜",
+                priceEstimate: "Gratuit",
+
                 completed: false
             },
             {
@@ -152,6 +169,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Habille-toi de matière élégante et confortable (un beau col roulé ou une chemise repassée). Si tu dînes seul au bar ou sur une grande table partagée, montre ta galanterie européenne. Si un regard se croise, lance un poli \"Zhèr yǒu rén ma?\" (Est-ce que cette place est libre ?).",
                 location: "Yuzhong",
                 icon: "🍷",
+                priceEstimate: "25-38 €",
+
                 completed: false
             }
         ]
@@ -173,6 +192,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Yuzhong",
                 address: "People's Square",
                 icon: "🏛️",
+                priceEstimate: "Gratuit",
+
                 completed: false
             },
             {
@@ -186,6 +207,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Prends quelques selfies avec l'Auditorium en fond. Si un vieux local te regarde avec curiosité, salue-le d'un signe de tête. L'esplanade est très conviviale.",
                 location: "Yuzhong",
                 icon: "🏯",
+                priceEstimate: "Gratuit (Extérieur)",
+
                 completed: false
             },
             {
@@ -200,6 +223,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Yuzhong",
                 address: "Shibati Traditional Custom Area",
                 icon: "📸",
+                priceEstimate: "25-38 € (Hanfu)",
+
                 completed: false
             },
             {
@@ -213,6 +238,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Yuzhong",
                 address: "Jiefangbei Food Streets",
                 icon: "🥟",
+                priceEstimate: "4-6 €",
+
                 completed: false
             },
             {
@@ -227,6 +254,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Yuzhong",
                 address: "Jiefangbei",
                 icon: "🪩",
+                priceEstimate: "Sur conso (Min. requis pr table)",
+
                 completed: false
             }
         ]
@@ -248,6 +277,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Yuzhong -> Nan'an",
                 address: "Xinhua Road",
                 icon: "🚡",
+                priceEstimate: "4 € (Aller-retour)",
+
                 completed: false
             },
             {
@@ -262,6 +293,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Yuzhong Ouest",
                 address: "Liziba Station",
                 icon: "🚈",
+                priceEstimate: "0-1 € (Métro)",
+
                 completed: false
             },
             {
@@ -276,6 +309,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Yuzhong Ouest",
                 address: "Eling & Testbed 2",
                 icon: "🌳",
+                priceEstimate: "Gratuit",
+
                 completed: false
             },
             {
@@ -290,6 +325,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Jiangbei",
                 address: "Guanyinqiao",
                 icon: "🏙️",
+                priceEstimate: "13-25 €",
+
                 completed: false
             }
         ]
@@ -309,6 +346,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Montre traduction à l'accueil : \"Xǐ Yá\" (Détartrage). Le personnel infirmier, très jeune et encadrant, est excessivement attentif et protecteur envers les étrangers. Ta blondeur et tes yeux bleus susciteront beaucoup de murmures intrigués en salle de soin. Si l'infirmière t'aide gentiment après le soin, c'est ta chance. Demande une photo de tes dents avec ton tel et ajoute très candidement : \"Wǒ xiǎng liànxī Zhōngwén... Kěyǐ jiā wēixìn ma?\" (J'aimerais m'entraîner en chinois... On s'ajoute sur WeChat ?). C'est la phrase passe-partout imparable.",
                 location: "Jiangbei",
                 icon: "🦷",
+                priceEstimate: "38-76 € (Détartrage)",
+
                 completed: false
             },
             {
@@ -323,6 +362,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Jiangbei",
                 address: "Starlight 68 Plaza / Paradise Walk",
                 icon: "🛍️",
+                priceEstimate: "Variable",
+
                 completed: false
             },
             {
@@ -337,6 +378,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Jiangbei",
                 address: "Nine Street (Jiujie), Guanyinqiao",
                 icon: "🪩",
+                priceEstimate: "Sur conso (Min. requis pr table)",
+
                 completed: false
             }
         ]
@@ -357,6 +400,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "L'ascension est une succession d'escaliers escarpés, l'air y est pur. Prends le temps de t'arrêter à chaque promontoire, c'est une pause salvatrice après la violence du club la veille.",
                 location: "Nan'an",
                 icon: "🛕",
+                priceEstimate: "6 € (Avec serres)",
+
                 completed: false
             },
             {
@@ -370,6 +415,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Ceci n'est pas une simulation, la fondue locale PEUT te détruire. Ordonne catégoriquement \"Wēi là !\" (Légèrement épicé) de tes deux mains à la serveuse, ou prends une fondue moitié-champignon/moitié-piment. Les tables sont denses. Repère une table bruyante de jeunes filles/garçons locaux. Si tu ne sais pas combien de temps cuire un morceau de canard ou de lotus, pointe l'aliment vers eux, montre tes yeux bleus faussement affolés et crie par dessus le brouhaha : \"Zhège zěnme zhǔ?\" (Comment on cuit ça ?). Cet appel à l'aide sera vu de façon très amusante et attachante !",
                 location: "Nan'an",
                 icon: "🍲",
+                priceEstimate: "13-19 €",
+
                 completed: false
             },
             {
@@ -383,6 +430,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Si la pression te fait trop mal (les masseurs n'y vont pas de main morte pour évacuer la tension !), crie doucement : \"Téng! Qīng yīdiǎn...\" (Ça fait mal ! Plus doucement...). Une fois fini, tu repars frais comme à 15 ans.",
                 location: "Nan'an",
                 icon: "💆",
+                priceEstimate: "25-44 €",
+
                 completed: false
             },
             {
@@ -397,6 +446,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Nan'an",
                 address: "Changjiahui Shopping Park, Nanbin Road",
                 icon: "🍸",
+                priceEstimate: "13-25 € (Cocktail)",
+
                 completed: false
             }
         ]
@@ -418,6 +469,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Shapingba",
                 address: "Ciqikou",
                 icon: "🏘️",
+                priceEstimate: "Gratuit",
+
                 completed: false
             },
             {
@@ -432,6 +485,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Jiulongpo",
                 address: "Huangjueping",
                 icon: "🖌️",
+                priceEstimate: "Gratuit",
+
                 completed: false
             },
             {
@@ -445,6 +500,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Le goût est sensationnel, ça picote les lèvres à mort et donne furieusement soif. Demande obligatoirement une grande bouteille de lait de coco d'avoine fraîche ou de lait d'amande très glacé en accompagnement pour combattre l'incendie et protéger ton palais avec la fraîcheur laiteuse.",
                 location: "Jiulongpo",
                 icon: "🐟",
+                priceEstimate: "15-19 €",
+
                 completed: false
             }
         ]
@@ -466,6 +523,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Jiulongpo",
                 address: "Xijiao Road",
                 icon: "🐼",
+                priceEstimate: "3 €",
+
                 completed: false
             },
             {
@@ -480,6 +539,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Jiulongpo",
                 address: "Zhongdi Square",
                 icon: "📚",
+                priceEstimate: "Gratuit",
+
                 completed: false
             },
             {
@@ -494,6 +555,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Chaotianmen",
                 address: "Chaotianmen Dock",
                 icon: "⛴️",
+                priceEstimate: "16-24 €",
+
                 completed: false
             },
             {
@@ -527,6 +590,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Achète une énorme batterie externe la veille, et prévois quelques snacks/chocolat car tu ne trouveras rien que des gargotes paumées sur le trajet et les sentiers rocailleux te prendront pas mal de jus calorique.",
                 location: "Gare / Autoroute -> Wulong",
                 icon: "🚆",
+                priceEstimate: "8-10 € (Bus/Train)",
+
                 completed: false
             },
             {
@@ -541,6 +606,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Wulong Karst",
                 address: "Wulong District",
                 icon: "⛰️",
+                priceEstimate: "20 €",
+
                 completed: false
             },
             {
@@ -554,6 +621,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Habille-toi très chaudement. Sous terre l'air envoie un taux d'humidité avoisinant les 90% combiné à une vraie chute frigorifique de la chaleur. Le sol brillant est extrêmement glissant (oublie les chaussures mode, amène les grosses baskets de sport à crans).",
                 location: "Wulong District",
                 icon: "🦇",
+                priceEstimate: "19 €",
+
                 completed: false
             },
             {
@@ -566,6 +635,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Mange seulement léger, une bouchée chaude fumante type vapeur et couche-toi après une petite douche et une crème hydratante complète pour abréger les crispations.",
                 location: "Wulong -> Yuzhong",
                 icon: "🚌",
+                priceEstimate: "8-10 € (Train)",
+
                 completed: false
             }
         ]
@@ -586,6 +657,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Dazu",
                 address: "Gare routière ou Train grande vitesse Ouest",
                 icon: "🚌",
+                priceEstimate: "6-10 €",
+
                 completed: false
             },
             {
@@ -599,6 +672,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 location: "Dazu",
                 address: "Baodingshan Scenic Area",
                 icon: "🗿",
+                priceEstimate: "14 €",
+
                 completed: false
             },
             {
@@ -611,6 +686,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "C'est la cuisine du terroir et des anciens ! Retenir simplement \"Qíng gěi wǒ nǐ de běl dǐ té sē.\" (pouvez-vous m'apporter votre spécialité ultra-locale typique) et savourer avec beaucoup de paix d'esprit ce moment simple sur la plaine reculée.",
                 location: "Dazu",
                 icon: "🍲",
+                priceEstimate: "Variable",
+
                 completed: false
             }
         ]
@@ -630,6 +707,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "C'est simple, tu seras le meilleur de tes copains de France qui l'aura fait : assied-toi poliment, ose payer tes 20 euros pour une sincère consultation de \"prise des pouls simultanés du poignets\". Lève de fierté tes yeux bleus mystérieux, tend tranquillement au pharmacien sage des billets d'entrée et glisse un sincère respect absolu : \"Wǒ xiǎng kàn zhōngyī\" (Je veux l'expertise de voir un médecin de médecine traditionnelle !). Un moment dingue à filmer qui n'existe qu'au bout du monde.",
                 location: "Jiefangbei",
                 icon: "🌿",
+                priceEstimate: "19-38 €",
+
                 completed: false
             },
             {
@@ -642,6 +721,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Prend de bonnes poignées du \"poulet frit piquant spécialite nationale\" et croque dedant. Simple, enfantin, hyper lourd caloriquement parlant et très fun au cœur d'un voyage à ne pas louper. N'oublie pas de scanner au comptoir pour choper tes menus directos en QR sur l'Iphone car bien sûr, on ne parle pas aux caissières au fast food ici... ! Le Tur-fu on a dit.",
                 location: "Centre-ville",
                 icon: "🍟",
+                priceEstimate: "4-6 €",
+
                 completed: false
             },
             {
@@ -654,6 +735,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Ferme les achats ! La base crucial des pourparlers : pour l'artisanat (à Chaotianmen ou dans les vieilles ruelles de Ciqikou), négocier est l'art naturel urbain. Propose sans gêne à la petite grand mère marchande sur ta calculatrice numérique \"Tài guì la!\" (C'est vraiment trop cher !) pour l'obliger à réduire gracieusement le prix au bas mot de diviser la somme facilement de moitié de suite, même à un beau blond charmant riche ! Ce n'est jamais méchant et les deux le prennent comme le jeu amical classique social asiatique du commerce des bas quartiers !",
                 location: "Jiefangbei / Chaotianmen",
                 icon: "🎁",
+                priceEstimate: "Variable",
+
                 completed: false
             },
             {
@@ -666,6 +749,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Enveloppe doucement ta délicate crêpe canard avec finesse et élève tout simplement un gros vert de l'alcool d'eau de vie à 50 degrés le plus cher de la terre avec tes potes, amis de beuveries récents ou le date charmant que chongqing t'a déposé sur les genoux durant les 11 soirées folles (tu l'avais choppé grâce un \"jiā wēixìn\" à Nine Street le 4e soir) pour frapper la table avec fracasse aux exclamations éternelles du trinque unanime solennel festoyant chinois... ! \"GĀNBĒI !\" C'est majestueux et lourd d'adrénaline de la belle jeunesse. Un succès absolu.",
                 location: "Yuzhong",
                 icon: "🦆",
+                priceEstimate: "38-63 €",
+
                 completed: false
             }
         ]
@@ -685,6 +770,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Vérifie bien les tiroirs et les placards pour ne rien oublier.",
                 location: "Deya Hôtel",
                 icon: "🏨",
+                priceEstimate: "Variable",
+
                 completed: false
             },
             {
@@ -697,6 +784,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Prévient un peu en avance ton chauffeur si besoin sur DiDi.",
                 location: "Aéroport (CKG) T3",
                 icon: "🚕",
+                priceEstimate: "12 € (RER B)",
+
                 completed: false
             },
             {
@@ -719,6 +808,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Derniers achats duty-free chinois si tu as des oublis !",
                 location: "Aéroport PEK T3",
                 icon: "⏱️",
+                priceEstimate: "Variable",
+
                 completed: false
             },
             {
@@ -741,6 +832,8 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 tips: "Bon retour, c'est la fin du cyberpunk pour l'instant !",
                 location: "Paris CDG T1",
                 icon: "🛬",
+                priceEstimate: "Variable",
+
                 completed: false
             }
         ]

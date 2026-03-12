@@ -11,6 +11,7 @@ export interface Activity {
     address?: string; // For navigation
     completed: boolean;
     images?: string[];
+    priceEstimate?: string; // Estimated price of the activity
 }
 
 export interface TripDay {
