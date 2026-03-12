@@ -28,8 +28,8 @@ export function SortableActivity({ activity, onToggle, onDelete, onClick, onTime
                     onClick(activity);
                 }}
                 className={cn(
-                    "w-full bg-white dark:bg-slate-800 p-4 xl:p-5 rounded-3xl border shadow-md transition-all cursor-pointer flex flex-col gap-3 group-hover:shadow-lg dark:shadow-black/40",
-                    activity.completed ? "border-slate-200 dark:border-slate-700 opacity-60 bg-slate-50/50 dark:bg-slate-800/50 shadow-none" : "border-slate-100 dark:border-slate-600 hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:-translate-y-0.5"
+                    "w-full bg-white dark:bg-slate-800 p-4 xl:p-5 rounded-3xl border-2 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.4)] transition-all duration-300 cursor-pointer flex flex-col gap-3 group-hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)] dark:group-hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.6)] hover:-translate-y-1",
+                    activity.completed ? "border-slate-100 dark:border-slate-700/50 opacity-60 bg-slate-50/50 dark:bg-slate-800/50 shadow-none hover:shadow-none hover:-translate-y-0" : "border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-500/60"
                 )}>
 
                 {/* Top Row: Time & Duration context, Check/Cross actions */}
