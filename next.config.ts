@@ -7,6 +7,11 @@ const withPWA = withPWAInit({
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
+  cacheStartUrl: true,
+  dynamicStartUrl: false,
+  fallbacks: {
+    document: "/~offline",
+  },
   workboxOptions: {
     disableDevLogs: true,
   },
