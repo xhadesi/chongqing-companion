@@ -393,7 +393,7 @@ export const DEFAULT_ITINERARY: TripDay[] = [
                 completed: false
             }
         ]
-    }
+    },
     {
         id: `day-${generateId()}`,
         date: "2026-05-05",
