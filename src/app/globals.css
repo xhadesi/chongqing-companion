@@ -1,161 +1,115 @@
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
 
 html,
 body {
   overscroll-behavior-x: none;
+  background-color: #F8F5EE;
+  color: #1F1C18;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
 @theme {
-  /* Warm Ivory / Beige foundation */
-  --color-background: #F7F4EE;
-  --color-foreground: #1D1A16;
+  --color-background: #F8F5EE;
+  --color-foreground: #1F1C18;
 
   --color-card: #FFFFFF;
-  --color-card-foreground: #1D1A16;
+  --color-card-foreground: #1F1C18;
 
-  --color-popover: #FFFFFF;
-  --color-popover-foreground: #1D1A16;
-
-  /* Authentic Chinese Lacquer Red */
-  --color-primary: #C22424;
+  /* Imperial Lacquer Red */
+  --color-primary: #C52222;
   --color-primary-foreground: #FFFFFF;
 
-  /* Lacquer deep tone */
-  --color-lacquer: #9A1C1C;
-  --color-lacquer-light: #FBEBEB;
-
-  /* Warm Charcoal / Stone */
-  --color-secondary: #EBE5D8;
-  --color-secondary-foreground: #221E19;
+  /* Dragon Gold */
+  --color-gold: #C99726;
+  --color-gold-light: #FDF6E2;
+  --color-gold-dark: #9E7416;
 
   --color-muted: #EFECE3;
-  --color-muted-foreground: #6F685D;
+  --color-muted-foreground: #767064;
 
-  --color-accent: #E8E0CE;
-  --color-accent-foreground: #1D1A16;
+  --color-border: #E6E0D2;
+  --color-destructive: #C52222;
 
-  --color-destructive: #B3261E;
-  --color-destructive-foreground: #FFFFFF;
-
-  --color-border: #E5DFD0;
-  --color-input: #E5DFD0;
-  --color-ring: #C22424;
-
-  --radius-sm: 0.5rem;
-  --radius-md: 0.875rem;
-  --radius-lg: 1.25rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.375rem;
   --radius-xl: 1.75rem;
 }
 
-/* Dark Mode: Deep Lacquer Ink & Charcoal */
-:root:where(.dark) {
-  --color-background: #121110;
-  --color-foreground: #F4EFE6;
-
-  --color-card: #181714;
-  --color-card-foreground: #F4EFE6;
-
-  --color-popover: #181714;
-  --color-popover-foreground: #F4EFE6;
-
-  --color-primary: #D63333;
-  --color-primary-foreground: #FFFFFF;
-
-  --color-lacquer: #E04444;
-  --color-lacquer-light: #2A1717;
-
-  --color-secondary: #22201C;
-  --color-secondary-foreground: #F4EFE6;
-
-  --color-muted: #1E1D19;
-  --color-muted-foreground: #9C9588;
-
-  --color-accent: #26241F;
-  --color-accent-foreground: #F4EFE6;
-
-  --color-destructive: #E04B41;
-  --color-destructive-foreground: #FFFFFF;
-
-  --color-border: #282621;
-  --color-input: #282621;
-  --color-ring: #D63333;
-}
-
 @utility pb-safe {
-  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
 }
 
 @utility pt-safe {
-  padding-top: max(1rem, env(safe-area-inset-top));
+  padding-top: max(1.25rem, env(safe-area-inset-top));
 }
 
-@layer base {
-  * {
-    border-color: var(--color-border);
-  }
-
-  body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-  }
-}
-
-/* Dedicated Chinese Typography Treatment */
+/* Dedicated Chinese Hanzi Typography */
 .hanzi {
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Serif SC", serif, sans-serif;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   font-feature-settings: "palt";
 }
 
-/* Clean Artisanal Cards */
-.card-clean {
-  background-color: var(--color-card);
-  border: 1px solid var(--color-border);
+/* Liquid Glass Dock (iOS style) */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 
+    0 12px 36px -4px rgba(60, 40, 20, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+
+/* Card with subtle warm depth and gold rim */
+.card-warm {
+  background-color: #FFFFFF;
+  border: 1px solid #EBE4D5;
   border-radius: var(--radius-lg);
-  box-shadow: 0 1px 3px rgba(30, 26, 22, 0.04), 0 4px 12px rgba(30, 26, 22, 0.02);
-  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease;
+  box-shadow: 0 2px 10px rgba(50, 40, 30, 0.04);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
 
-.dark .card-clean {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), 0 6px 16px rgba(0, 0, 0, 0.3);
-}
-
-.card-clean:active {
+.card-warm:active {
   transform: scale(0.985);
 }
 
-/* Subtle Lacquer Accent Card */
-.card-lacquer {
-  background: linear-gradient(135deg, #A81C1C 0%, #7E1414 100%);
+/* Imperial Red and Gold Banner Card */
+.card-imperial {
+  background: linear-gradient(135deg, #B51D1D 0%, #8A1313 100%);
   color: #FFFFFF;
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 6px 20px rgba(162, 28, 28, 0.25);
+  border: 1px solid rgba(217, 168, 54, 0.35);
+  box-shadow: 0 8px 24px rgba(181, 29, 29, 0.22);
 }
 
-.dark .card-lacquer {
-  background: linear-gradient(135deg, #8A1515 0%, #5E0E0E 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* iOS Grouped Inset Cells */
+.ios-group {
+  background-color: #FFFFFF;
+  border-radius: 1.25rem;
+  border: 1px solid #EBE4D5;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
-/* Subdued Glass Nav */
-.nav-glass {
-  background-color: rgba(247, 244, 238, 0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid var(--color-border);
+.ios-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1rem;
+  transition: background-color 0.15s ease;
 }
 
-.dark .nav-glass {
-  background-color: rgba(18, 17, 16, 0.88);
-  border-top: 1px solid var(--color-border);
+.ios-cell:not(:last-child) {
+  border-bottom: 1px solid #F0EAE0;
 }
 
-/* Hide scrollbar cleanly */
+.ios-cell:active {
+  background-color: #F8F5EE;
+}
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

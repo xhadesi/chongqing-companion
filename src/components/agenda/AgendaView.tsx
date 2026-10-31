@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Trash2, ChevronRight, X, Clock, MapPin, Navigation, ArrowLeft, Timer, Banknote, Volume2, Map, List, Copy, Check, CarTaxiFront } from "lucide-react";
+import { Plus, Trash2, ChevronRight, X, Clock, MapPin, Navigation, ArrowLeft, Timer, Banknote, Volume2, Map, List, Copy, Check } from "lucide-react";
 import { useAgenda } from "@/hooks/useAgenda";
 import { cn } from "@/lib/utils";
 import { DatePicker } from "@/components/ui/DatePicker";
@@ -374,35 +374,25 @@ export function AgendaView() {
                             )}
                         </div>
 
-                        {/* Action buttons: Taxi & Copy */}
+                        {/* Action buttons: Copy for DiDi & Map */}
                         <div className="grid grid-cols-2 gap-2.5">
-                            <Link
-                                href="/taxi"
-                                className="p-3 rounded-xl bg-primary text-white text-xs font-semibold flex items-center justify-center gap-2 hover:bg-lacquer transition-colors shadow-sm"
+                            <button
+                                onClick={() => copyText((selectedActivity.chineseTitle ? selectedActivity.chineseTitle + " " : "") + (selectedActivity.address || selectedActivity.title))}
+                                className="p-3 rounded-xl bg-primary text-white text-xs font-semibold flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors shadow-sm"
                             >
-                                <CarTaxiFront className="w-4 h-4" />
-                                Mode Taxi Plein Écran
-                            </Link>
+                                {copiedAddress ? <Check className="w-4 h-4 text-white" /> : <Copy className="w-4 h-4" />}
+                                Copier pour DiDi
+                            </button>
 
-                            {selectedActivity.address ? (
-                                <button
-                                    onClick={() => copyText(selectedActivity.address!)}
-                                    className="p-3 rounded-xl bg-card border border-border text-foreground text-xs font-semibold flex items-center justify-center gap-2 hover:bg-muted transition-colors"
-                                >
-                                    {copiedAddress ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
-                                    Copier l'adresse
-                                </button>
-                            ) : (
-                                <a
-                                    href={`https://www.amap.com/search?query=${encodeURIComponent(selectedActivity.title)}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="p-3 rounded-xl bg-card border border-border text-foreground text-xs font-semibold flex items-center justify-center gap-2 hover:bg-muted transition-colors"
-                                >
-                                    <Navigation className="w-4 h-4 text-primary" />
-                                    Ouvrir dans Amap
-                                </a>
-                            )}
+                            <a
+                                href={`https://www.amap.com/search?query=${encodeURIComponent(selectedActivity.chineseTitle || selectedActivity.address || selectedActivity.title)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-3 rounded-xl bg-card border border-border text-foreground text-xs font-semibold flex items-center justify-center gap-2 hover:bg-muted transition-colors"
+                            >
+                                <Navigation className="w-4 h-4 text-primary" />
+                                Ouvrir dans Amap
+                            </a>
                         </div>
 
                         {/* Address */}

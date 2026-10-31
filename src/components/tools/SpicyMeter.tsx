@@ -7,41 +7,36 @@ import { cn } from "@/lib/utils";
 const SPICE_LEVELS = [
     {
         level: 0,
-        label: "Aucun piment",
+        label: "Zéro",
         chinese: "不要辣",
         pinyin: "Bú yào là",
-        description: "Zéro piment, bouillon clair ou sauce douce.",
-        tag: "Sécurité totale"
+        traduction: "Pas de piment"
     },
     {
         level: 1,
-        label: "Très léger",
+        label: "Léger",
         chinese: "微辣",
         pinyin: "Wēi là",
-        description: "Une pointe de piment. Déjà piquant pour un palais européen !",
-        tag: "Recommandé débutant"
+        traduction: "Légèrement pimenté"
     },
     {
         level: 2,
-        label: "Moyen (Standard local)",
+        label: "Moyen",
         chinese: "中辣",
         pinyin: "Zhōng là",
-        description: "Niveau traditionnel des restaurants de Chongqing. Très fort !",
-        tag: "Amateurs d'épices"
+        traduction: "Moyennement pimenté"
     },
     {
         level: 3,
-        label: "Extra pimenté",
+        label: "Fort",
         chinese: "特辣",
         pinyin: "Tè là",
-        description: "Dose maximale. Huile rouge bouillonnante et poivre de Sichuan engourdissant.",
-        tag: "Guerrier local"
+        traduction: "Très pimenté"
     },
 ];
 
 export function SpicyMeter() {
     const [selectedLevel, setSelectedLevel] = useState(1);
-
     const current = SPICE_LEVELS[selectedLevel];
 
     const playSpeech = (text: string) => {
@@ -55,11 +50,11 @@ export function SpicyMeter() {
     };
 
     return (
-        <div className="card-clean p-5 space-y-4">
+        <div className="card-warm p-5 space-y-4">
             <div className="flex items-center justify-between">
                 <div>
-                    <span className="text-[11px] font-semibold text-primary uppercase tracking-wider">Restaurant & Hotpot</span>
-                    <h3 className="text-base font-bold text-foreground">Piment-O-Mètre</h3>
+                    <span className="text-[11px] font-bold text-primary uppercase tracking-wider">Restaurant & Hotpot</span>
+                    <h3 className="text-base font-black text-foreground">Piment-O-Mètre</h3>
                 </div>
                 <div className="p-2 rounded-xl bg-primary/10 text-primary">
                     <Flame className="w-4 h-4" />
@@ -67,7 +62,7 @@ export function SpicyMeter() {
             </div>
 
             {/* Selector tabs */}
-            <div className="grid grid-cols-4 gap-1 p-1 bg-muted/60 rounded-xl border border-border">
+            <div className="grid grid-cols-4 gap-1 p-1 bg-muted/60 rounded-xl">
                 {SPICE_LEVELS.map((s, idx) => (
                     <button
                         key={s.level}
@@ -79,37 +74,32 @@ export function SpicyMeter() {
                                 : "text-muted-foreground hover:text-foreground"
                         )}
                     >
-                        {idx === 0 ? "0" : `+${idx}`}
+                        {s.label}
                     </button>
                 ))}
             </div>
 
-            {/* Large Chinese Display Card */}
-            <div className="p-5 rounded-2xl bg-muted/30 border border-border text-center space-y-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
-                    {current.tag}
-                </span>
-
-                <div className="py-2">
-                    <p className="hanzi text-4xl font-black text-foreground tracking-wide">
-                        {current.chinese}
-                    </p>
-                    <p className="text-xs text-muted-foreground font-medium mt-1">
+            {/* Display Card: Chinese + French Translation + Audio */}
+            <div className="p-6 rounded-2xl bg-[#FCFAF5] border border-border text-center space-y-3">
+                <p className="hanzi text-5xl font-black text-primary tracking-wide">
+                    {current.chinese}
+                </p>
+                <div className="space-y-0.5">
+                    <p className="text-sm font-semibold text-foreground">
                         {current.pinyin}
+                    </p>
+                    <p className="text-xs font-bold text-gold-dark">
+                        {current.traduction}
                     </p>
                 </div>
 
-                <p className="text-xs text-foreground/80 leading-relaxed max-w-xs mx-auto">
-                    {current.description}
-                </p>
-
-                <div className="pt-3 flex items-center justify-center">
+                <div className="pt-2 flex justify-center">
                     <button
                         onClick={() => playSpeech(current.chinese)}
-                        className="py-2.5 px-4 rounded-xl bg-card border border-border hover:bg-muted text-foreground text-xs font-semibold flex items-center gap-2 transition-colors active:scale-95 shadow-sm"
+                        className="py-2.5 px-5 rounded-full bg-white border border-border hover:border-primary text-foreground text-xs font-bold flex items-center gap-2 shadow-sm transition-transform active:scale-95"
                     >
                         <Volume2 className="w-4 h-4 text-primary" />
-                        Faire prononcer au serveur
+                        Écouter la prononciation
                     </button>
                 </div>
             </div>
