@@ -95,7 +95,7 @@ export function PullToRefresh({ children }: { children: React.ReactNode }) {
                     className="fixed top-0 left-0 right-0 h-32 z-[100] pointer-events-none flex justify-center items-start drop-shadow-md"
                     style={{ transform: `translateY(${pullChange - 60}px)` }}
                 >
-                    <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-full p-2.5 shadow-xl border border-slate-200 dark:border-slate-700 mt-8 pointer-events-none">
+                    <div className="bg-white/95 backdrop-blur-sm rounded-full p-2.5 shadow-xl border border-border mt-8 pointer-events-none">
                         <Loader2 className={`w-5 h-5 text-primary ${loading ? 'animate-spin' : ''}`} style={{ transform: `rotate(${pullChange * 3}deg)` }} />
                     </div>
                 </div>

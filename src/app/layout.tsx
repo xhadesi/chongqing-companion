@@ -12,6 +12,7 @@ export const viewport: Viewport = {
   userScalable: false,
   viewportFit: "cover",
   themeColor: "#F8F5EE",
+  colorScheme: "light",
 };
 
 export const metadata: Metadata = {
@@ -31,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" style={{ colorScheme: "light" }}>
       <body className={`${inter.className} min-h-screen bg-background text-foreground antialiased`}>
         <main className="min-h-screen pb-24">
           {children}

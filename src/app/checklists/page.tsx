@@ -20,7 +20,7 @@ type ListData = {
 const DEFAULT_LISTS: ListData = {
     outward: [
         { id: "1", label: "Passeport / Visa", checked: false },
-        { id: "2", label: "Spray Anti-Moustiques (Puissant)", checked: false },
+        { id: "2", label: "Spray Anti-Moustiques", checked: false },
         { id: "5", label: "Bonnes chaussures de marche", checked: false },
         { id: "6", label: "Adaptateur prise chinoise", checked: false },
         { id: "7", label: "Parapluie / Poncho", checked: false },
@@ -97,15 +97,15 @@ export default function ChecklistsPage() {
     const progress = currentList.length === 0 ? 0 : Math.round((completedCount / currentList.length) * 100);
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col">
-            <header className="sticky top-0 z-30 pt-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 mt-[env(safe-area-inset-top)]">
-                <div className="flex items-center gap-4 p-4 pb-2">
-                    <Link href="/tools" className="p-2 -ml-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
-                        <ArrowLeft className="w-6 h-6" />
+        <div className="min-h-screen bg-background text-foreground flex flex-col">
+            <header className="sticky top-0 z-30 pt-4 bg-background/90 backdrop-blur-md border-b border-border mt-[env(safe-area-inset-top)]">
+                <div className="flex items-center gap-3 p-4 pb-2">
+                    <Link href="/tools" className="p-2 -ml-2 text-muted-foreground hover:text-foreground transition-colors">
+                        <ArrowLeft className="w-5 h-5" />
                     </Link>
                     <div>
-                        <h1 className="text-xl font-black text-slate-800 dark:text-white leading-none">Listes & Bagages</h1>
-                        <p className="text-xs font-bold text-indigo-500 uppercase tracking-widest mt-1">Checklists</p>
+                        <h1 className="text-xl font-black text-foreground leading-none">Listes & Bagages</h1>
+                        <p className="text-[11px] font-bold text-gold-dark uppercase tracking-widest mt-1">Checklists de voyage</p>
                     </div>
                 </div>
 
@@ -132,60 +132,60 @@ export default function ChecklistsPage() {
                 </div>
 
                 {/* Progress Bar */}
-                <div className="h-1 w-full bg-slate-100 dark:bg-slate-800">
+                <div className="h-1 w-full bg-border">
                     <div
-                        className="h-full bg-indigo-500 transition-all duration-500"
+                        className="h-full bg-primary transition-all duration-300"
                         style={{ width: `${progress}%` }}
                     />
                 </div>
             </header>
 
-            <main className="flex-1 overflow-y-auto p-4 md:p-6 max-w-2xl mx-auto w-full mb-32">
-
-                <div className="flex items-center justify-between mb-6 px-2">
-                    <h2 className="text-lg font-bold text-slate-800 dark:text-white">
-                        {activeTab === 'outward' && 'L\'essentiel pour partir'}
-                        {activeTab === 'homeward' && 'Souvenirs à ramener'}
-                        {activeTab === 'shopping' && 'Idées Shopping libres'}
+            <main className="flex-1 overflow-y-auto p-4 md:p-6 max-w-lg mx-auto w-full mb-32 space-y-4">
+                <div className="flex items-center justify-between px-1">
+                    <h2 className="text-sm font-bold text-foreground">
+                        {activeTab === "outward" && "L'essentiel pour partir"}
+                        {activeTab === "homeward" && "Souvenirs à ramener"}
+                        {activeTab === "shopping" && "Idées Shopping libres"}
                     </h2>
-                    <span className="text-sm font-bold text-slate-400">
+                    <span className="text-xs font-bold text-muted-foreground">
                         {completedCount} / {currentList.length}
                     </span>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                     {currentList.map((item) => (
                         <div
                             key={item.id}
                             onClick={() => toggleItem(activeTab, item.id)}
                             className={cn(
-                                "flex items-center justify-between p-4 rounded-2xl border transition-all cursor-pointer active:scale-[0.98]",
+                                "flex items-center justify-between p-3.5 rounded-2xl border transition-all cursor-pointer active:scale-[0.98]",
                                 item.checked
-                                    ? "bg-slate-50 dark:bg-slate-900 border-slate-100 dark:border-slate-800 opacity-60"
-                                    : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm"
+                                    ? "bg-stone-50 border-border opacity-60"
+                                    : "bg-white border-border shadow-sm hover:border-primary/40"
                             )}
                         >
-                            <div className="flex items-center gap-4 flex-1">
+                            <div className="flex items-center gap-3 flex-1">
                                 <div className={cn(
-                                    "w-6 h-6 rounded-full flex items-center justify-center transition-colors border",
-                                    item.checked ? "bg-indigo-500 border-indigo-500 text-white" : "border-slate-300 dark:border-slate-600 bg-transparent text-transparent"
+                                    "w-5 h-5 rounded-full flex items-center justify-center transition-colors border",
+                                    item.checked ? "bg-primary border-primary text-white" : "border-stone-300 bg-white text-transparent"
                                 )}>
-                                    <Check className="w-4 h-4" />
+                                    <Check className="w-3.5 h-3.5" />
                                 </div>
                                 <span className={cn(
-                                    "font-medium transition-all text-sm md:text-base select-none",
-                                    item.checked ? "line-through text-slate-400 dark:text-slate-500" : "text-slate-700 dark:text-slate-200"
+                                    "font-semibold transition-all text-xs select-none",
+                                    item.checked ? "line-through text-muted-foreground" : "text-foreground"
                                 )}>
                                     {item.label}
                                 </span>
                             </div>
 
                             <button
+                                type="button"
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     deleteItem(activeTab, item.id);
                                 }}
-                                className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition-colors ml-2 shrink-0"
+                                className="p-1.5 text-stone-400 hover:text-destructive hover:bg-stone-100 rounded-lg transition-colors ml-2 shrink-0"
                             >
                                 <Trash2 className="w-4 h-4" />
                             </button>
@@ -193,28 +193,28 @@ export default function ChecklistsPage() {
                     ))}
 
                     {currentList.length === 0 && (
-                        <div className="py-12 text-center text-slate-400 dark:text-slate-500 text-sm">
+                        <div className="py-10 text-center text-muted-foreground text-xs">
                             <p>Cette liste est vide.</p>
                         </div>
                     )}
                 </div>
 
                 {/* Fixed add button container relative to bottom */}
-                <div className="fixed bottom-24 pb-safe left-0 right-0 p-4 bg-gradient-to-t from-slate-50 via-slate-50 to-transparent dark:from-slate-950 dark:via-slate-950 z-20 pointer-events-none">
-                    <form onSubmit={addItem} className="max-w-2xl mx-auto flex gap-2 pointer-events-auto">
+                <div className="fixed bottom-24 pb-safe left-0 right-0 p-4 bg-gradient-to-t from-background via-background/90 to-transparent z-20 pointer-events-none">
+                    <form onSubmit={addItem} className="max-w-lg mx-auto flex gap-2 pointer-events-auto">
                         <input
                             type="text"
                             placeholder="Ajouter un élément..."
                             value={newItemLabel}
                             onChange={(e) => setNewItemLabel(e.target.value)}
-                            className="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-6 py-4 font-bold text-slate-800 dark:text-white outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 shadow-lg"
+                            className="flex-1 bg-white border border-border rounded-2xl px-4 py-3 text-xs font-bold text-foreground outline-none focus:border-primary shadow-sm"
                         />
                         <button
                             type="submit"
                             disabled={!newItemLabel.trim()}
-                            className="w-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center disabled:opacity-50 disabled:bg-slate-200 dark:disabled:bg-slate-700 shadow-lg active:scale-95 transition-transform"
+                            className="w-12 bg-primary text-white rounded-2xl flex items-center justify-center disabled:opacity-40 disabled:bg-stone-300 shadow-md active:scale-95 transition-transform shrink-0"
                         >
-                            <Plus className="w-6 h-6" />
+                            <Plus className="w-5 h-5" />
                         </button>
                     </form>
                 </div>
@@ -226,12 +226,13 @@ export default function ChecklistsPage() {
 function TabButton({ active, onClick, icon, label }: { active: boolean, onClick: () => void, icon: React.ReactNode, label: string }) {
     return (
         <button
+            type="button"
             onClick={onClick}
             className={cn(
-                "flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all",
+                "flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all shadow-sm",
                 active
-                    ? "bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-400"
-                    : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
+                    ? "bg-primary text-white"
+                    : "bg-white text-muted-foreground border border-border hover:text-foreground"
             )}
         >
             {icon}

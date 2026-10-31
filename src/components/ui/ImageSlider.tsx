@@ -25,7 +25,7 @@ export function ImageSlider({ images, alt, className = "", imageClassName = "" }
 
     if (validImages.length === 0) {
         return (
-            <div className={`relative flex items-center justify-center bg-slate-100 dark:bg-slate-800 ${className}`}>
+            <div className={`relative flex items-center justify-center bg-stone-100 ${className}`}>
                 <ImageIcon className="w-8 h-8 text-slate-400" />
             </div>
         );

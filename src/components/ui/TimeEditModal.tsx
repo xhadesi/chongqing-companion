@@ -31,24 +31,27 @@ export function TimeEditModal({ isOpen, onClose, onConfirm, initialTime }: TimeE
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200" onClick={onClose} />
-            <div className="bg-white dark:bg-slate-900 w-full max-w-sm rounded-[2rem] p-6 relative animate-in zoom-in-95 duration-200 shadow-2xl">
-                <button onClick={onClose} className="absolute top-4 right-4 p-2 text-slate-300 hover:bg-slate-100 rounded-full">
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200" onClick={onClose} />
+            <div className="bg-white w-full max-w-sm rounded-3xl p-6 relative z-10 animate-in zoom-in-95 duration-200 shadow-2xl border border-border">
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 p-2 text-muted-foreground hover:bg-stone-100 rounded-full"
+                >
                     <X className="w-5 h-5" />
                 </button>
 
-                <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-6 flex items-center gap-2 justify-center">
-                    <Clock className="w-6 h-6 text-indigo-500" />
-                    Modifier l'heure
+                <h3 className="text-lg font-black text-foreground mb-5 flex items-center gap-2 justify-center">
+                    <Clock className="w-5 h-5 text-primary" />
+                    Modifier l'horaire
                 </h3>
 
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="flex justify-center">
                         <input
                             type="time"
                             value={time}
                             onChange={(e) => setTime(e.target.value)}
-                            className="bg-slate-50 border-2 border-slate-100 dark:bg-slate-800 dark:border-slate-700 dark:text-white text-slate-900 text-4xl font-black rounded-2xl px-6 py-4 text-center focus:outline-none focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20 transition-all w-full"
+                            className="bg-stone-50 border border-border text-foreground text-3xl font-black rounded-2xl px-6 py-3.5 text-center focus:outline-none focus:border-primary transition-all w-full"
                             autoFocus
                         />
                     </div>
@@ -57,31 +60,31 @@ export function TimeEditModal({ isOpen, onClose, onConfirm, initialTime }: TimeE
                         <button
                             type="button"
                             onClick={() => handleQuickTime("10:00")}
-                            className="p-2 rounded-xl bg-amber-50 text-amber-700 text-sm font-bold border border-amber-100 hover:bg-amber-100"
+                            className="p-2 rounded-xl bg-gold-light text-gold-dark text-xs font-bold border border-gold/30 hover:bg-gold-light/80 transition-colors"
                         >
-                            Matin
+                            Matin (10h)
                         </button>
                         <button
                             type="button"
                             onClick={() => handleQuickTime("14:00")}
-                            className="p-2 rounded-xl bg-indigo-50 text-indigo-700 text-sm font-bold border border-indigo-100 hover:bg-indigo-100"
+                            className="p-2 rounded-xl bg-gold-light text-gold-dark text-xs font-bold border border-gold/30 hover:bg-gold-light/80 transition-colors"
                         >
-                            Aprèm
+                            Midi (14h)
                         </button>
                         <button
                             type="button"
                             onClick={() => handleQuickTime("19:00")}
-                            className="p-2 rounded-xl bg-indigo-50 text-indigo-700 text-sm font-bold border border-indigo-100 hover:bg-indigo-100"
+                            className="p-2 rounded-xl bg-gold-light text-gold-dark text-xs font-bold border border-gold/30 hover:bg-gold-light/80 transition-colors"
                         >
-                            Soir
+                            Soir (19h)
                         </button>
                     </div>
 
                     <button
                         type="submit"
-                        className="w-full py-4 bg-indigo-600 text-white rounded-xl font-bold text-lg shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                        className="w-full py-3.5 bg-primary text-white rounded-xl font-black text-xs shadow-md hover:bg-primary/90 active:scale-95 transition-all"
                     >
-                        Valider
+                        Valider l'horaire
                     </button>
                 </form>
             </div>

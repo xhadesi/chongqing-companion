@@ -294,7 +294,7 @@ export function AgendaView() {
 
             {/* Add Custom Activity Modal */}
             {isAdding && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in">
                     <div className="bg-white w-full max-w-sm rounded-3xl p-5 border border-border shadow-2xl space-y-4">
                         <div className="flex items-center justify-between">
                             <h3 className="text-base font-black text-foreground">Nouvelle étape</h3>

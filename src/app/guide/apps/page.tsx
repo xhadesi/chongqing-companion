@@ -7,112 +7,102 @@ export default function AppGuidePage() {
     const apps = [
         {
             name: "WeChat (Weixin)",
-            icon: <MessageSquare className="w-8 h-8 text-green-500" />,
-            desc: "L'application à tout faire. Messagerie, Paiements, Réservations. Indispensable.",
-            link: "https://www.wechat.com/en/",
-            color: "bg-green-50 text-green-700 border-green-200"
+            icon: <MessageSquare className="w-6 h-6 text-emerald-600" />,
+            desc: "L'application à tout faire. Messagerie, paiements, réservations. Indispensable.",
+            link: "https://www.wechat.com/en/"
         },
         {
             name: "Alipay (Zhifubao)",
-            icon: <Smartphone className="w-8 h-8 text-blue-500" />,
-            desc: "Alternative de paiement majeure. Inclut 'TourPass' pour lier une carte étrangère.",
-            link: "https://render.alipay.com/p/s/i?scheme=alipays%3A%2F%2Fplatformapi%2Fstartapp%3FappId%3D20000056",
-            color: "bg-blue-50 text-blue-700 border-blue-200"
+            icon: <Smartphone className="w-6 h-6 text-sky-600" />,
+            desc: "Alternative de paiement majeure. Inclut le paiement direct par carte étrangère.",
+            link: "https://render.alipay.com/p/s/i?scheme=alipays%3A%2F%2Fplatformapi%2Fstartapp%3FappId%3D20000056"
         },
         {
             name: "Amap (Gaode Ditu)",
-            icon: <Map className="w-8 h-8 text-amber-500" />,
-            desc: "Le 'Google Maps' local. Google Maps ne fonctionne pas bien ici.",
-            link: "https://www.amap.com/",
-            color: "bg-amber-50 text-amber-700 border-amber-200"
+            icon: <Map className="w-6 h-6 text-gold" />,
+            desc: "La cartographie la plus précise en Chine. Google Maps ne fonctionne pas bien sur place.",
+            link: "https://www.amap.com/"
         },
         {
-            name: "Didi (Ride Hailing)",
-            icon: <CarFront className="w-8 h-8 text-indigo-500" />,
-            desc: "L'équivalent d'Uber. Indispensable car les taxis sont difficiles à héler.",
-            link: "https://web.didiglobal.com/en/",
-            color: "bg-indigo-50 text-indigo-700 border-indigo-200"
+            name: "DiDi (VTC / Chauffeur)",
+            icon: <CarFront className="w-6 h-6 text-primary" />,
+            desc: "Commandez vos trajets directement depuis l'application avec traduction automatique.",
+            link: "https://web.didiglobal.com/en/"
         },
         {
             name: "Trip.com",
-            icon: <div className="w-8 h-8 rounded bg-blue-600 text-white font-bold flex items-center justify-center text-xs">Trip</div>,
-            desc: "Pour réserver trains et hôtels. Interface en français et service client top.",
-            link: "https://www.trip.com/",
-            color: "bg-blue-50 text-blue-700 border-blue-200"
+            icon: <div className="w-6 h-6 rounded bg-sky-600 text-white font-bold flex items-center justify-center text-[10px]">Trip</div>,
+            desc: "Idéal pour réserver trains chinois, hôtels et billets de musées en français.",
+            link: "https://www.trip.com/"
         },
         {
             name: "Pleco",
-            icon: <div className="w-8 h-8 rounded bg-slate-800 text-white font-serif flex items-center justify-center font-black text-lg">魚</div>,
-            desc: "Le dictionnaire ultime. OCR pour lire les menus et écrire à la main.",
-            link: "https://www.pleco.com/",
-            color: "bg-slate-50 text-slate-700 border-slate-200"
+            icon: <div className="w-6 h-6 rounded bg-stone-800 text-white font-serif flex items-center justify-center font-bold text-sm hanzi">魚</div>,
+            desc: "Dictionnaire hors ligne avec reconnaissance optique des caractères chinois.",
+            link: "https://www.pleco.com/"
         },
         {
             name: "MetroMan",
-            icon: <div className="w-8 h-8 rounded bg-emerald-600 text-white font-bold flex items-center justify-center">M</div>,
-            desc: "Carte du métro interactive (en anglais/français). Calcule les itinéraires.",
-            link: "https://www.metroman.cn/en/",
-            color: "bg-emerald-50 text-emerald-700 border-emerald-200"
-        },
-        {
-            name: "Dazhong Dianping",
-            icon: <div className="w-8 h-8 rounded bg-orange-500 text-white font-bold flex items-center justify-center">点</div>,
-            desc: "Le 'Yelp/TripAdvisor' chinois. Pour trouver les meilleurs restos et avis.",
-            link: "https://www.dianping.com/",
-            color: "bg-orange-50 text-orange-700 border-orange-200"
+            icon: <div className="w-6 h-6 rounded bg-emerald-700 text-white font-bold flex items-center justify-center text-xs">M</div>,
+            desc: "Plan du métro de Chongqing hors ligne avec calcul de trajet et tarifs.",
+            link: "https://www.metroman.cn/en/"
         },
         {
             name: "LetsVPN / Astrill",
-            icon: <Wifi className="w-8 h-8 text-purple-500" />,
-            desc: "Crucial pour accéder à Google, Instagram, WhatsApp, etc. (Installer AVANT de partir)",
-            link: "https://letsvpn.world/",
-            color: "bg-purple-50 text-purple-700 border-purple-200"
+            icon: <Wifi className="w-6 h-6 text-indigo-600" />,
+            desc: "VPN à installer impérativement avant d'atterrir en Chine.",
+            link: "https://letsvpn.world/"
         }
     ];
 
     return (
-        <div className="min-h-screen bg-white dark:bg-slate-950 pb-32">
+        <div className="min-h-screen bg-background text-foreground pb-32">
             {/* Header */}
-            <div className="sticky top-0 bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-100 dark:border-slate-800 p-4 flex items-center gap-4 z-10 transition-colors">
-                <Link href="/" className="p-2 -ml-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
-                    <ArrowLeft className="w-6 h-6 text-slate-700 dark:text-slate-300" />
+            <div className="sticky top-0 bg-background/90 backdrop-blur-md border-b border-border p-4 flex items-center gap-3 z-10">
+                <Link href="/" className="p-2 -ml-2 hover:bg-stone-200/50 rounded-full transition-colors">
+                    <ArrowLeft className="w-5 h-5 text-foreground" />
                 </Link>
-                <h1 className="text-xl font-bold text-slate-800 dark:text-white">Apps Indispensables</h1>
+                <div>
+                    <h1 className="text-xl font-black text-foreground">Applications Essentielles</h1>
+                    <p className="text-[11px] font-bold text-gold-dark uppercase tracking-wider">Guide d'installation</p>
+                </div>
             </div>
 
-            <div className="max-w-xl mx-auto p-6 space-y-6">
-                <div className="bg-indigo-600 rounded-3xl p-6 text-white shadow-lg shadow-indigo-200">
-                    <h2 className="text-2xl font-black mb-2">Kit de Survie</h2>
-                    <p className="text-indigo-100 opacity-90">Pour survivre en Chine, votre téléphone est votre meilleure arme. Installez ces apps avant de partir !</p>
+            <div className="max-w-lg mx-auto p-4 space-y-4">
+                <div className="card-imperial p-5">
+                    <h2 className="text-lg font-black text-white mb-1">Kit Téléphone Chine</h2>
+                    <p className="text-xs text-white/90 leading-relaxed">
+                        Installez ces applications et configurez vos cartes bancaires sur Alipay et WeChat avant de partir.
+                    </p>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-3">
                     {apps.map((app) => (
                         <a
                             key={app.name}
                             href={app.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`block p-5 rounded-2xl border-2 transition-all hover:scale-[1.02] hover:shadow-md ${app.color} dark:bg-slate-900/50 dark:border-slate-800 dark:text-slate-300 dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]`}
+                            className="card-warm p-4 block hover:border-primary/50 transition-colors"
                         >
-                            <div className="flex items-start gap-4">
-                                <div className="bg-white dark:bg-slate-800 p-2 rounded-xl shadow-sm shrink-0">
+                            <div className="flex items-start gap-3">
+                                <div className="p-2.5 rounded-xl bg-stone-100 shrink-0">
                                     {app.icon}
                                 </div>
-                                <div>
-                                    <h3 className="text-lg font-bold flex items-center gap-2 dark:text-white">
+                                <div className="flex-1 min-w-0">
+                                    <h3 className="text-sm font-black text-foreground flex items-center gap-1.5">
                                         {app.name}
-                                        <Download className="w-4 h-4 opacity-50" />
+                                        <Download className="w-3.5 h-3.5 text-muted-foreground opacity-60" />
                                     </h3>
-                                    <p className="text-sm opacity-80 mt-1 leading-relaxed">{app.desc}</p>
+                                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{app.desc}</p>
                                 </div>
                             </div>
                         </a>
                     ))}
                 </div>
 
-                <div className="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl text-xs text-slate-400 dark:text-slate-400 text-center border border-slate-100 dark:border-slate-800 dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.05)]">
-                    Note: Un VPN est souvent nécessaire pour télécharger ou utiliser certaines apps occidentales, mais ces apps locales fonctionnent partout.
+                <div className="card-warm p-4 text-xs text-muted-foreground text-center bg-stone-50">
+                    Pour WeChat et Alipay, vérifiez votre pièce d'identité en avance afin d'activer les paiements sans blocage.
                 </div>
             </div>
         </div>
