@@ -1,11 +1,8 @@
 "use client";
 
 import { Activity } from "@/lib/types";
-import { Clock, MapPin, Check, X, ImageIcon, ChevronRight, Edit2, Timer, Banknote } from "lucide-react";
+import { Clock, MapPin, Check, X, Timer, Banknote, CarTaxiFront, Volume2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
-
-import { TaxiModal } from "@/components/ui/TaxiModal";
 import { useState } from "react";
 
 interface SortableActivityProps {
@@ -18,140 +15,153 @@ interface SortableActivityProps {
 }
 
 export function SortableActivity({ activity, onToggle, onDelete, onClick, onTimeEdit, onDurationEdit }: SortableActivityProps) {
-    const [isTaxiModalOpen, setIsTaxiModalOpen] = useState(false);
+    const [isEditingTime, setIsEditingTime] = useState(false);
+    const [timeVal, setTimeVal] = useState(activity.time || "09:00");
+
+    const playSpeech = (text: string) => {
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = "zh-CN";
+            utterance.rate = 0.82;
+            window.speechSynthesis.speak(utterance);
+        }
+    };
+
+    const handleTimeSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (onTimeEdit) onTimeEdit(activity.id, timeVal);
+        setIsEditingTime(false);
+    };
 
     return (
-        <div className="relative group animate-in fade-in slide-in-from-bottom-2 duration-300">
+        <div className="relative group">
             <div
                 onClick={(e) => {
                     e.stopPropagation();
                     onClick(activity);
                 }}
                 className={cn(
-                    "w-full bg-white dark:bg-slate-800 p-4 xl:p-5 rounded-3xl border-2 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.4)] transition-all duration-300 cursor-pointer flex flex-col gap-3 group-hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.15)] dark:group-hover:shadow-[0_8px_30px_-4px_rgba(0,0,0,0.6)] hover:-translate-y-1",
-                    activity.completed ? "border-slate-100 dark:border-slate-700/50 opacity-60 bg-slate-50/50 dark:bg-slate-800/50 shadow-none hover:shadow-none hover:-translate-y-0" : "border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-500/60"
-                )}>
+                    "card-clean p-4 cursor-pointer transition-all hover:border-primary/50",
+                    activity.completed && "opacity-55 bg-muted/40 border-border shadow-none"
+                )}
+            >
+                {/* Header row: time chip & actions */}
+                <div className="flex items-center justify-between gap-2 mb-2">
+                    <div className="flex items-center gap-2">
+                        {isEditingTime ? (
+                            <form onSubmit={handleTimeSubmit} onClick={(e) => e.stopPropagation()} className="flex items-center gap-1">
+                                <input
+                                    type="time"
+                                    value={timeVal}
+                                    onChange={(e) => setTimeVal(e.target.value)}
+                                    className="text-xs px-2 py-1 rounded bg-muted border border-border text-foreground font-semibold"
+                                    autoFocus
+                                    onBlur={handleTimeSubmit}
+                                />
+                            </form>
+                        ) : (
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsEditingTime(true);
+                                }}
+                                className="flex items-center gap-1.5 text-xs font-semibold px-2 py-0.5 rounded-md bg-primary/10 text-primary hover:bg-primary/15 transition-colors"
+                                title="Modifier l'heure"
+                            >
+                                <Clock className="w-3 h-3" />
+                                {activity.time || "--:--"}
+                            </button>
+                        )}
 
-                {/* Top Row: Time & Duration context, Check/Cross actions */}
-                <div className="flex justify-between items-start gap-3 mb-1.5 pl-1.5 pr-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                if (onTimeEdit) {
-                                    const newVal = window.prompt("Nouvelle heure (ex: 20:00):", activity.time);
-                                    if (newVal !== null && newVal !== activity.time) {
-                                        onTimeEdit(activity.id, newVal);
-                                    }
-                                }
-                            }}
-                            className="flex items-center gap-1.5 text-xs font-black px-2.5 py-1.5 -ml-1.5 rounded-xl border shadow-sm bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors active:scale-95"
-                            title="Modifier l'heure"
-                        >
-                            <Clock className="w-3.5 h-3.5" />
-                            {activity.time || "--:--"}
-                        </button>
-
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                if (onDurationEdit) {
-                                    const newVal = window.prompt("Nouvelle durée (ex: 1h30) :", activity.duration || "");
-                                    if (newVal !== null) {
-                                        onDurationEdit(activity.id, newVal);
-                                    }
-                                }
-                            }}
-                            className="flex items-center gap-1.5 text-xs font-black px-2.5 py-1.5 rounded-xl border shadow-sm bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors active:scale-95"
-                            title="Modifier la durée"
-                        >
-                            <Timer className="w-3.5 h-3.5" />
-                            {activity.duration || "--"}
-                        </button>
+                        {activity.duration && (
+                            <span className="flex items-center gap-1 text-[11px] text-muted-foreground">
+                                <Timer className="w-3 h-3" />
+                                {activity.duration}
+                            </span>
+                        )}
                     </div>
 
-                    <div className="flex items-center gap-1 pt-0.5">
+                    {/* Actions: complete & delete */}
+                    <div className="flex items-center gap-1">
                         <button
-                            onClick={(e) => { e.stopPropagation(); onToggle(activity.id); }}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onToggle(activity.id);
+                            }}
                             className={cn(
-                                "flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all active:scale-90 shadow-sm",
-                                activity.completed ? "bg-emerald-500 border-emerald-500 text-white shadow-emerald-500/20" : "bg-slate-50 dark:bg-slate-700/50 border-slate-200 dark:border-slate-600 text-slate-400 dark:text-slate-400 hover:border-emerald-400 dark:hover:border-emerald-500 hover:text-emerald-500 dark:hover:text-emerald-400"
+                                "w-7 h-7 rounded-full flex items-center justify-center transition-colors border",
+                                activity.completed
+                                    ? "bg-emerald-600 border-emerald-600 text-white"
+                                    : "border-border text-muted-foreground hover:text-emerald-600 hover:border-emerald-600/40"
                             )}
-                            title={activity.completed ? "Annuler terminer" : "Marquer terminé"}
+                            title={activity.completed ? "Annuler" : "Marquer fait"}
                         >
-                            <Check className="w-4 h-4" strokeWidth={3} />
+                            <Check className="w-3.5 h-3.5" />
                         </button>
                         <button
-                            onClick={(e) => { e.stopPropagation(); onDelete(activity.id); }}
-                            className="flex items-center justify-center w-8 h-8 rounded-full text-slate-400 hover:bg-red-50 dark:hover:bg-red-900/30 hover:text-red-500 transition-colors active:scale-90 ml-1"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onDelete(activity.id);
+                            }}
+                            className="w-7 h-7 rounded-full flex items-center justify-center text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
                             title="Supprimer"
                         >
-                            <X className="w-5 h-5" />
+                            <X className="w-3.5 h-3.5" />
                         </button>
                     </div>
                 </div>
 
-                {/* Main Content: Title, Image, Badges */}
-                <div className="flex gap-4">
-                    <div className="flex flex-col flex-1 min-w-0 pb-1 pl-1">
-                        {/* Title */}
-                        <h3 className={cn("font-black text-slate-800 dark:text-white text-lg leading-tight mb-3 pr-2 flex", activity.completed && "line-through text-slate-400")}>
-                            {activity.icon && <span className="mr-2.5 text-xl -mt-0.5 drop-shadow-sm shrink-0">{activity.icon}</span>}
-                            <span>{activity.title}</span>
-                        </h3>
-
-                        {/* Badges / Bottom Row */}
-                        <div className="flex flex-wrap items-center gap-2 mt-auto">
-                            {activity.location && (
-                                <span className="text-[11px] font-bold bg-indigo-50 dark:bg-indigo-900/20 px-2 py-1 rounded-lg border border-indigo-100 dark:border-indigo-900/40 text-indigo-700 dark:text-indigo-400 flex items-center gap-1 shrink-0">
-                                    <MapPin className="w-3 h-3 text-indigo-500 dark:text-indigo-500" />
-                                    <span className="truncate max-w-[140px]">{activity.location}</span>
-                                </span>
-                            )}
-
-                            {activity.priceEstimate && (
-                                <span className="text-[11px] font-bold bg-emerald-50 dark:bg-emerald-900/20 px-2 py-1 rounded-lg border border-emerald-100 dark:border-emerald-900/40 text-emerald-700 dark:text-emerald-400 flex items-center gap-1 shrink-0">
-                                    <Banknote className="w-3 h-3 text-emerald-500" />
-                                    <span className="truncate max-w-[100px]">{activity.priceEstimate}</span>
-                                </span>
-                            )}
-
-                            {activity.address && (
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        setIsTaxiModalOpen(true);
-                                    }}
-                                    className="text-[11px] font-bold text-amber-700 dark:text-amber-500 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded-lg border border-amber-200 dark:border-amber-900/40 flex items-center gap-1 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors active:scale-95"
-                                >
-                                    <span>🚕</span> Taxi
-                                </button>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Image */}
-                    {activity.images && activity.images.length > 0 && (
-                        <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shadow-sm shrink-0 border border-slate-100 dark:border-slate-800 self-end mb-0.5 mr-0.5 group-hover:shadow-md transition-shadow">
-                            <Image
-                                src={activity.images[0]}
-                                alt={activity.title}
-                                fill
-                                className="object-cover transition-transform group-hover:scale-105 duration-500"
-                            />
+                {/* Content: Title & Chinese title */}
+                <div className="space-y-1">
+                    <h3 className={cn("font-bold text-sm text-foreground", activity.completed && "line-through text-muted-foreground")}>
+                        {activity.title}
+                    </h3>
+                    {activity.chineseTitle && (
+                        <div className="flex items-center justify-between">
+                            <p className="hanzi text-xs font-medium text-primary">
+                                {activity.chineseTitle}
+                            </p>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    playSpeech(activity.chineseTitle!);
+                                }}
+                                className="p-1 rounded text-muted-foreground hover:text-foreground hover:bg-muted"
+                                title="Prononcer le nom"
+                            >
+                                <Volume2 className="w-3.5 h-3.5" />
+                            </button>
                         </div>
                     )}
                 </div>
-            </div>
 
-            {activity.address && (
-                <TaxiModal
-                    isOpen={isTaxiModalOpen}
-                    onClose={() => setIsTaxiModalOpen(false)}
-                    destinationName={activity.chineseTitle || activity.location || activity.title}
-                    address={activity.address}
-                />
-            )}
+                {/* Description or location snippet */}
+                {activity.description && (
+                    <p className="text-xs text-muted-foreground line-clamp-2 mt-1.5 leading-relaxed">
+                        {activity.description}
+                    </p>
+                )}
+
+                {/* Footer details: location & price */}
+                {(activity.location || activity.priceEstimate) && (
+                    <div className="mt-2.5 pt-2.5 border-t border-border/60 flex items-center justify-between text-[11px] text-muted-foreground">
+                        {activity.location ? (
+                            <div className="flex items-center gap-1.5 truncate">
+                                <MapPin className="w-3 h-3 text-primary shrink-0" />
+                                <span className="truncate">{activity.location}</span>
+                            </div>
+                        ) : <span />}
+
+                        {activity.priceEstimate && (
+                            <div className="flex items-center gap-1 font-medium text-foreground/80 shrink-0 ml-2">
+                                <Banknote className="w-3 h-3" />
+                                <span>{activity.priceEstimate}</span>
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

@@ -1,6 +1,8 @@
+"use client";
+
 import { Activity } from "@/lib/types";
+import { Bookmark, Plus } from "lucide-react";
 import { SidebarItem } from "./SidebarItem";
-import { Card } from "@/components/ui/Card";
 
 interface UnscheduledSidebarProps {
     items: Activity[];
@@ -11,36 +13,36 @@ interface UnscheduledSidebarProps {
 
 export function UnscheduledSidebar({ items, onDelete, onAddClick, onItemClick }: UnscheduledSidebarProps) {
     return (
-        <Card variant="premium" className="h-[calc(100vh-8rem)] flex flex-col shadow-sm sticky top-28">
-            <div className="p-4 border-b border-white/20 dark:border-white/10 bg-white/40 dark:bg-black/20 backdrop-blur-md rounded-t-[var(--radius)]">
-                <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                    <span className="text-xl">📌</span> À planifier
-                    <span className="ml-auto bg-white/50 dark:bg-white/10 text-slate-600 dark:text-slate-300 text-xs px-2 py-0.5 rounded-full border border-white/20">
-                        {items.length}
-                    </span>
-                </h3>
+        <div className="card-clean flex flex-col sticky top-20 overflow-hidden">
+            <div className="p-3.5 border-b border-border bg-muted/40 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                    <Bookmark className="w-4 h-4 text-primary" />
+                    <h3 className="font-bold text-xs uppercase tracking-wider text-foreground">
+                        À planifier
+                    </h3>
+                </div>
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-primary/10 text-primary">
+                    {items.length}
+                </span>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar">
+            <div className="p-3 space-y-2.5 max-h-[70vh] overflow-y-auto no-scrollbar">
                 {items.length === 0 ? (
-                    <div className="text-center py-10 opacity-50 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl mx-2">
-                        <p className="text-sm text-slate-500 dark:text-slate-400">Aucun élément.</p>
-                        <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Ajoutez-en depuis le Guide !</p>
+                    <div className="text-center py-8 border border-dashed border-border rounded-xl">
+                        <p className="text-xs text-muted-foreground">Aucun lieu en attente</p>
                     </div>
                 ) : (
-                    <div className="space-y-3">
-                        {items.map((activity) => (
-                            <SidebarItem
-                                key={activity.id}
-                                activity={activity}
-                                onDelete={onDelete}
-                                onAddClick={onAddClick}
-                                onClick={() => onItemClick(activity)}
-                            />
-                        ))}
-                    </div>
+                    items.map((activity) => (
+                        <SidebarItem
+                            key={activity.id}
+                            activity={activity}
+                            onDelete={onDelete}
+                            onAddClick={onAddClick}
+                            onClick={() => onItemClick(activity)}
+                        />
+                    ))
                 )}
             </div>
-        </Card>
+        </div>
     );
 }

@@ -12,6 +12,7 @@ export interface Activity {
     completed: boolean;
     images?: string[];
     priceEstimate?: string; // Estimated price of the activity
+    coordinates?: [number, number];
 }
 
 export interface TripDay {

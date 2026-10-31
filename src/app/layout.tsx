@@ -5,19 +5,20 @@ import { BottomNav } from "@/components/layout/BottomNav";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { PullToRefresh } from "@/components/layout/PullToRefresh";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: "#faf9f6",
+  viewportFit: "cover",
+  themeColor: "#F7F4EE",
 };
 
 export const metadata: Metadata = {
-  title: "China One",
-  description: "Votre assistant de voyage tout-en-un pour la Chine",
+  title: "China One | Chongqing",
+  description: "Guide de voyage et carnet de bord pour Chongqing",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -36,18 +37,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen bg-background text-foreground antialiased`}>
+      <body className={`${inter.className} min-h-screen bg-background text-foreground antialiased selection:bg-primary/10 selection:text-primary`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          {/* Isolated Background Layer for Safari iOS Fix */}
-          <div className="fixed inset-0 bg-pearl z-[-1] pointer-events-none" />
-
           <PullToRefresh>
-            <main className="pb-20 relative min-h-screen">
+            <main className="min-h-screen pb-24">
               {children}
             </main>
           </PullToRefresh>

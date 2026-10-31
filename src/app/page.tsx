@@ -1,200 +1,287 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { BestOfGuide } from "@/components/guide/BestOfGuide";
+import {
+  CarTaxiFront,
+  Coins,
+  Flame,
+  MessageSquareText,
+  Calendar,
+  CloudSun,
+  MapPin,
+  Clock,
+  ArrowUpRight,
+  ChevronRight,
+  ShieldCheck,
+  Utensils,
+  TrainTrack,
+  Landmark,
+  ShoppingBag
+} from "lucide-react";
 import { Card } from "@/components/ui/Card";
-import { GovernmentAlert } from "@/components/home/GovernmentAlert";
 import { DailyQuote } from "@/components/home/DailyQuote";
+import { GovernmentAlert } from "@/components/home/GovernmentAlert";
+import { useAgenda } from "@/hooks/useAgenda";
 
 export default function Home() {
+  const { days, isLoading } = useAgenda();
+  const [chongqingTime, setChongqingTime] = useState("");
+  const [parisTime, setParisTime] = useState("");
+  const [weatherTemp, setWeatherTemp] = useState<string>("24°C");
+
+  useEffect(() => {
+    const updateTimes = () => {
+      const now = new Date();
+      setChongqingTime(
+        new Intl.DateTimeFormat("fr-FR", {
+          timeZone: "Asia/Shanghai",
+          hour: "2-digit",
+          minute: "2-digit"
+        }).format(now)
+      );
+      setParisTime(
+        new Intl.DateTimeFormat("fr-FR", {
+          timeZone: "Europe/Paris",
+          hour: "2-digit",
+          minute: "2-digit"
+        }).format(now)
+      );
+    };
+
+    updateTimes();
+    const interval = setInterval(updateTimes, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Quick weather fetch for Chongqing
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        const res = await fetch("https://api.open-meteo.com/v1/forecast?latitude=29.5623&longitude=106.5774&current=temperature_2m");
+        const data = await res.json();
+        if (data?.current?.temperature_2m !== undefined) {
+          setWeatherTemp(`${Math.round(data.current.temperature_2m)}°C`);
+        }
+      } catch (e) {
+        // fallback to default
+      }
+    };
+    fetchWeather();
+  }, []);
+
+  const firstDay = days.length > 0 ? days[0] : null;
+  const nextActivity = firstDay?.activities?.[0] || null;
+
   return (
-    <div className="flex flex-col min-h-screen px-6 pt-10 pb-32 space-y-10 mt-[env(safe-area-inset-top)]">
+    <div className="max-w-lg mx-auto px-4 pt-6 pb-28 space-y-5">
       {/* Header */}
-      <header className="animate-in slide-in-from-bottom-4 duration-700 flex items-center justify-center gap-3 mt-2">
-        <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-lg border border-white/10">
-          <img src="/icon-192x192.png" alt="Logo" className="object-cover w-full h-full" />
+      <header className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="relative w-11 h-11 rounded-xl overflow-hidden shadow-sm border border-border shrink-0 bg-card">
+            <img src="/icon-192x192.png" alt="China One Logo" className="object-cover w-full h-full" />
+          </div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <h1 className="text-lg font-bold tracking-tight text-foreground">China One</h1>
+              <span className="hanzi text-xs font-semibold text-primary px-1.5 py-0.5 rounded bg-primary/10">重庆</span>
+            </div>
+            <p className="text-[11px] text-muted-foreground">Carnet de bord & survie urbaine</p>
+          </div>
         </div>
-        <h1 className="text-3xl font-black tracking-tight text-slate-800 dark:text-white">
-          China <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">One</span>
-        </h1>
+
+        {/* Dual Clocks */}
+        <div className="flex items-center gap-2 text-right">
+          <div className="p-2 rounded-xl bg-card border border-border">
+            <span className="text-[10px] text-muted-foreground block font-medium">Chongqing</span>
+            <span className="text-xs font-bold text-foreground">{chongqingTime || "--:--"}</span>
+          </div>
+          <div className="p-2 rounded-xl bg-card border border-border">
+            <span className="text-[10px] text-muted-foreground block font-medium">Paris</span>
+            <span className="text-xs font-medium text-muted-foreground">{parisTime || "--:--"}</span>
+          </div>
+        </div>
       </header>
 
-      {/* Government Alert Banner - Top Position */}
-      <section className="animate-in slide-in-from-bottom-4 duration-700 delay-75">
-        <GovernmentAlert />
-      </section>
-
-
-
-      {/* Daily Quote */}
-      <section className="animate-in slide-in-from-bottom-8 duration-700 delay-75">
-        <DailyQuote />
-      </section>
-
-      {/* News & Guide Carousel (Banner Style) */}
-      <section className="space-y-4 animate-in slide-in-from-bottom-8 duration-700 delay-100">
-        <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white">Actualités & Guide</h2>
-          <span className="text-xs font-medium text-slate-400">Liens Utiles</span>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          {/* News: Visa Exemption */}
-          <GuideBanner
-            emoji="🛂"
-            title="Visa Free"
-            subtitle="Info 2025"
-            tag="Flash"
-            href="https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/chine/#entre"
-            external
-          />
-
-          {/* Internet - Holafly */}
-          <GuideBanner
-            emoji="📶"
-            title="Internet"
-            subtitle="eSIM"
-            href="https://esim.holafly.com/fr/esim-chine/"
-            external
-          />
-
-          {/* Apps Essentials Link */}
-          <GuideBanner
-            emoji="📱"
-            title="Apps"
-            subtitle="Kit Survie"
-            href="/guide/apps"
-          />
-
-          {/* Culture Guide */}
-          <GuideBanner
-            emoji="🏮"
-            title="Culture"
-            subtitle="Le Guide"
-            href="/guide/culture"
-          />
-
-          {/* Guide: Emergency */}
-          <GuideBanner
-            emoji="🚨"
-            title="Urgences"
-            subtitle="110 / 119 / 120"
-            isEmergency={true}
-            href="tel:110"
-            external
-            className="col-span-2"
-          />
-        </div>
-      </section>
-
-
-
-      {/* Best Of Guide (Replaces Assistant) */}
-      <section className="animate-in slide-in-from-bottom-8 duration-700 delay-150">
-        <BestOfGuide />
-      </section>
-
-
-
-      {/* Currency Cheat Sheet */}
-      <section className="animate-in slide-in-from-bottom-8 duration-700 delay-200">
-        <div className="bg-slate-900 dark:bg-slate-900/80 rounded-2xl p-4 flex items-center justify-between text-white shadow-lg shadow-slate-900/10 dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)] dark:border dark:border-white/5 relative overflow-hidden">
-          {/* Subtle inner light */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
-          <div className="flex items-center gap-3 relative z-10">
-            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-lg">
-              💶
+      {/* FLASH ACTION: Taxi Mode */}
+      <Link href="/taxi" className="block">
+        <div className="card-lacquer p-4 relative group">
+          <div className="flex items-start justify-between">
+            <div className="space-y-1">
+              <span className="text-[11px] uppercase tracking-wider font-semibold opacity-90 block">
+                Mode Urgence Taxi
+              </span>
+              <h2 className="text-lg font-black tracking-tight leading-snug">
+                Montrer mon adresse au chauffeur
+              </h2>
+              <p className="text-xs text-white/80 leading-relaxed max-w-xs">
+                Affichage grand format en caractères chinois et lecture audio sans connexion.
+              </p>
             </div>
-            <div>
-              <p className="font-bold text-sm">Pense-bête Devises</p>
-              <p className="text-[10px] text-slate-300">1€ ≈ 8¥</p>
-            </div>
-          </div>
-          <div className="flex gap-3">
-            <div className="text-center">
-              <p className="text-[10px] text-slate-400 font-bold mb-0.5">5€</p>
-              <p className="font-black text-sm text-green-400">40¥</p>
-            </div>
-            <div className="w-px h-8 bg-white/10" />
-            <div className="text-center">
-              <p className="text-[10px] text-slate-400 font-bold mb-0.5">10€</p>
-              <p className="font-black text-sm text-green-400">80¥</p>
-            </div>
-            <div className="w-px h-8 bg-white/10" />
-            <div className="text-center">
-              <p className="text-[10px] text-slate-400 font-bold mb-0.5">50€</p>
-              <p className="font-black text-sm text-green-400">400¥</p>
+            <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <CarTaxiFront className="w-5 h-5 text-white" />
             </div>
           </div>
         </div>
-      </section>
+      </Link>
 
-      {/* Tools Quick Access */}
-      <section className="animate-in slide-in-from-bottom-8 duration-700 delay-300">
-        <Link href="/tools">
-          <Card variant="premium" className="h-28 flex items-center justify-between px-8 hover:scale-[1.02] active:scale-95 transition-transform group">
-            {/* Background Gradient Effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-900/5 to-transparent dark:from-slate-900/50 pointer-events-none" />
-
-            <div className="flex flex-col justify-center relative z-10">
-              <h3 className="font-black text-slate-900 dark:text-white text-xl tracking-tight">Boîte à Outils</h3>
-              <p className="text-slate-600 dark:text-slate-400 text-xs mt-0.5 font-bold uppercase tracking-wide opacity-80">Convertisseur • Météo</p>
-            </div>
-
-            <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-white/5 flex items-center justify-center group-hover:bg-slate-200 dark:group-hover:bg-white/10 transition-colors border border-slate-200 dark:border-white/5 relative z-10 shadow-sm text-2xl drop-shadow-sm group-hover:scale-110">
-              🧰
-            </div>
-
-            {/* Decoration */}
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-slate-900/5 dark:bg-white/5 rounded-full blur-lg group-hover:bg-slate-900/10 dark:group-hover:bg-white/10 transition-colors" />
-          </Card>
+      {/* COCKPIT WIDGETS: Météo & Devises */}
+      <div className="grid grid-cols-2 gap-3">
+        <Link href="/tools/weather" className="card-clean p-3.5 hover:border-primary/40 block">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Météo locale</span>
+            <CloudSun className="w-4 h-4 text-primary" />
+          </div>
+          <p className="text-xl font-bold text-foreground">{weatherTemp}</p>
+          <p className="text-[11px] text-muted-foreground mt-0.5 truncate">Chongqing centre</p>
         </Link>
+
+        <Link href="/tools/currency" className="card-clean p-3.5 hover:border-primary/40 block">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Change</span>
+            <Coins className="w-4 h-4 text-primary" />
+          </div>
+          <p className="text-xl font-bold text-foreground">1€ ≈ 7.82 ¥</p>
+          <p className="text-[11px] text-muted-foreground mt-0.5">100 ¥ ≈ 12.80 €</p>
+        </Link>
+      </div>
+
+      {/* PROCHAINE ÉTAPE DE L'AGENDA */}
+      <section className="space-y-2">
+        <div className="flex items-center justify-between px-1">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            Itinéraire du voyage
+          </h2>
+          <Link href="/agenda" className="text-xs font-medium text-primary hover:underline flex items-center gap-0.5">
+            Tout le planning
+            <ChevronRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        {nextActivity ? (
+          <Link href="/agenda" className="card-clean p-4 block hover:border-primary/40">
+            <div className="flex items-start justify-between gap-3">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-bold text-primary">{nextActivity.time}</span>
+                  <span className="text-xs text-muted-foreground">• Jour 1</span>
+                </div>
+                <h3 className="font-bold text-sm text-foreground">{nextActivity.title}</h3>
+                {nextActivity.chineseTitle && (
+                  <p className="hanzi text-xs font-medium text-muted-foreground">
+                    {nextActivity.chineseTitle}
+                  </p>
+                )}
+              </div>
+              <div className="p-2 rounded-xl bg-muted/60 text-muted-foreground shrink-0">
+                <Calendar className="w-4 h-4" />
+              </div>
+            </div>
+            {nextActivity.location && (
+              <div className="mt-3 pt-3 border-t border-border flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                <MapPin className="w-3 h-3 text-primary shrink-0" />
+                <span className="truncate">{nextActivity.location}</span>
+              </div>
+            )}
+          </Link>
+        ) : (
+          <Link href="/agenda" className="card-clean p-4 block text-center py-6 text-muted-foreground hover:border-primary/40">
+            <p className="text-xs">Consulter les étapes du voyage dans l'Agenda</p>
+          </Link>
+        )}
       </section>
 
-    </div>
-  );
-}
+      {/* 4 OUTILS DE TERRAIN */}
+      <section className="space-y-2">
+        <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-1">
+          Outils de Survie
+        </h2>
+        <div className="grid grid-cols-2 gap-2.5">
+          <Link href="/taxi" className="card-clean p-3.5 flex items-center gap-3 hover:border-primary/40">
+            <div className="p-2 rounded-xl bg-primary/10 text-primary shrink-0">
+              <CarTaxiFront className="w-4 h-4" />
+            </div>
+            <div className="min-w-0">
+              <h3 className="font-semibold text-xs text-foreground truncate">Cartes Taxi</h3>
+              <p className="text-[10px] text-muted-foreground truncate">Plein écran & audio</p>
+            </div>
+          </Link>
 
-function GuideBanner({
-  emoji, title, subtitle, image, tag, href, external, isEmergency, className
-}: {
-  emoji: string, title: string, subtitle: string, image?: string, tag?: string, href: string, external?: boolean, isEmergency?: boolean, className?: string
-}) {
-  const Component = external ? 'a' : href === '#' ? 'div' : Link;
-  const props = external ? { target: "_blank", rel: "noopener noreferrer" } : {};
+          <Link href="/guide/phrases" className="card-clean p-3.5 flex items-center gap-3 hover:border-primary/40">
+            <div className="p-2 rounded-xl bg-primary/10 text-primary shrink-0">
+              <MessageSquareText className="w-4 h-4" />
+            </div>
+            <div className="min-w-0">
+              <h3 className="font-semibold text-xs text-foreground truncate">Phrases Audio</h3>
+              <p className="text-[10px] text-muted-foreground truncate">Survie en mandarin</p>
+            </div>
+          </Link>
 
-  return (
-    // @ts-ignore
-    <Component href={href !== '#' ? href : undefined} {...props} className={`w-full min-h-[90px] p-3 flex flex-row items-center gap-3 relative overflow-hidden transition-all active:scale-95 group card-premium ${className || ''} ${isEmergency ? 'shadow-sm border-red-500/30 dark:border-red-500/30 shadow-red-500/10' : ''}`}>
-      {/* Background Image (if provided and not emergency) */}
-      {!isEmergency && image && (
-        <div className="absolute inset-0">
-          <img src={image} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-white/40 to-white/10 dark:from-black/80 dark:via-black/40 dark:to-black/10" />
+          <Link href="/tools/spicy" className="card-clean p-3.5 flex items-center gap-3 hover:border-primary/40">
+            <div className="p-2 rounded-xl bg-primary/10 text-primary shrink-0">
+              <Flame className="w-4 h-4" />
+            </div>
+            <div className="min-w-0">
+              <h3 className="font-semibold text-xs text-foreground truncate">Piment-O-Mètre</h3>
+              <p className="text-[10px] text-muted-foreground truncate">Doser le piment</p>
+            </div>
+          </Link>
+
+          <Link href="/tools/currency" className="card-clean p-3.5 flex items-center gap-3 hover:border-primary/40">
+            <div className="p-2 rounded-xl bg-primary/10 text-primary shrink-0">
+              <Coins className="w-4 h-4" />
+            </div>
+            <div className="min-w-0">
+              <h3 className="font-semibold text-xs text-foreground truncate">Convertisseur</h3>
+              <p className="text-[10px] text-muted-foreground truncate">RMB vers Euros</p>
+            </div>
+          </Link>
         </div>
-      )}
+      </section>
 
-      {/* Tag */}
-      {tag && (
-        <div className="absolute top-2 right-2 bg-primary text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full animate-pulse shadow-sm z-20">
-          {tag}
-        </div>
-      )}
+      {/* BONS PLANS SURVIE CHONGQING */}
+      <section className="space-y-2">
+        <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-1">
+          Repères Rapides
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <div className="card-clean p-3 space-y-1">
+            <div className="flex items-center gap-1.5 text-primary text-xs font-semibold">
+              <Utensils className="w-3.5 h-3.5" />
+              <span>Xiaomian 10-15¥</span>
+            </div>
+            <p className="text-[11px] text-muted-foreground leading-relaxed">
+              Nouilles locales ou baozi le matin pour 1 à 2€. Copieux et authentique.
+            </p>
+          </div>
 
-      {/* Emoji Icon */}
-      <div className="relative z-10 shrink-0">
-        <div className="w-12 h-12 bg-white/80 dark:bg-white/5 backdrop-blur-md rounded-xl border border-white/60 dark:border-white/10 shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300 transform-gpu hover:shadow-md">
-          <div className="text-2xl drop-shadow-sm">
-            {emoji}
+          <div className="card-clean p-3 space-y-1">
+            <div className="flex items-center gap-1.5 text-primary text-xs font-semibold">
+              <TrainTrack className="w-3.5 h-3.5" />
+              <span>Métro 2 à 5¥</span>
+            </div>
+            <p className="text-[11px] text-muted-foreground leading-relaxed">
+              Moins de 1€ par trajet. Traversée rapide et climatisée de la ville.
+            </p>
+          </div>
+
+          <div className="card-clean p-3 space-y-1">
+            <div className="flex items-center gap-1.5 text-primary text-xs font-semibold">
+              <Landmark className="w-3.5 h-3.5" />
+              <span>Spots Gratuits</span>
+            </div>
+            <p className="text-[11px] text-muted-foreground leading-relaxed">
+              Hongyadong, Shibati et Shancheng Alley sont 100% libres d'accès.
+            </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Text Content */}
-      <div className="relative z-10 flex-1 min-w-0">
-        <h3 className="font-black text-slate-900 dark:text-white text-base tracking-tight leading-none mb-0.5 truncate">{title}</h3>
-        <p className="text-slate-600 dark:text-slate-300 text-[10px] font-bold uppercase tracking-wide opacity-90 truncate">{subtitle}</p>
-      </div>
-    </Component>
+      {/* Proverbe du jour */}
+      <DailyQuote />
+
+      {/* Alerte consulaire */}
+      <GovernmentAlert />
+    </div>
   );
 }

@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AlertTriangle, CheckCircle2 } from "lucide-react";
+import { AlertCircle, ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getGeminiAlertStatus } from "@/app/actions/gemini";
 
 interface GovernmentAlertProps {
     initialAlert?: boolean;
@@ -12,62 +11,33 @@ interface GovernmentAlertProps {
 
 export function GovernmentAlert({ initialAlert = false, initialMessage }: GovernmentAlertProps) {
     const [hasAlert, setHasAlert] = useState(initialAlert);
-    const [message, setMessage] = useState(initialMessage || "Aucune annonce gouvernementale importante. Tout est OK.");
-
-    useEffect(() => {
-        const checkStatus = async () => {
-            const cached = sessionStorage.getItem("gov_alert_cache");
-            if (cached) {
-                try {
-                    const data = JSON.parse(cached);
-                    setHasAlert(data.hasAlert);
-                    setMessage(data.message);
-                    return;
-                } catch (e) { }
-            }
-
-            try {
-                const data = await getGeminiAlertStatus();
-                if (data) {
-                    setHasAlert(data.hasAlert);
-                    setMessage(data.message);
-                    sessionStorage.setItem("gov_alert_cache", JSON.stringify(data));
-                }
-            } catch (e) {
-                console.error(e);
-            }
-        };
-        checkStatus();
-    }, []);
+    const [message, setMessage] = useState(initialMessage || "Voyageurs français : exemption de visa confirmée jusqu'à fin 2025 pour les séjours de moins de 15 jours.");
 
     return (
-        <a href="https://translate.google.com/translate?sl=zh-CN&tl=fr&u=www.gov.cn" target="_blank" rel="noopener noreferrer" className={cn(
-            "block w-full rounded-[1.5rem] p-4 flex items-start gap-4 shadow-lg border transaction-all duration-300 relative overflow-hidden group active:scale-95 backdrop-blur-md",
-            hasAlert
-                ? "bg-red-50/90 border-red-200 text-red-900 dark:bg-red-900/40 dark:border-red-800 dark:text-red-100 shadow-red-500/10"
-                : "bg-emerald-50/90 border-emerald-200 text-emerald-900 dark:bg-emerald-900/40 dark:border-emerald-800 dark:text-emerald-100 shadow-emerald-500/10"
-        )}>
-            {/* Texture Overlay */}
-            <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
-                style={{ backgroundImage: 'repeating-linear-gradient(45deg, #000 0, #000 1px, transparent 0, transparent 5px)', backgroundSize: '10px 10px' }}
-            />
-
-            <div className={cn(
-                "p-2 rounded-xl shrink-0 relative z-10",
-                hasAlert ? "bg-red-100/50" : "bg-emerald-100/50"
-            )}>
-                {hasAlert ? <AlertTriangle className="w-5 h-5 text-red-600" /> : <CheckCircle2 className="w-5 h-5 text-emerald-600" />}
+        <a
+            href="https://www.diplomatie.gouv.fr/fr/conseils-aux-voyageurs/conseils-par-pays-destination/chine/#entree"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+                "card-clean p-3.5 flex items-start gap-3 transition-colors text-xs block",
+                hasAlert
+                    ? "border-destructive/40 bg-destructive/5 text-destructive"
+                    : "border-border bg-card/60 text-muted-foreground hover:text-foreground"
+            )}
+        >
+            <div className="mt-0.5 shrink-0">
+                {hasAlert ? (
+                    <AlertCircle className="w-4 h-4 text-destructive" />
+                ) : (
+                    <ShieldCheck className="w-4 h-4 text-primary" />
+                )}
             </div>
-
-            <div className="relative z-10 pt-0.5">
-                <div className="flex items-center gap-2">
-                    <h4 className="font-bold text-sm mb-0.5 uppercase tracking-wide opacity-80">
-                        {hasAlert ? "Alerte Officielle" : "Statut Chine"}
-                    </h4>
-                    <span className="text-[10px] bg-black/5 dark:bg-white/10 px-1.5 py-0.5 rounded text-current opacity-70">www.gov.cn</span>
-                </div>
-                <p className="text-sm font-medium leading-relaxed opacity-95">
-                    {message || (hasAlert ? "Alerte en cours." : "Aucune annonce gouvernementale importante. Tout est OK.")}
+            <div className="flex-1 min-w-0">
+                <span className="font-semibold text-[11px] uppercase tracking-wider text-foreground block mb-0.5">
+                    Conseil Consulaire
+                </span>
+                <p className="line-clamp-2 leading-relaxed text-foreground/80">
+                    {message}
                 </p>
             </div>
         </a>

@@ -4,140 +4,107 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import {
     Moon, Sun, Smartphone, Wifi, MapPin,
-    Bell, Shield, ChevronRight, Trash2,
-    HelpCircle, Info, LogOut
+    Trash2, Info, ShieldCheck, RefreshCw
 } from "lucide-react";
-import { Switch } from "@/components/ui/switch"; // We'll need a Switch component, or I'll build a simple one inline for now
+import { cn } from "@/lib/utils";
 
 export default function SettingsPage() {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
-    const [notifications, setNotifications] = useState(true);
-    const [location, setLocation] = useState(true);
-    const [offlineMode, setOfflineMode] = useState(false);
 
     useEffect(() => setMounted(true), []);
+
+    const handleClearData = () => {
+        if (confirm("Voulez-vous réinitialiser toutes les données locales de votre carnet ?")) {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.reload();
+        }
+    };
 
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen bg-slate-100 dark:bg-black pt-10 pb-32 px-4 mt-[env(safe-area-inset-top)]">
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-6 px-2">Paramètres</h1>
+        <div className="max-w-lg mx-auto p-4 pt-6 pb-28 space-y-5">
+            <header className="space-y-1">
+                <span className="text-[11px] font-semibold text-primary uppercase tracking-wider">Configuration</span>
+                <h1 className="text-2xl font-black text-foreground tracking-tight">Réglages</h1>
+                <p className="text-xs text-muted-foreground">Préférences d'affichage et données locales.</p>
+            </header>
 
-            <div className="space-y-6">
-                {/* Connectivity Group */}
-                <SettingsGroup>
-                    <SettingsItem
-                        icon={<Wifi className="w-5 h-5 text-white" />}
-                        iconColor="bg-blue-500"
-                        label="Mode Hors-ligne"
-                        control={
-                            <Toggle checked={offlineMode} onChange={setOfflineMode} />
-                        }
-                    />
-                    <SettingsItem
-                        icon={<MapPin className="w-5 h-5 text-white" />}
-                        iconColor="bg-green-500"
-                        label="Localisation GPS"
-                        control={
-                            <Toggle checked={location} onChange={setLocation} />
-                        }
-                    />
-                    <SettingsItem
-                        icon={<Bell className="w-5 h-5 text-white" />}
-                        iconColor="bg-red-500"
-                        label="Notifications"
-                        control={
-                            <Toggle checked={notifications} onChange={setNotifications} />
-                        }
-                    />
-                </SettingsGroup>
+            {/* Apparence */}
+            <div className="card-clean p-4 space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-primary">
+                    Apparence
+                </h3>
+                <div className="grid grid-cols-3 gap-2">
+                    {[
+                        { id: "light", label: "Clair (Ivoire)", icon: Sun },
+                        { id: "dark", label: "Sombre (Encre)", icon: Moon },
+                        { id: "system", label: "Système", icon: Smartphone }
+                    ].map((mode) => {
+                        const Icon = mode.icon;
+                        const isSelected = theme === mode.id;
 
-                {/* Appearance Group */}
-                <SettingsGroup title="APPRARENCE">
-                    <SettingsItem
-                        icon={theme === 'dark' ? <Moon className="w-5 h-5 text-white" /> : <Sun className="w-5 h-5 text-white" />}
-                        iconColor="bg-slate-800 dark:bg-slate-600"
-                        label="Mode Sombre"
-                        control={
-                            <Toggle checked={theme === 'dark'} onChange={(v) => setTheme(v ? 'dark' : 'light')} />
-                        }
-                    />
-                </SettingsGroup>
-
-                {/* Data & Privacy */}
-                <SettingsGroup title="DONNÉES & CRÉDITS">
-                    <SettingsItem
-                        icon={<Trash2 className="w-5 h-5 text-white" />}
-                        iconColor="bg-red-500"
-                        label="Vider le cache"
-                        onClick={() => {
-                            if (confirm("Voulez-vous vraiment effacer les données locales ?")) {
-                                localStorage.clear();
-                                alert("Cache vidé !");
-                                window.location.reload();
-                            }
-                        }}
-                    />
-                    <SettingsItem
-                        icon={<Info className="w-5 h-5 text-white" />}
-                        iconColor="bg-gray-500"
-                        label="À propos"
-                        value="v1.6.0"
-                    />
-                </SettingsGroup>
-
-                <div className="px-4 text-center">
-                    <p className="text-xs text-slate-400">
-                        China One<br />
-                        Fait avec ❤️ par Lucas
-                    </p>
+                        return (
+                            <button
+                                key={mode.id}
+                                onClick={() => setTheme(mode.id)}
+                                className={cn(
+                                    "p-3 rounded-xl border flex flex-col items-center justify-center gap-1.5 transition-all active:scale-95",
+                                    isSelected
+                                        ? "bg-primary text-white border-primary shadow-sm"
+                                        : "bg-muted/30 border-border text-muted-foreground hover:text-foreground hover:border-primary/40"
+                                )}
+                            >
+                                <Icon className="w-4 h-4" />
+                                <span className="text-[11px] font-medium">{mode.label}</span>
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
-        </div>
-    );
-}
 
-function SettingsGroup({ children, title }: { children: React.ReactNode, title?: string }) {
-    return (
-        <div className="space-y-2">
-            {title && <h2 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase px-4 ml-1">{title}</h2>}
-            <div className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800">
-                {children}
-            </div>
-        </div>
-    );
-}
-
-function SettingsItem({ icon, iconColor, label, value, control, onClick }: any) {
-    return (
-        <div
-            onClick={onClick}
-            className={`flex items-center justify-between p-4 border-b border-slate-100 dark:border-slate-800 last:border-0 ${onClick ? 'cursor-pointer active:bg-slate-50 dark:active:bg-slate-800' : ''}`}
-        >
-            <div className="flex items-center gap-3">
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${iconColor}`}>
-                    {icon}
+            {/* Réseau & Offline */}
+            <div className="card-clean p-4 space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-primary">
+                    Fonctionnement en Chine
+                </h3>
+                <div className="space-y-2 text-xs text-foreground/80 leading-relaxed">
+                    <div className="p-3 rounded-xl bg-muted/40 border border-border flex items-start gap-2.5">
+                        <ShieldCheck className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                        <div>
+                            <span className="font-semibold text-foreground block">100% Fonctionnel Hors-Ligne</span>
+                            <span className="text-[11px] text-muted-foreground">
+                                Les adresses, cartes taxi, prononciations audio et plannings sont stockés sur votre appareil et ne nécessitent aucun VPN.
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <span className="font-medium text-slate-900 dark:text-white">{label}</span>
             </div>
 
-            <div className="flex items-center gap-2">
-                {value && <span className="text-slate-500 text-sm">{value}</span>}
-                {control}
-                {!control && onClick && <ChevronRight className="w-5 h-5 text-slate-400" />}
+            {/* Réinitialisation */}
+            <div className="card-clean p-4 space-y-3">
+                <h3 className="text-xs font-bold uppercase tracking-wider text-destructive">
+                    Zone de Réinitialisation
+                </h3>
+                <button
+                    onClick={handleClearData}
+                    className="w-full py-2.5 px-3 rounded-xl border border-destructive/30 bg-destructive/5 hover:bg-destructive/10 text-destructive text-xs font-semibold flex items-center justify-center gap-2 transition-colors active:scale-95"
+                >
+                    <Trash2 className="w-4 h-4" />
+                    Effacer le cache et recharger l'application
+                </button>
+            </div>
+
+            <div className="text-center pt-2">
+                <p className="text-[11px] text-muted-foreground">
+                    China One • Chongqing Companion v2.0
+                </p>
+                <p className="hanzi text-xs font-semibold text-primary mt-1">
+                    重庆旅行助手
+                </p>
             </div>
         </div>
-    );
-}
-
-function Toggle({ checked, onChange }: { checked: boolean, onChange: (v: boolean) => void }) {
-    return (
-        <button
-            onClick={(e) => { e.stopPropagation(); onChange(!checked); }}
-            className={`w-12 h-7 rounded-full transition-colors duration-200 ease-in-out relative ${checked ? 'bg-green-500' : 'bg-slate-300 dark:bg-slate-600'}`}
-        >
-            <span className={`absolute top-1 left-1 bg-white w-5 h-5 rounded-full shadow-sm transition-transform duration-200 ease-in-out ${checked ? 'translate-x-5' : 'translate-x-0'}`} />
-        </button>
     );
 }

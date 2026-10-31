@@ -1,81 +1,68 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { WeatherWidget } from "@/components/tools/WeatherWidget";
 import { WorldClock } from "@/components/tools/WorldClock";
 import { SpicyMeter } from "@/components/tools/SpicyMeter";
 import { CurrencyConverter } from "@/components/tools/CurrencyConverter";
+import { CarTaxiFront, MessageSquareText, Luggage, ArrowRight } from "lucide-react";
 
 export default function ToolsPage() {
-
-
     return (
-        <div className="min-h-screen p-6 pt-safe pb-32">
-            <header className="mb-8">
-                <span className="text-sm font-semibold text-primary uppercase tracking-widest">Utilitaires</span>
-                <h1 className="text-3xl font-black text-slate-800">Boîte à Outils</h1>
-                <p className="text-muted-foreground mt-1">Sélectionnez un outil.</p>
+        <div className="max-w-lg mx-auto p-4 pt-6 pb-28 space-y-5">
+            <header className="space-y-1">
+                <span className="text-[11px] font-semibold text-primary uppercase tracking-wider">Boîte à Outils</span>
+                <h1 className="text-2xl font-black text-foreground tracking-tight">Outils de Survie</h1>
+                <p className="text-xs text-muted-foreground">Utilitaires indispensables pour votre séjour à Chongqing.</p>
             </header>
 
-            <section className="grid gap-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <WeatherWidget />
-                    <WorldClock />
-                    <CurrencyConverter />
-                    <SpicyMeter />
-                </div>
+            {/* Quick Access to Main Subpages */}
+            <div className="grid grid-cols-3 gap-2.5">
+                <Link
+                    href="/taxi"
+                    className="card-clean p-3 flex flex-col justify-between hover:border-primary/50 transition-colors group"
+                >
+                    <div className="p-2 rounded-xl bg-primary/10 text-primary w-fit">
+                        <CarTaxiFront className="w-4 h-4" />
+                    </div>
+                    <div className="mt-3">
+                        <h3 className="text-xs font-bold text-foreground">Cartes Taxi</h3>
+                        <p className="text-[10px] text-muted-foreground truncate">Plein écran</p>
+                    </div>
+                </Link>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Link href="/taxi" className="bg-gradient-to-br from-blue-500 to-indigo-600 p-5 rounded-[2rem] shadow-sm hover:shadow-lg transition-all active:scale-95 group relative overflow-hidden flex flex-col justify-between h-48 text-white">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-lg -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500" />
+                <Link
+                    href="/guide/phrases"
+                    className="card-clean p-3 flex flex-col justify-between hover:border-primary/50 transition-colors group"
+                >
+                    <div className="p-2 rounded-xl bg-primary/10 text-primary w-fit">
+                        <MessageSquareText className="w-4 h-4" />
+                    </div>
+                    <div className="mt-3">
+                        <h3 className="text-xs font-bold text-foreground">Phrases Audio</h3>
+                        <p className="text-[10px] text-muted-foreground truncate">Mandarin vocal</p>
+                    </div>
+                </Link>
 
-                        <div className="relative z-10">
-                            <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-4 border border-white/30">
-                                <span className="text-2xl drop-shadow-sm">🚕</span>
-                            </div>
-                            <h3 className="font-bold text-xl mb-1">Taxi Cards</h3>
-                            <p className="text-xs text-white/80 font-medium">Montrer au chauffeur</p>
-                        </div>
+                <Link
+                    href="/checklists"
+                    className="card-clean p-3 flex flex-col justify-between hover:border-primary/50 transition-colors group"
+                >
+                    <div className="p-2 rounded-xl bg-primary/10 text-primary w-fit">
+                        <Luggage className="w-4 h-4" />
+                    </div>
+                    <div className="mt-3">
+                        <h3 className="text-xs font-bold text-foreground">Bagages</h3>
+                        <p className="text-[10px] text-muted-foreground truncate">Checklists</p>
+                    </div>
+                </Link>
+            </div>
 
-                        <div className="relative z-10 flex justify-end">
-                            <span className="text-xs font-bold text-white group-hover:translate-x-1 transition-transform">Ouvrir &rarr;</span>
-                        </div>
-                    </Link>
-
-                    <Link href="/guide/phrases" className="bg-gradient-to-br from-emerald-400 to-teal-500 p-5 rounded-[2rem] shadow-sm hover:shadow-lg transition-all active:scale-95 group relative overflow-hidden flex flex-col justify-between h-48 text-white">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-lg -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500" />
-
-                        <div className="relative z-10">
-                            <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-4 border border-white/30">
-                                <span className="text-2xl">🗣️</span>
-                            </div>
-                            <h3 className="font-bold text-xl mb-1">Phrases Audio</h3>
-                            <p className="text-xs text-white/80 font-medium">Parler Chinois</p>
-                        </div>
-
-                        <div className="relative z-10 flex justify-end">
-                            <span className="text-xs font-bold text-white group-hover:translate-x-1 transition-transform">Écouter &rarr;</span>
-                        </div>
-                    </Link>
-
-                    <Link href="/checklists" className="bg-gradient-to-br from-amber-400 to-orange-500 p-5 rounded-[2rem] shadow-sm hover:shadow-lg transition-all active:scale-95 group relative overflow-hidden flex flex-col justify-between h-48 text-white">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/20 rounded-full blur-lg -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500" />
-
-                        <div className="relative z-10">
-                            <div className="w-12 h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center mb-4 border border-white/30">
-                                <span className="text-2xl">🎒</span>
-                            </div>
-                            <h3 className="font-bold text-xl mb-1">Listes & Bagages</h3>
-                            <p className="text-xs text-white/80 font-medium">Ne rien oublier</p>
-                        </div>
-
-                        <div className="relative z-10 flex justify-end">
-                            <span className="text-xs font-bold text-white group-hover:translate-x-1 transition-transform">Préparer &rarr;</span>
-                        </div>
-                    </Link>
-                </div>
-            </section>
+            {/* In-page Tools */}
+            <CurrencyConverter />
+            <SpicyMeter />
+            <WeatherWidget />
+            <WorldClock />
         </div>
     );
 }
