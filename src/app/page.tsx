@@ -16,42 +16,8 @@ import {
 } from "lucide-react";
 import { DailyQuote } from "@/components/home/DailyQuote";
 import { GovernmentAlert } from "@/components/home/GovernmentAlert";
+import { BestOfGuide } from "@/components/guide/BestOfGuide";
 import { useAgenda } from "@/hooks/useAgenda";
-
-const MUST_SEE_SPOTS = [
-  {
-    name: "Hongyadong",
-    chinese: "洪崖洞",
-    pinyin: "Hóngyádòng",
-    desc: "Maisons sur pilotis illuminées la nuit au bord du fleuve Jialing, rappelant Le Voyage de Chihiro.",
-    image: "/images/places/sight_1_1.jpg",
-    tag: "Incontournable Nuit"
-  },
-  {
-    name: "Monorail de Liziba",
-    chinese: "李子坝轻轨站",
-    pinyin: "Lǐzǐbà",
-    desc: "La ligne 2 du métro traverse directement un immeuble résidentiel de 19 étages.",
-    image: "/images/places/sight_2_1.jpg",
-    tag: "Spot Cyberpunk"
-  },
-  {
-    name: "Shibati & Shancheng",
-    chinese: "十八梯 • 山城巷",
-    pinyin: "Shíbātī",
-    desc: "Les ruelles d'escaliers traditionnelles à flanc de falaise reliant la ville basse à la ville haute.",
-    image: "/images/places/sight_3_1.jpg",
-    tag: "Vieux Chongqing"
-  },
-  {
-    name: "Chaotianmen & Raffles City",
-    chinese: "朝天门来福士",
-    pinyin: "Cháotiānmén",
-    desc: "La confluence spectaculaire du fleuve Yangtze brun et de la rivière Jialing verte.",
-    image: "/images/places/sight_4_1.jpg",
-    tag: "Panorama Fluvial"
-  }
-];
 
 export default function Home() {
   const { days } = useAgenda();
@@ -252,46 +218,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SPOTS EMBLÉMATIQUES DE CHONGQING */}
-      <section className="space-y-3">
-        <div className="flex items-center justify-between px-1">
-          <div>
-            <h2 className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              Les Incontournables
-            </h2>
-            <p className="text-sm font-black text-foreground">Spots Majeurs de la Ville</p>
-          </div>
-          <Link href="/agenda" className="text-xs font-bold text-primary hover:underline">
-            Voir sur carte &rarr;
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 gap-3">
-          {MUST_SEE_SPOTS.map((spot) => (
-            <div key={spot.name} className="card-warm overflow-hidden flex flex-col">
-              <div className="relative h-40 w-full bg-stone-200">
-                <img src={spot.image} alt={spot.name} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                <div className="absolute top-3 left-3 px-2 py-0.5 rounded-full bg-primary text-white text-[10px] font-bold shadow-sm">
-                  {spot.tag}
-                </div>
-                <div className="absolute bottom-3 left-3 right-3 text-white">
-                  <div className="flex items-baseline gap-2">
-                    <h3 className="text-lg font-black leading-tight drop-shadow">{spot.name}</h3>
-                    <span className="hanzi text-sm font-bold text-amber-300 drop-shadow">{spot.chinese}</span>
-                  </div>
-                  <span className="text-[11px] text-white/80">{spot.pinyin}</span>
-                </div>
-              </div>
-              <div className="p-3.5 bg-white">
-                <p className="text-xs text-foreground/80 leading-relaxed">
-                  {spot.desc}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* GUIDE INTERACTIF DES LIEUX */}
+      <BestOfGuide />
 
       {/* Proverbe du jour */}
       <DailyQuote />

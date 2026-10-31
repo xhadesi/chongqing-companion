@@ -3,40 +3,35 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { GUIDE_DATA, CATEGORIES, GuidePlace, CategoryId } from "@/data/guideData";
-import { MapPin, Star, Plus, Check, Info, Navigation, ArrowLeft, Lightbulb, Clock, Heart, Share2 } from "lucide-react";
+import { MapPin, Plus, Check, Navigation, ArrowLeft, Lightbulb, Clock, Copy, Volume2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAgenda } from "@/hooks/useAgenda";
-import { Card } from "@/components/ui/Card";
-import { TaxiModal } from "@/components/ui/TaxiModal";
 import { ImageSlider } from "@/components/ui/ImageSlider";
 
 export function BestOfGuide() {
     const [activeCategory, setActiveCategory] = useState<CategoryId | null>(null);
     const [selectedPlace, setSelectedPlace] = useState<GuidePlace | null>(null);
     const [now, setNow] = useState<Date | null>(null);
-    const [isTaxiModalOpen, setIsTaxiModalOpen] = useState(false);
+    const [copiedAddress, setCopiedAddress] = useState(false);
     const { addActivity, unscheduled, days } = useAgenda();
 
     useEffect(() => {
         setNow(new Date());
-        const timer = setInterval(() => setNow(new Date()), 60000); // UI update every min
+        const timer = setInterval(() => setNow(new Date()), 60000);
         return () => clearInterval(timer);
     }, []);
 
-    // Filter data
     const places = activeCategory ? GUIDE_DATA.filter(p => p.category === activeCategory).sort((a, b) => b.averageRating - a.averageRating) : [];
     const currentCategory = activeCategory ? CATEGORIES.find(c => c.id === activeCategory) : null;
 
-    // Helpers to check if added
     const isAdded = (id: string) => {
         const inUnscheduled = unscheduled.some(u => u.title.includes(id) || u.description?.includes(id));
         const inDays = days.some(d => d.activities.some(a => a.title.includes(id) || a.description?.includes(id)));
         return inUnscheduled || inDays;
     };
 
-    // Helper: Check if Open
     const getOpenStatus = (open: string, close: string) => {
-        if (!now) return { isOpen: false, text: "Wait..." };
+        if (!now) return { isOpen: false, text: "Horaire non vérifié" };
 
         const [openH, openM] = open.split(":").map(Number);
         const [closeH, closeM] = close.split(":").map(Number);
@@ -47,9 +42,7 @@ export function BestOfGuide() {
         const openTime = openH * 60 + openM;
         let closeTime = closeH * 60 + closeM;
 
-        if (closeTime <= openTime) closeTime += 24 * 60; // Handle over midnight (e.g. 02:00)
-
-        // Adjust current time if it's early morning and we're checking a late night place
+        if (closeTime <= openTime) closeTime += 24 * 60;
         let adjustedCurrentTime = currentTime;
         if (currentH < 5) adjustedCurrentTime += 24 * 60;
 
@@ -58,7 +51,7 @@ export function BestOfGuide() {
         return {
             isOpen,
             text: isOpen ? "Ouvert" : "Fermé",
-            color: isOpen ? "text-emerald-600" : "text-red-500",
+            color: isOpen ? "text-emerald-600" : "text-primary",
             hours: `${open} - ${close}`
         };
     };
@@ -68,364 +61,255 @@ export function BestOfGuide() {
         addActivity("unscheduled", {
             time: "10:00",
             title: place.title,
-            description: `${place.chineseTitle} (${place.pinyin}) - ${place.description.substring(0, 50)}... [ID:${place.id}]`,
+            chineseTitle: place.chineseTitle,
+            description: `${place.chineseTitle} (${place.pinyin}) • ${place.description.substring(0, 70)}... [ID:${place.id}]`,
             location: place.district,
             address: place.address,
             images: place.images
         });
     };
 
-    // Icon Mapping
-    const getIcon = (name: string) => {
-        switch (name) {
-            case "Utensils": return <span className="text-xl drop-shadow-sm">🌶️</span>;
-            case "Coffee": return <span className="text-xl drop-shadow-sm">☕</span>;
-            case "Landmark": return <span className="text-xl drop-shadow-sm">🏯</span>;
-            case "ShoppingBag": return <span className="text-xl drop-shadow-sm">🛍️</span>;
-            case "Martini": return <span className="text-xl drop-shadow-sm">🍸</span>;
-            default: return <span className="text-xl drop-shadow-sm">📍</span>;
+    const copyForDidi = (text: string) => {
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(text);
+        } else {
+            const el = document.createElement("textarea");
+            el.value = text;
+            el.style.position = "fixed";
+            el.style.left = "-9999px";
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand("copy");
+            document.body.removeChild(el);
+        }
+        setCopiedAddress(true);
+        setTimeout(() => setCopiedAddress(false), 2000);
+    };
+
+    const playSpeech = (text: string) => {
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = "zh-CN";
+            utterance.rate = 0.82;
+            window.speechSynthesis.speak(utterance);
         }
     };
 
-    // Helper for Rating Bubbles
-    const RatingBubbles = ({ score, colorClass }: { score: number, colorClass: string }) => {
-        return (
-            <div className="flex items-center gap-0.5">
-                {[1, 2, 3, 4, 5].map((i) => (
-                    <div
-                        key={i}
-                        className={cn(
-                            "w-2.5 h-2.5 rounded-full border border-slate-200 dark:border-slate-700",
-                            i <= Math.round(score) ? colorClass : "bg-transparent"
-                        )}
-                    />
-                ))}
-            </div>
-        );
-    };
-
-    // --- VIEW: CATEGORY SELECTION (DASHBOARD) ---
+    // --- VUE 1 : GRILLE DES CATÉGORIES ---
     if (!activeCategory) {
         return (
-            <Card variant="premium" className="flex flex-col h-auto max-h-[500px]">
-                <div className="p-6 pb-4 shrink-0">
-                    <h2 className="text-2xl font-black text-slate-900 dark:text-white mb-2 tracking-tight">
-                        Le Guide <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-red-600">Ultime</span>
+            <div className="card-warm p-5 space-y-4">
+                <div className="space-y-0.5">
+                    <span className="text-[11px] font-bold text-primary uppercase tracking-wider">
+                        Guide Interactif
+                    </span>
+                    <h2 className="text-xl font-black text-foreground tracking-tight">
+                        Lieux & Saveurs de Chongqing
                     </h2>
-                    <p className="text-slate-500 text-sm font-medium">Les lieux incontournables de Chongqing.</p>
+                    <p className="text-xs text-muted-foreground">
+                        Touchez une catégorie pour explorer les meilleurs spots, avis et photos.
+                    </p>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-4 pt-0 custom-scrollbar">
-                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 md:gap-4 pb-6">
-                        {CATEGORIES.map(cat => (
-                            <button
-                                key={cat.id}
-                                onClick={() => setActiveCategory(cat.id)}
-                                className="group flex flex-col items-center gap-2"
-                            >
-                                <div className="relative w-full aspect-square rounded-[1.2rem] overflow-hidden shadow-lg shadow-black/5 hover:shadow-xl hover:shadow-amber-500/20 transition-all active:scale-[0.95] border border-white/40 dark:border-white/10 group-hover:border-amber-400/50">
-                                    <Image
-                                        src={cat.images[0]}
-                                        alt={cat.label}
-                                        fill
-                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
-
-                                    {/* Icon centered */}
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="w-10 h-10 rounded-full bg-slate-900/50 dark:bg-black/50 backdrop-blur-md flex items-center justify-center text-white border border-white/30 dark:border-white/10 shadow-sm group-hover:scale-110 transition-transform">
-                                            {getIcon(cat.iconName)}
-                                        </div>
-                                    </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+                    {CATEGORIES.map(cat => (
+                        <button
+                            key={cat.id}
+                            onClick={() => setActiveCategory(cat.id)}
+                            className="card-warm overflow-hidden text-left hover:border-primary/60 transition-transform active:scale-95 group flex flex-col"
+                        >
+                            <div className="relative aspect-[4/3] w-full bg-stone-200">
+                                <Image
+                                    src={cat.images[0]}
+                                    alt={cat.label}
+                                    fill
+                                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                                <div className="absolute bottom-2 left-2 right-2 text-white">
+                                    <h3 className="font-bold text-xs leading-tight drop-shadow">{cat.label}</h3>
                                 </div>
-
-                                {/* Text below image */}
-                                <div className="text-center w-full">
-                                    <h3 className="text-slate-800 dark:text-white font-bold text-xs leading-tight truncate px-1 group-hover:text-amber-600 transition-colors">{cat.label}</h3>
-                                </div>
-                            </button>
-                        ))}
-                    </div>
+                            </div>
+                        </button>
+                    ))}
                 </div>
-            </Card>
+            </div>
         );
     }
 
-    // --- VIEW: LIST FOR CATEGORY ---
+    // --- VUE 2 : LISTE DES LIEUX DE LA CATÉGORIE ---
     return (
-        <Card variant="premium" className="flex flex-col min-h-[600px] h-[75vh]">
-
-            {/* Header */}
-            <div className="p-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-20 border-b border-white/20 dark:border-slate-800">
-                <div className="flex items-center gap-3 p-4">
-                    <button
-                        onClick={() => setActiveCategory(null)}
-                        className="w-10 h-10 rounded-full bg-slate-100/50 dark:bg-slate-800/50 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors"
-                    >
-                        <ArrowLeft className="w-5 h-5" />
-                    </button>
-                    <div>
-                        <h2 className="text-xl font-black text-slate-800 dark:text-white flex items-center gap-2">
-                            {currentCategory?.label}
-                        </h2>
-                    </div>
+        <div className="card-warm overflow-hidden flex flex-col space-y-0">
+            {/* Header Catégorie */}
+            <div className="p-4 bg-white border-b border-border flex items-center gap-3 sticky top-0 z-20">
+                <button
+                    onClick={() => {
+                        setActiveCategory(null);
+                        setSelectedPlace(null);
+                    }}
+                    className="p-2 rounded-xl bg-muted/60 hover:bg-muted text-foreground transition-colors"
+                    title="Retour aux catégories"
+                >
+                    <ArrowLeft className="w-4 h-4" />
+                </button>
+                <div>
+                    <span className="text-[10px] font-bold text-primary uppercase tracking-wider">Catégorie</span>
+                    <h2 className="text-lg font-black text-foreground leading-tight">
+                        {currentCategory?.label}
+                    </h2>
                 </div>
             </div>
 
-            {/* List */}
-            <div className="flex-1 overflow-y-auto overflow-x-hidden bg-slate-50 dark:bg-slate-950/20 w-full touch-pan-y overscroll-contain">
-                <div className="flex flex-col w-full max-w-full">
-                    {places.map((place, index) => {
-                        const status = getOpenStatus(place.openTime, place.closeTime);
+            {/* Liste des lieux */}
+            <div className="divide-y divide-border/60 max-h-[600px] overflow-y-auto no-scrollbar">
+                {places.map((place, index) => {
+                    const status = getOpenStatus(place.openTime, place.closeTime);
+                    const isSelected = selectedPlace?.id === place.id;
 
-                        return (
-                            <div
-                                key={place.id}
-                                className={cn(
-                                    "bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 transition-colors group",
-                                    selectedPlace?.id === place.id ? "p-0" : "p-4 flex gap-4 hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer"
-                                )}
-                                onClick={(e: React.MouseEvent) => {
-                                    if (selectedPlace?.id !== place.id) {
-                                        e.preventDefault();
-                                        setSelectedPlace(place);
-                                    }
-                                }}
-                            >
-                                {selectedPlace?.id === place.id ? (
-                                    /* --- EXPANDED INLINE VIEW --- */
-                                    <div className="flex flex-col w-full animate-in slide-in-from-top-2 duration-300">
-                                        <div ref={(node) => {
-                                            if (node) {
-                                                node.scrollIntoView({ behavior: "smooth", block: "start" });
-                                            }
-                                        }} />
-                                        <div className="relative h-64 w-full shrink-0">
-                                            <ImageSlider
-                                                images={place.images}
-                                                alt={place.title}
-                                                className="h-full w-full"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-                                            <div className="absolute bottom-6 left-6 right-6">
-                                                <h1 className="text-3xl font-black text-white mb-1 shadow-black/50 text-shadow-sm">{place.title}</h1>
-                                                <p className="text-white/80 font-medium">{place.chineseTitle}</p>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex-1 p-6 space-y-6">
-                                            {/* All Ratings Detailed */}
-                                            <div className="grid grid-cols-3 gap-2">
-                                                {place.ratings.map((rating, idx) => (
-                                                    <div key={idx} className="bg-slate-50 dark:bg-slate-900/50 p-2 rounded-xl border border-slate-100 dark:border-slate-800 flex flex-col items-center justify-center text-center dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]">
-                                                        <span className="text-[10px] text-slate-400 uppercase font-bold mb-1">{rating.source}</span>
-                                                        <span className={cn(
-                                                            "text-xl font-black",
-                                                            rating.source === "TripAdvisor" ? "text-emerald-500" :
-                                                                rating.source === "Dianping" ? "text-orange-500" :
-                                                                    "text-amber-500"
-                                                        )}>{rating.score}</span>
-                                                        <div className="flex gap-0.5 mt-1">
-                                                            {[1, 2, 3, 4, 5].map(i => (
-                                                                <div key={i} className={cn("w-1 h-1 rounded-full", i <= Math.round(rating.score) ? (rating.source === "TripAdvisor" ? "bg-emerald-500" : rating.source === "Dianping" ? "bg-orange-500" : "bg-amber-500") : "bg-slate-200")} />
-                                                            ))}
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <h3 className="font-bold text-slate-900 flex items-center gap-2">
-                                                    <Lightbulb className="w-5 h-5 text-amber-500" />
-                                                    Le Tips
-                                                </h3>
-                                                <p className="text-slate-600 text-sm leading-relaxed p-4 bg-amber-50 border border-amber-100 rounded-xl">
-                                                    {place.tips}
-                                                </p>
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                                                    <MapPin className="w-5 h-5 text-slate-500" />
-                                                    Adresse
-                                                </h3>
-                                                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between p-3 bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800 rounded-xl dark:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)]">
-                                                    <p className="text-slate-600 dark:text-slate-400 text-sm max-w-[200px] truncate">
-                                                        {place.address}
-                                                    </p>
-                                                    <button
-                                                        onClick={() => setIsTaxiModalOpen(true)}
-                                                        className="shrink-0 text-xs font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/20 px-3 py-2 rounded-xl border border-amber-200 dark:border-amber-900/50 flex items-center gap-2 hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors active:scale-95"
-                                                    >
-                                                        <span>🚕</span> Montrer au Taxi
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <h3 className="font-bold text-slate-900 dark:text-white">À propos</h3>
-                                                <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                                                    {place.description}
-                                                </p>
-                                            </div>
-
-                                            <div className="flex items-center gap-2 mt-8">
-                                                <button
-                                                    onClick={(e) => handleAdd(place, e)}
-                                                    className={cn(
-                                                        "flex-1 h-12 rounded-xl font-black flex items-center justify-center gap-2 transition-all active:scale-[0.98] text-sm uppercase tracking-wider",
-                                                        isAdded(place.id)
-                                                            ? "bg-slate-100 text-slate-400"
-                                                            : "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-700"
-                                                    )}
-                                                >
-                                                    {isAdded(place.id) ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                                                    {isAdded(place.id) ? "Ajouté à l'agenda" : "Ajouter à l'agenda"}
-                                                </button>
-
-                                                <div className="flex gap-2">
-                                                    <a
-                                                        href={`https://www.tripadvisor.fr/Search?q=${encodeURIComponent(place.title + " Chongqing")}`}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-emerald-600 hover:bg-emerald-50 transition-colors shadow-sm"
-                                                        title="Voir sur TripAdvisor"
-                                                    >
-                                                        <div className="w-6 h-6 rounded-full border-2 border-emerald-600 flex items-center justify-center">
-                                                            <span className="font-bold text-[10px] leading-none">TA</span>
-                                                        </div>
-                                                    </a>
-
-                                                    <a
-                                                        href={`https://www.amap.com/search?query=${encodeURIComponent(place.chineseTitle || place.address)}`}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className="w-12 h-12 rounded-xl bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-600 hover:bg-blue-100 transition-colors"
-                                                        title="Voir sur Amap (Maps)"
-                                                    >
-                                                        <Navigation className="w-5 h-5" />
-                                                    </a>
-                                                </div>
-                                            </div>
-
-                                            {/* Standard Back Button at the bottom (static flow) */}
-                                            <div className="mt-6 flex justify-center pb-2 border-t border-slate-100 dark:border-slate-800 pt-6">
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        setSelectedPlace(null);
-                                                    }}
-                                                    className="w-full max-w-[200px] h-12 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold flex items-center justify-center gap-2 hover:bg-slate-200 dark:hover:bg-slate-700 shadow-sm active:scale-95 transition-all"
-                                                >
-                                                    <ArrowLeft className="w-4 h-4" />
-                                                    Réduire
-                                                </button>
-                                            </div>
+                    return (
+                        <div key={place.id} className="bg-white">
+                            {isSelected ? (
+                                /* FICHE DÉTAILLÉE DU LIEU */
+                                <div className="p-4 space-y-4 animate-in fade-in duration-200">
+                                    <div className="rounded-2xl overflow-hidden border border-border h-52 relative">
+                                        <ImageSlider images={place.images} alt={place.title} />
+                                        <div className="absolute bottom-3 left-3 right-3 text-white pointer-events-none">
+                                            <h3 className="text-xl font-black drop-shadow-md">{place.title}</h3>
+                                            <p className="hanzi text-sm font-bold text-amber-300 drop-shadow">{place.chineseTitle}</p>
                                         </div>
                                     </div>
-                                ) : (
-                                    /* --- COLLAPSED LIST ITEM VIEW --- */
-                                    <>
-                                        {/* LEFT: Image + Rank */}
-                                        <div className="relative w-32 h-32 shrink-0 rounded-xl overflow-hidden bg-slate-100">
-                                            <ImageSlider
-                                                images={place.images}
-                                                alt={place.title}
-                                                className="h-full w-full"
-                                                imageClassName="transition-transform duration-500 group-hover:scale-105"
-                                            />
-                                            <div className="absolute top-2 left-0 bg-yellow-400 text-black text-[10px] font-black px-2 py-0.5 shadow-sm z-10">
-                                                #{index + 1}
-                                            </div>
-                                            <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white hover:text-red-500 transition-colors">
-                                                <Heart className="w-3.5 h-3.5" />
-                                            </div>
-                                        </div>
 
-                                        {/* RIGHT: Content */}
-                                        <div className="flex-1 flex flex-col min-w-0">
-                                            <div className="flex justify-between items-start">
-                                                <h3 className="font-bold text-slate-900 dark:text-white text-lg leading-tight truncate pr-2">
-                                                    {place.title}
-                                                </h3>
+                                    {/* Ratings Dianping / TripAdvisor */}
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {place.ratings.map((r, idx) => (
+                                            <div key={idx} className="p-2.5 rounded-xl bg-[#FCFAF5] border border-border text-center">
+                                                <span className="text-[10px] font-bold uppercase text-muted-foreground block">{r.source}</span>
+                                                <span className="text-lg font-black text-primary">{r.score}</span>
+                                                <span className="text-[10px] text-muted-foreground block">/ 5</span>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Astuce Terrain */}
+                                    {place.tips && (
+                                        <div className="p-3.5 rounded-xl bg-gold-light border border-gold/30 space-y-1">
+                                            <div className="flex items-center gap-1.5 text-xs font-bold text-gold-dark">
+                                                <Lightbulb className="w-4 h-4 text-gold" />
+                                                <span>Conseil Local</span>
+                                            </div>
+                                            <p className="text-xs text-foreground/90 leading-relaxed">
+                                                {place.tips}
+                                            </p>
+                                        </div>
+                                    )}
+
+                                    {/* Adresse et Actions */}
+                                    <div className="p-3 rounded-xl bg-muted/40 border border-border space-y-2">
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-[10px] font-bold uppercase text-muted-foreground">Adresse</span>
+                                            <button
+                                                onClick={() => playSpeech(place.chineseTitle || place.address)}
+                                                className="p-1 text-primary hover:bg-white rounded"
+                                                title="Prononcer"
+                                            >
+                                                <Volume2 className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                        <p className="hanzi text-xs font-semibold text-foreground leading-relaxed">
+                                            {place.address}
+                                        </p>
+                                        <p className="text-[10px] text-muted-foreground">{place.pinyin}</p>
+                                    </div>
+
+                                    {/* Boutons d'action */}
+                                    <div className="grid grid-cols-2 gap-2 pt-1">
+                                        <button
+                                            onClick={(e) => handleAdd(place, e)}
+                                            className={cn(
+                                                "p-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm",
+                                                isAdded(place.id)
+                                                    ? "bg-muted text-muted-foreground"
+                                                    : "bg-primary text-white hover:bg-primary/90"
+                                            )}
+                                        >
+                                            {isAdded(place.id) ? <Check className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                                            {isAdded(place.id) ? "Dans l'agenda" : "Ajouter à l'agenda"}
+                                        </button>
+
+                                        <button
+                                            onClick={() => copyForDidi(place.chineseTitle + " " + place.address)}
+                                            className="p-3 rounded-xl bg-white border border-border text-foreground text-xs font-bold flex items-center justify-center gap-1.5 hover:bg-muted/50 transition-colors shadow-sm"
+                                        >
+                                            {copiedAddress ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4 text-primary" />}
+                                            Copier pour DiDi
+                                        </button>
+                                    </div>
+
+                                    {/* Réduire */}
+                                    <button
+                                        onClick={() => setSelectedPlace(null)}
+                                        className="w-full py-2 text-xs font-bold text-muted-foreground hover:text-foreground text-center"
+                                    >
+                                        Fermer les détails
+                                    </button>
+                                </div>
+                            ) : (
+                                /* CARTE CONDENSÉE DE LA LISTE */
+                                <div
+                                    onClick={() => setSelectedPlace(place)}
+                                    className="p-3.5 flex gap-3 hover:bg-[#FCFAF5] cursor-pointer transition-colors"
+                                >
+                                    <div className="relative w-24 h-24 rounded-xl overflow-hidden bg-stone-200 shrink-0">
+                                        <Image
+                                            src={place.images[0]}
+                                            alt={place.title}
+                                            fill
+                                            className="object-cover"
+                                        />
+                                        <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded bg-primary text-white text-[9px] font-bold">
+                                            #{index + 1}
+                                        </div>
+                                    </div>
+
+                                    <div className="flex-1 min-w-0 flex flex-col justify-between">
+                                        <div>
+                                            <div className="flex items-start justify-between gap-1">
+                                                <h3 className="font-bold text-sm text-foreground truncate">{place.title}</h3>
                                                 <button
                                                     onClick={(e) => handleAdd(place, e)}
-                                                    disabled={isAdded(place.id)}
                                                     className={cn(
-                                                        "shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all",
+                                                        "p-1.5 rounded-lg transition-transform active:scale-90 shrink-0",
                                                         isAdded(place.id)
-                                                            ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                                                            : "bg-amber-500 text-white hover:bg-amber-600 hover:scale-110 shadow-md shadow-amber-200"
+                                                            ? "bg-muted text-muted-foreground"
+                                                            : "bg-primary/10 text-primary hover:bg-primary hover:text-white"
                                                     )}
-                                                    title={isAdded(place.id) ? "Déjà ajouté" : "Ajouter au planning"}
+                                                    title={isAdded(place.id) ? "Dans l'agenda" : "Ajouter"}
                                                 >
-                                                    {isAdded(place.id) ? <Check className="w-4 h-4" /> : <Plus className="w-5 h-5" />}
+                                                    {isAdded(place.id) ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
                                                 </button>
                                             </div>
-
-                                            {/* Ratings Row */}
-                                            <div className="flex items-center gap-3 mt-1 mb-2">
-                                                <div className="flex items-center gap-1.5" title="Our Rating">
-                                                    <span className="text-xs font-bold text-slate-900 dark:text-white">{place.averageRating}</span>
-                                                    <RatingBubbles score={place.averageRating} colorClass="bg-amber-400 border-amber-400" />
-                                                    <span className="text-[10px] text-slate-500 dark:text-slate-400">({place.ratings.find(r => r.source === "Chongqing Companion")?.count || "62 avis"})</span>
-                                                </div>
-                                            </div>
-
-                                            {/* Meta Row: Cuisine • Price • Status */}
-                                            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-3">
-                                                <span className="font-medium text-slate-700 dark:text-slate-300">
-                                                    {place.tags[0]}
-                                                </span>
-                                                {place.priceLevel && (
-                                                    <>
-                                                        <span>•</span>
-                                                        <span>{place.priceLevel}</span>
-                                                    </>
-                                                )}
-                                                <span>•</span>
-                                                <div className="flex items-center gap-1">
-                                                    <Clock className="w-3 h-3 text-slate-400" />
-                                                    <span className={cn("font-medium", status.color)}>
-                                                        {status.hours}
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            {/* Snippet / Tip */}
-                                            <div className="mt-auto relative pl-3 border-l-2 border-slate-200 dark:border-slate-700 py-0.5">
-                                                <p className="text-xs text-slate-600 dark:text-slate-400 italic line-clamp-2">
-                                                    "{place.tips}"
-                                                </p>
-                                            </div>
-
-                                            {/* Sources Ratings (Small) */}
-                                            <div className="flex gap-2 mt-3 pt-2 border-t border-slate-50 dark:border-slate-800">
-                                                {place.ratings.filter(r => r.source !== "Chongqing Companion").map((rating, idx) => (
-                                                    <div key={idx} className="flex items-center gap-1">
-                                                        <div className={cn("w-1.5 h-1.5 rounded-full", rating.source === "TripAdvisor" ? "bg-emerald-500" : rating.source === "Dianping" ? "bg-orange-500" : "bg-blue-500")} />
-                                                        <span className="text-[9px] text-slate-400 font-medium uppercase tracking-tight">{rating.source}</span>
-                                                        <span className={cn("text-[9px] font-bold", rating.source === "TripAdvisor" ? "text-emerald-600" : rating.source === "Dianping" ? "text-orange-600" : "text-blue-600")}>{rating.score}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
+                                            <p className="hanzi text-xs font-bold text-gold-dark truncate mt-0.5">{place.chineseTitle}</p>
                                         </div>
-                                    </>
-                                )}
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
 
-            {/* Taxi Modal overlay, triggered from within inline details */}
-            <TaxiModal
-                isOpen={isTaxiModalOpen}
-                onClose={() => setIsTaxiModalOpen(false)}
-                destinationName={selectedPlace?.title || ""}
-                address={selectedPlace?.chineseTitle || selectedPlace?.address || ""}
-            />
-        </Card>
+                                        <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+                                            <span className="font-bold text-foreground">★ {place.averageRating}</span>
+                                            <span>•</span>
+                                            <span className="truncate">{place.district}</span>
+                                            <span>•</span>
+                                            <span className={status.color}>{status.text}</span>
+                                        </div>
+
+                                        <p className="text-[11px] text-muted-foreground line-clamp-1 italic">
+                                            {place.tips}
+                                        </p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
     );
 }
