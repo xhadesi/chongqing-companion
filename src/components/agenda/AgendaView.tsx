@@ -157,15 +157,16 @@ export function AgendaView() {
 
                     <button
                         onClick={() => addDay()}
-                        className="flex-shrink-0 w-12 h-16 rounded-2xl border border-dashed border-border bg-white/40 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+                        className="flex-shrink-0 px-3.5 h-16 rounded-2xl border-2 border-dashed border-primary/40 bg-primary/5 flex items-center justify-center gap-1.5 text-xs font-black text-primary hover:bg-primary/10 transition-all shadow-sm active:scale-95"
                         title="Ajouter un jour au voyage"
                     >
-                        <Plus className="w-5 h-5" />
+                        <Plus className="w-4 h-4" />
+                        <span>+ Jour</span>
                     </button>
                 </div>
             </div>
 
-            {/* Sub-Header: Day title, Date picker, View toggles */}
+            {/* Sub-Header: Day title, Date picker, View toggles, and Remove Day */}
             <div className="p-4 space-y-3">
                 <div className="flex items-center justify-between">
                     <div>
@@ -174,6 +175,17 @@ export function AgendaView() {
                                 Jour {selectedDay?.dayNumber || 1}
                             </span>
                             <span className="text-xs text-muted-foreground">• {selectedDay?.activities.length || 0} arrêts</span>
+                            {days.length > 1 && selectedDay && (
+                                <button
+                                    type="button"
+                                    onClick={() => setDayToDelete(selectedDay.id)}
+                                    className="ml-2 text-[11px] text-destructive hover:underline font-bold flex items-center gap-1 p-1 rounded hover:bg-red-50 transition-colors"
+                                    title="Supprimer cette journée"
+                                >
+                                    <Trash2 className="w-3 h-3" />
+                                    <span>Retirer</span>
+                                </button>
+                            )}
                         </div>
                         {selectedDay && (
                             <button
@@ -458,10 +470,17 @@ export function AgendaView() {
                 isOpen={!!dayToDelete}
                 onClose={() => setDayToDelete(null)}
                 onConfirm={() => {
-                    if (dayToDelete) removeDay(dayToDelete);
+                    if (dayToDelete) {
+                        const remaining = days.filter(d => d.id !== dayToDelete);
+                        removeDay(dayToDelete);
+                        if (remaining.length > 0) {
+                            setSelectedDayId(remaining[0].id);
+                        }
+                        setDayToDelete(null);
+                    }
                 }}
                 title="Supprimer cette journée ?"
-                message="Toutes les étapes associées seront supprimées."
+                message="Toutes les étapes associées à cette journée seront supprimées."
                 isDestructive={true}
             />
 
