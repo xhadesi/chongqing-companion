@@ -21,33 +21,7 @@ import { useAgenda } from "@/hooks/useAgenda";
 
 export default function Home() {
   const { days } = useAgenda();
-  const [chongqingTime, setChongqingTime] = useState("");
-  const [parisTime, setParisTime] = useState("");
   const [weatherTemp, setWeatherTemp] = useState<string>("19°C");
-
-  useEffect(() => {
-    const updateTimes = () => {
-      const now = new Date();
-      setChongqingTime(
-        new Intl.DateTimeFormat("fr-FR", {
-          timeZone: "Asia/Shanghai",
-          hour: "2-digit",
-          minute: "2-digit"
-        }).format(now)
-      );
-      setParisTime(
-        new Intl.DateTimeFormat("fr-FR", {
-          timeZone: "Europe/Paris",
-          hour: "2-digit",
-          minute: "2-digit"
-        }).format(now)
-      );
-    };
-
-    updateTimes();
-    const interval = setInterval(updateTimes, 10000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const fetchWeather = async () => {
@@ -67,32 +41,20 @@ export default function Home() {
 
   return (
     <div className="max-w-lg mx-auto px-4 pt-6 pb-28 space-y-6">
-      {/* Header avec Logo, Titre & Horloges */}
+      {/* Header avec Logo & Titre */}
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="relative w-12 h-12 rounded-2xl overflow-hidden shadow-md border-2 border-gold/40 shrink-0 bg-white p-0.5">
             <img src="/icon-192x192.png" alt="China One Logo" className="object-cover w-full h-full rounded-xl" />
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
-              <h1 className="text-xl font-black tracking-tight text-foreground">China One</h1>
-              <span className="hanzi text-xs font-bold text-white bg-primary px-2 py-0.5 rounded-full shadow-sm">
+            <div className="flex items-center gap-2">
+              <h1 className="text-2xl font-black tracking-tight text-foreground">China One</h1>
+              <span className="hanzi text-xs font-bold text-white bg-primary px-2.5 py-0.5 rounded-full shadow-sm">
                 重庆
               </span>
             </div>
-            <p className="text-[11px] font-semibold text-gold-dark">Mégalopole de Chongqing</p>
-          </div>
-        </div>
-
-        {/* Dual Clocks */}
-        <div className="flex items-center gap-1.5 text-right">
-          <div className="px-2.5 py-1.5 rounded-xl bg-white border border-border shadow-sm">
-            <span className="text-[9px] font-bold text-muted-foreground uppercase block">Chongqing</span>
-            <span className="text-xs font-black text-primary">{chongqingTime || "--:--"}</span>
-          </div>
-          <div className="px-2.5 py-1.5 rounded-xl bg-white border border-border shadow-sm">
-            <span className="text-[9px] font-bold text-muted-foreground uppercase block">Paris</span>
-            <span className="text-xs font-bold text-muted-foreground">{parisTime || "--:--"}</span>
+            <p className="text-xs font-semibold text-gold-dark">Mégalopole de Chongqing</p>
           </div>
         </div>
       </header>
